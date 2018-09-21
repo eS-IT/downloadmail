@@ -1,0 +1,30 @@
+{
+    "name": "esit/downloadmail",
+    "description": "Themenverwaltung des Deutschen Blinden- und Sehbehindertenverbands",
+    "version": "2.0.0",
+    "license": "proprietary",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Patrick Froch",
+            "email": "info@easySolutionsIT.de",
+            "homepage": "https://easySolutionsIT.de",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "info@easySolutionsIT.de"
+    },
+    "require": {
+        "php": ">=7.0",
+        "contao/core-bundle": "~4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esit\\Downloadmail": ""
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Esit\\Downloadmail\\Classes\\Contao\\Manager\\Plugin"
+    }
+}
