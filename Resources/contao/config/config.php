@@ -1,34 +1,13 @@
 <?php
-
 /**
- * Contao Open Source CMS
- * Copyright (C) 2005-2011 Leo Feyer
- *
- * Formerly known as TYPOlight Open Source CMS.
- *
- * This program is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program. If not, please visit the Free
- * Software Foundation website at <http://www.gnu.org/licenses/>.
- *
- *
  * @package     downloadmail
  * @filesource  config.php
- * @version     1.0.0
- * @since       21.09.18 - 16:31
+ * @version     2.0.0
+ * @since       18.10.2018 - 10:34
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @link        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
- * @license     EULA
+ * @license     CC-BY-SA-4.0
  */
 /**
  * BACK END MODULES
@@ -56,6 +35,16 @@
  * have to be set. Take a look at the system/modules/core/config/config.php
  * file to see how back end modules are configured.
  */
+$GLOBALS['BE_MOD']['easy_downloadmail'] = array(
+    'tl_dm_downloads' => array(
+        'tables'    => array('tl_dm_downloads'),
+        'view'      => array('\Esit\Downloadmail\Classes\Contao\Dca\DownloadView', 'show'),
+        'reset'     => array('\Esit\Downloadmail\Classes\Contao\Dca\DownloadView', 'show')
+    ),
+    'tl_dm_blacklist' => array(
+        'tables'    => array('tl_dm_blacklist')
+    )
+);
 
 
 /**
@@ -79,6 +68,7 @@
  * module is rendered. The class "ModuleClass1" has to be stored in a file
  * named "ModuleClass1.php" in your module folder.
  */
+$GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadmail\Classes\Contao\Modules\ModuleRequestDownload';
 
 
 /**
@@ -268,6 +258,8 @@
  * source code by registering callback functions to be executed on a particular
  * event. For more information see https://contao.org/manual.html.
  */
+$GLOBALS['TL_HOOKS']['addCustomRegexp'][] = array('\Esit\Downloadmail\Classes\Contao\Hooks\BlacklistHook', 'onBlacklistRegex');
+$GLOBALS['TL_HOOKS']['processFormData'][] = array('\Esit\Downloadmail\Classes\Contao\Hooks\FormHook', 'onProcessFormData');
 
 
 /**
@@ -282,3 +274,20 @@
  * When rebuilding the search index URLs, Contao needs to know about these
  * keywords so it can handle them properly.
  */
+
+
+/**
+ * Downloadmail
+ */
+
+// Modifikator fuer die Downloadtime
+$GLOBALS['downloadmail']['timemodifikator'] = 60 * 60;  // Eingabe in den Eintellungen in Tagen: 60 * 60 * 24; in Stunden: 60 * 60
+
+// Fallback fuer die Wartezeit bis der Download startet
+$GLOBALS['downloadmail']['requestTime']     = 5;        // Wartezeit bis zum Start des Downloads (fallback)
+
+// Lebensdauer der Cookies in Tagen
+$GLOBALS['downloadmail']['cookieTime']      = 30;
+
+// Gueltigkeitsdauer der Downloadtokens (fallback)
+$GLOBALS['downloadmail']['downloadtime']    = 12;

@@ -1,0 +1,13 @@
+services:
+    ## ####### ##
+    ## Servies ##
+    ## ####### ##
+
+    ## Helper
+    downloadmail.servies.helper.blacklisthelper:
+        class: Esit\Downloadmail\Classes\Helper\BlacklistHelper
+        arguments: []
+
+    downloadmail.servies.helper.stringhelper:
+        class: Esit\Downloadmail\Classes\Helper\StringHelper
+        arguments: []

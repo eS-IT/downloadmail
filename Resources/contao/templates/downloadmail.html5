@@ -1,0 +1,25 @@
+<?php if($this->strError): ?>
+    <div class="error">
+        <?php echo $this->strError; ?>
+    </div>
+<?php endif; ?>
+
+<?php if($this->strLink != null && $this->strLabel != null): ?>
+    <div class="download">
+        <div class="message"><?php echo $this->strMessage; ?></div>
+        <a href="<?php echo $this->strLink; ?>"><?php echo $this->strLabel; ?></a>
+
+    </div>
+
+    <script>
+        function redirect(){
+            window.location = "<?php echo $this->strLink; ?>"
+        }
+
+        window.setTimeout(redirect, <?php echo $this->intTimer; ?> * 1000);
+    </script>
+
+<?php endif; ?>
+
+
+

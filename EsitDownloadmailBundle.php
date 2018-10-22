@@ -2,8 +2,8 @@
 /**
  * @package     downloadmail
  * @filesource  EsitDownloadmailBundle.php
- * @version     1.0.0
- * @since       21.09.18 - 16:26
+ * @version     2.0.0
+ * @since       18.10.2018 - 10:49
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @link        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018

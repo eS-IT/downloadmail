@@ -1,0 +1,163 @@
+services:
+    ## ############# ##
+    ## EventListener ##
+    ## ############# ##
+
+    # OnManageDownloadListener
+    downloadmail.listener.on_manage_download_listener.load_download_from_db:
+        class: Esit\Downloadmail\Classes\Listener\OnManageDownloadListener
+        arguments: []
+        tags:
+            - { name: kernel.event_listener, event: on.manage.download, method: loadDownloadFromDb }
+
+    downloadmail.listener.on_manage_download_listener.load_file_data:
+        class: Esit\Downloadmail\Classes\Listener\OnManageDownloadListener
+        arguments: []
+        tags:
+            - { name: kernel.event_listener, event: on.manage.download, method: loadFileData }
+
+    downloadmail.listener.on_manage_download_listener.load_form_data:
+        class: Esit\Downloadmail\Classes\Listener\OnManageDownloadListener
+        arguments: []
+        tags:
+            - { name: kernel.event_listener, event: on.manage.download, method: loadFormData }
+
+    downloadmail.listener.on_manage_download_listener.load_download_time:
+        class: Esit\Downloadmail\Classes\Listener\OnManageDownloadListener
+        arguments: []
+        tags:
+            - { name: kernel.event_listener, event: on.manage.download, method: loadDownloadTime }
+
+    downloadmail.listener.on_manage_download_listener.get_request_link:
+        class: Esit\Downloadmail\Classes\Listener\OnManageDownloadListener
+        arguments: []
+        tags:
+            - { name: kernel.event_listener, event: on.manage.download, method: getRequestLink }
+
+    downloadmail.listener.on_manage_download_listener.check_download_time:
+        class: Esit\Downloadmail\Classes\Listener\OnManageDownloadListener
+        arguments: []
+        tags:
+            - { name: kernel.event_listener, event: on.manage.download, method: checkDownloadTime }
+
+    downloadmail.listener.on_manage_download_listener.get_request_time:
+        class: Esit\Downloadmail\Classes\Listener\OnManageDownloadListener
+        arguments: []
+        tags:
+            - { name: kernel.event_listener, event: on.manage.download, method: getRequestTime }
+
+    downloadmail.listener.on_manage_download_listener.handle_download:
+        class: Esit\Downloadmail\Classes\Listener\OnManageDownloadListener
+        arguments: []
+        tags:
+            - { name: kernel.event_listener, event: on.manage.download, method: handleDownload }
+
+    # OnManageFormListener
+    downloadmail.listener.on_manage_form_listener.load_download_from_db:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: loadMailField }
+
+    downloadmail.listener.on_manage_form_listener.gen_file_info:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: genFileInfo }
+
+    downloadmail.listener.on_manage_form_listener.gen_download_code:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: genDownloadCode }
+
+    downloadmail.listener.on_manage_form_listener.load_data_from_settings:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: loadDataFromSettings }
+
+    downloadmail.listener.on_manage_form_listener.load_default_values:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: loadDefaultValues }
+
+    downloadmail.listener.on_manage_form_listener.load_data_from_rootpage:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: loadDataFromRootpage }
+
+    downloadmail.listener.on_manage_form_listener.load_data_from_form:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: loadDataFromForm }
+
+    downloadmail.listener.on_manage_form_listener.set_data_for_db:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: setDataForDb }
+
+    downloadmail.listener.on_manage_form_listener.filter_not_db_fields:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: filterNotDbFields }
+
+    downloadmail.listener.on_manage_form_listener.save_data_in_db:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: saveDataInDb }
+
+    downloadmail.listener.on_manage_form_listener.send_mails:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: sendMails }
+
+    # OnShowDownloadListener
+    downloadmail.listener.on_show_download_listener.reset_download:
+        class: Esit\Downloadmail\Classes\Listener\OnShowDownloadListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.show.download, method: resetDownload }
+
+    downloadmail.listener.on_show_download_listener.load_data:
+        class: Esit\Downloadmail\Classes\Listener\OnShowDownloadListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.show.download, method: loadData }
+
+    downloadmail.listener.on_show_download_listener.convert_single_src:
+        class: Esit\Downloadmail\Classes\Listener\OnShowDownloadListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.show.download, method: convertSingleSrc }
+
+    downloadmail.listener.on_show_download_listener.convert_jump_to:
+        class: Esit\Downloadmail\Classes\Listener\OnShowDownloadListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.show.download, method: convertJumpTo }
+
+    downloadmail.listener.on_show_download_listener.convert_from_id:
+        class: Esit\Downloadmail\Classes\Listener\OnShowDownloadListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.show.download, method: convertFromId }
+
+    downloadmail.listener.on_show_download_listener.convert_form_data:
+        class: Esit\Downloadmail\Classes\Listener\OnShowDownloadListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.show.download, method: convertFormData }
+
+    downloadmail.listener.on_show_download_listener.convert_download_data:
+        class: Esit\Downloadmail\Classes\Listener\OnShowDownloadListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.show.download, method: convertDownloadData }

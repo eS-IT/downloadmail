@@ -1,0 +1,81 @@
+<div id="tl_buttons">
+    <a href="<?php echo $this->backlink; ?>/contao?do=tl_dm_downloads" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
+</div>
+
+<div class="maintenance_inactive">
+    <h2 class="sub_headline">Details des Eintrags mit der ID <?php echo $this->id; ?></h2>
+</div>
+
+
+<table class="tl_show">
+    <tbody>
+        <tr>
+            <td><span class="tl_label"><?php echo $this->lang['id'][0]; ?>: </span></td>
+            <td><?php echo $this->id; ?></td>
+        </tr>
+
+        <?php $style = (\Contao\Input::get('key') == 'reset') ? ' style="font-weight: bold; color: rgb(0, 100, 148);"' :''; ?>
+
+        <tr class="tl_bg"<?php echo $style; ?>>
+            <td><span class="tl_label"><?php echo $this->lang['requesttime'][0]; ?>: </span></td>
+            <td><?php echo date(\Contao\Config::get('datimFormat'), $this->requesttime); ?></td>
+        </tr>
+
+        <tr>
+            <td><span class="tl_label"><?php echo $this->lang['code'][0]; ?>: </span></td>
+            <td><?php echo $this->code; ?></td>
+        </tr>
+
+        <tr class="tl_bg">
+            <td><span class="tl_label"><?php echo $this->lang['email'][0]; ?>: </span></td>
+            <td><?php echo $this->email; ?></td>
+        </tr>
+
+        <tr>
+            <td><span class="tl_label"><?php echo $this->lang['downloadcount'][0]; ?>: </span></td>
+            <td><?php echo $this->downloadcount; ?></td>
+        </tr>
+
+        <tr class="tl_bg">
+            <td><span class="tl_label"><?php echo $this->lang['singleSRC'][0]; ?>: </span></td>
+            <td>
+                <?php echo isset($this->fileData['filepath']) ? $this->fileData['filepath'] : ''; ?>
+                <?php echo isset($this->fileData['filesize']) ? '[' . $this->fileData['filesize'] . ']' : ''; ?>
+            </td>
+        </tr>
+
+        <tr>
+            <td><span class="tl_label"><?php echo $this->lang['jumpto'][0]; ?>: </span></td>
+            <td><?php echo $this->jumpto['title']; ?></td>
+        </tr>
+
+        <tr class="tl_bg">
+            <td><span class="tl_label"><?php echo $this->lang['formid'][0]; ?>: </span></td>
+            <td><?php echo $this->formid['title']; ?></td>
+        </tr>
+
+        <tr>
+            <td><span class="tl_label"><?php echo $this->lang['downloaddata'][0]; ?>: </span></td>
+            <td>
+                <?php if (is_array($this->downloaddata) && count($this->downloaddata)): ?>
+                    <ul>
+                        <?php foreach ($this->downloaddata as $row): ?>
+                            <li>
+                                <?php echo date(\Contao\Config::get('datimFormat'), $row['time']);?>
+                                -
+                                <?php echo $row['ip'];?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a href="<?php echo $this->backlink; ?>/contao?do=tl_dm_downloads&key=reset&id=<?php echo $this->id; ?>">
+                    <button>Anforderungszeit zurücksetzen</button>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
