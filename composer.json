@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Esit\\Downloadmail": ""
+            "Esit\\Downloadmail\\": ""
         }
     },
     "extra": {
