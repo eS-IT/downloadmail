@@ -20,6 +20,8 @@ $GLOBALS['TL_DCA']['tl_dm_downloads'] = array
 	(
 		'dataContainer'               => 'Table',
 		'enableVersioning'            => true,
+		'notCreatable'                => true,
+		'notCopyable'                 => true,
 		'sql' => array
 		(
 			'keys' => array
