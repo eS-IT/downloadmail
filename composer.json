@@ -2,7 +2,7 @@
     "name": "esit/downloadmail",
     "description": "Mit dieser Erweiterung für das Open Source CMS Contao können Downloads über E-Mail zur Verfügung stellt werden.",
     "license": "CC-BY-SA-4.0",
-    "type": "library",
+    "type": "contao-bundle",
     "authors": [
         {
             "name": "Patrick Froch",
