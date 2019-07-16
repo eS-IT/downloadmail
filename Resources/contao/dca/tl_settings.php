@@ -26,7 +26,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['mailfrom'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['mailfrom'],
     'exclude'                 => true,
     'inputType'               => 'text',
-    'eval'                    => array('maxlength'=>255, 'rgxp'=>'email', 'decodeEntities'=>true, 'tl_class'=>'long')
+    'eval'                    => array('maxlength'=>255, 'rgxp'=>'email', 'decodeEntities'=>true, 'tl_class'=>'long clr')
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['mailbcc'] = array(

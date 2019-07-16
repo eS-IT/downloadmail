@@ -30,7 +30,7 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['mailfrom'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_page']['mailfrom'],
     'exclude'                 => true,
     'inputType'               => 'text',
-    'eval'                    => array('maxlength'=>255, 'rgxp'=>'email', 'decodeEntities'=>true, 'tl_class'=>'long'),
+    'eval'                    => array('maxlength'=>255, 'rgxp'=>'email', 'decodeEntities'=>true, 'tl_class'=>'long clr'),
     'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
