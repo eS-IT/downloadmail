@@ -1,6 +1,6 @@
 {
     "name": "esit/downloadmail",
-    "description": "Mit dieser Erweiterung für das Open Source CMS Contao können Downloads über E-Mail zur Verfügung stellt werden.",
+    "description": "DownloadMail v2 ist eine Erweiterung für das Open Source CMS Contao, die den Download einer geschützten Datei nach dem Ausfüllen eines Formulars ermöglicht. Das Formular kann im Formulargenerator frei gestalltet werden. Die eingegebenen Daten stehen im Backend zur Verfügung.",
     "license": "CC-BY-SA-4.0",
     "type": "contao-bundle",
     "authors": [

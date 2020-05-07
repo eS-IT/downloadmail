@@ -1,7 +1,10 @@
 # DownloadMail v2
 
-DownloadMail v2 ist ein Erweiterung für das Open Source CMS Contao. Diese Version benötigt Contao 4, für Contao 3 
-bitte die erste Version verwenden.
+DownloadMail v2 ist eine Erweiterung für das Open Source CMS Contao, die den Download einer geschützten Datei nach dem 
+Ausfüllen eines Formulars ermöglicht. Das Formular kann im Formulargenerator frei gestalltet werden. Die eingegebenen 
+Daten stehen im Backend zur Verfügung.
+
+__Diese Version benötigt Contao 4, für Contao 3bitte die erste Version verwenden.__
 
 
 ## Requirements
