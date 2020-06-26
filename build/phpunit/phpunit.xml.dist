@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
+         bootstrap="./bootstrap.php"
+         forceCoversAnnotation="false"
+         beStrictAboutCoversAnnotation="false"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         verbose="false"
+         colors="true"
+         backupGlobals="false"
+         backupStaticAttributes="false">
+
+    <!-- Coverage
+    <logging>
+        <log type="coverage-html" target="/tmp/coverage" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false" showOnlySummary="true" lowUpperBound="35" highLowerBound="70"/>
+    </logging>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../../Classes/</directory>
+            <exclude>
+                <directory suffix=".php">../../Classes/Contao/</directory>
+            </exclude>
+        </whitelist>
+    </filter> -->
+
+    <!-- Tests -->
+    <testsuites>
+        <testsuite name="esitTestSuite">
+            <directory>../../Tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

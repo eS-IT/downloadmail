@@ -1,0 +1,47 @@
+{
+    "name": "esit/smartgallery",
+    "description": "Es handelt sich um eine Erweiterung für das Open Source CMS Contao",
+    "license": "proprietary",
+    "type": "contao-bundle",
+    "authors": [
+        {
+            "name": "Patrick Froch",
+            "email": "info@easySolutionsIT.de",
+            "homepage": "http://easySolutionsIT.de",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "info@easySolutionsIT.de"
+    },
+    "require": {
+        "php": "^7.2",
+        "contao/core-bundle": "^4.4",
+        "contao/manager-bundle": "^4.4",
+        "contao/conflicts": "@dev"
+    },
+    "require-dev": {
+        "contao/test-case": "^4.0",
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esit\\Smartgallery\\": ""
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Esit\\Smartgallery\\Classes\\Contao\\Manager\\Plugin",
+        "composertoolbox": {
+            "require": {
+                "esit/smartgallery": "^1.0"
+            },
+            "repositories": {
+                "esit/smartgallery": {
+                    "type": "vcs",
+                    "url": "https://gitlab+deploy-token-XX:XXXXXXXXXXXXXXXXXXXXX@esit-projekt.de/pfroch/XXXXXKUNDEXXXXX_smartgallery_dev4.git"
+                }
+            }
+        }
+    }
+}
