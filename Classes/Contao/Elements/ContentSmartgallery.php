@@ -65,12 +65,23 @@ class ContentSmartgallery extends \ContentElement
         $uuid                       = Input::get('gallery');
 
         if (null !== $uuid) {
-            $this->objModel->type     = 'gallery';
-            $this->objModel->multiSRC = $this->getImages($uuid);
-            $cte                      = new ContentGallery($this->objModel);
+            $folder = FilesModel::findByUuid($uuid);
 
-            if (!empty($this->objModel->multiSRC)) {
-                $this->Template->content = $cte->generate();
+            if (null !== $folder) {
+                $filename                 = $folder->name;
+                $parts                    = \explode('_', $filename);
+                $this->objModel->type     = 'gallery';
+                $this->objModel->multiSRC = $this->getImages($folder);
+                $cte                      = new ContentGallery($this->objModel);
+                $this->Template->headline = $filename; // Fallback
+
+                if (\is_array($parts) && \count($parts)) {
+                    $this->Template->headline = \array_pop($parts);
+                }
+
+                if (!empty($this->objModel->multiSRC)) {
+                    $this->Template->content = $cte->generate();
+                }
             }
         }
     }
@@ -78,13 +89,12 @@ class ContentSmartgallery extends \ContentElement
 
     /**
      * Gibt das Array mit den Bildern zurück.
-     * @param  string $uuid
+     * @param  FilesModel $folder
      * @return array
      */
-    protected function getImages(string $uuid): array
+    protected function getImages(FilesModel $folder): array
     {
         $multiSRC   = [];
-        $folder     = FilesModel::findByUuid($uuid);
 
         if (null !== $folder) {
             $finder = new Finder();

@@ -38,7 +38,7 @@ $GLOBALS['TL_DCA'][$table]['palettes']['__selector__'][] = 'SUBFIELD';
 
 /* Palettes */
 $GLOBALS['TL_DCA'][$table]['palettes']['smartgallerymenu']  = '{type_legend},type,headline;{settings_legend},startfolder;{jumpto_legend:hide},jumpto;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop;';
-$GLOBALS['TL_DCA'][$table]['palettes']['smartgallery']      = '{type_legend},type,headline;{image_legend},size,imagemargin,perRow,fullsize,perPage;{template_legend:hide},galleryTpl,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop;';
+$GLOBALS['TL_DCA'][$table]['palettes']['smartgallery']      = '{type_legend},type;{image_legend},size,imagemargin,perRow,fullsize,perPage;{template_legend:hide},galleryTpl,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop;';
 
 /* subpalettes
 $GLOBALS['TL_DCA'][$table]['subpalettes']['SUBFIELD'] = 'FIELDS';
