@@ -13,3 +13,4 @@
 autoload*
 vendor/
 **/**/*.example
+CHANGELOG.txt
