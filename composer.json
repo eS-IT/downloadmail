@@ -17,8 +17,8 @@
     "require": {
         "php": "^7.2",
         "contao/core-bundle": "^4.4",
-        "contao/manager-bundle": "^4.4",
-        "contao/conflicts": "@dev"
+        "contao/conflicts": "@dev",
+        "erusev/parsedown": "^1.7"
     },
     "require-dev": {
         "contao/test-case": "^4.0",
@@ -31,17 +31,6 @@
         }
     },
     "extra": {
-        "contao-manager-plugin": "Esit\\Smartgallery\\Classes\\Contao\\Manager\\Plugin",
-        "composertoolbox": {
-            "require": {
-                "esit/smartgallery": "^1.0"
-            },
-            "repositories": {
-                "esit/smartgallery": {
-                    "type": "vcs",
-                    "url": "https://gitlab+deploy-token-XX:XXXXXXXXXXXXXXXXXXXXX@esit-projekt.de/pfroch/XXXXXKUNDEXXXXX_smartgallery_dev4.git"
-                }
-            }
-        }
+        "contao-manager-plugin": "Esit\\Smartgallery\\Classes\\Contao\\Manager\\Plugin"
     }
 }

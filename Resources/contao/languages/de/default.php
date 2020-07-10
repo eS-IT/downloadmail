@@ -10,13 +10,6 @@
  */
 
 /**
- * Miscellaneous
- */
-//$GLOBALS['TL_LANG']['MSC']['']         = '';
-//$GLOBALS['TL_LANG']['MSC']['']         = ['' => ''];
-
-
-/**
  * Content Elemente
  */
 $GLOBALS['TL_LANG']['CTE']['baaken']            = ['Schützenverein Baaken', 'Schützenverein Baaken'];

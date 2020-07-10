@@ -1,0 +1,64 @@
+<div class="block helppage">
+    <img src="files/customer/assets/layout/logo-website.png" alt="Schützenverein Baaken Werne e.V.">
+
+    <?php if ($this->content): ?>
+        <?php echo $this->content; ?>
+    <?php endif; ?>
+</div>
+
+<style>
+    .helppage,
+    h1,
+    h2,
+    p,
+    th,
+    strong {
+        color: #555;
+        font-size: 1em;
+    }
+
+    .helppage {
+        margin: 20px;
+    }
+
+    img {
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 1.2em;
+    }
+
+    h2 {
+        border-bottom: 1px solid #555;
+        font-size: 1.15em;
+        margin: 30px 0 15px 0;
+        padding-bottom: 5px;
+    }
+
+    th {
+        padding: 0 10px 10px 0;
+    }
+
+
+    td {
+        padding: 0 10px 5px 0;
+    }
+
+    a {
+        color: #006494;
+    }
+
+    a:hover {
+        color: #f47c00;
+    }
+
+    code {
+        font-size: 1em;
+    }
+
+    p {
+        margin-top: 10px;
+    }
+</style>

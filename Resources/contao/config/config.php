@@ -27,7 +27,7 @@
  * @since       25.06.2020 - 17:29
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @link        http://easySolutionsIT.de
- * @copyright   e@sy Solutions IT 2020
+ * @copyright   e@sy Solutions ITTEST 2020
  * @license     EULA
  */
 /**
@@ -56,6 +56,9 @@
  * have to be set. Take a look at the system/modules/core/config/config.php
  * file to see how back end modules are configured.
  */
+$GLOBALS['BE_MOD']['baaken']['helppage'] = [
+    'callback' => \Esit\Smartgallery\Classes\Contao\Backend\HelpPage::class
+];
 
 
 /**
