@@ -1,6 +1,6 @@
 {
     "name": "esit/downloadmail",
-    "description": "DownloadMail v2 ist eine Erweiterung für das Open Source CMS Contao, die den Download einer geschützten Datei nach dem Ausfüllen eines Formulars ermöglicht. Das Formular kann im Formulargenerator frei gestalltet werden. Die eingegebenen Daten stehen im Backend zur Verfügung. Diese Version benötigt Contao 4, für Contao 3 bitte die erste Version verwenden.",
+    "description": "DownloadMail v2 ist eine Erweiterung für das Open Source CMS Contao, die den Download einer geschützten Datei nach dem Ausfüllen eines Formulars ermöglicht. Das Formular kann im Formulargenerator frei gestalltet werden. Die eingegebenen Daten stehen im Backend zur Verfügung. Diese Version benötigt Contao 4, für Contao 3 bitte die erste Version verwenden. Eine Anleitung ist unter https://github.com/eS-IT/downloadmail/blob/master/README.md zufinden.",
     "license": "CC-BY-SA-4.0",
     "type": "contao-bundle",
     "authors": [
@@ -12,8 +12,11 @@
         }
     ],
     "support": {
-        "email": "info@easySolutionsIT.de"
+        "email": "info@easySolutionsIT.de",
+        "issues": "https://github.com/eS-IT/downloadmail/issues",
+        "docs": "https://github.com/eS-IT/downloadmail/blob/master/README.md"
     },
+    "readme": "README.md",
     "require": {
         "php": ">=7.1",
         "contao/core-bundle": "^4.4"
