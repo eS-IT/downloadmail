@@ -32,6 +32,12 @@ $GLOBALS['TL_LANG']['tl_dm_downloads']['info_legend']   = 'Informationen';
 
 
 /**
+ * Operations
+ */
+$GLOBALS['TL_LANG']['tl_dm_downloads']['view'] = 'Details anzeigen';
+
+
+/**
  * Buttons
  */
 $GLOBALS['TL_LANG']['tl_dm_downloads']['new']           = array('Neuer Eintrag ', 'Neuen Eintrag erstellen');
