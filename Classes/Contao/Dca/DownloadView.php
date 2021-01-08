@@ -12,7 +12,6 @@
 namespace Esit\Downloadmail\Classes\Contao\Dca;
 
 use Contao\BackendTemplate;
-use Contao\Database;
 use Contao\Environment;
 use Contao\Input;
 use Contao\System;
@@ -44,7 +43,7 @@ class DownloadView
         $event                  = new OnShowDownloadEvent();
         $event->setId($dc->id);
 
-        if (Input::get('key') == 'reset') {
+        if (Input::get('key') === 'reset') {
             $event->setReset(true);
         }
 

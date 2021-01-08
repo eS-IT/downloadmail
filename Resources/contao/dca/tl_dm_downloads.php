@@ -46,69 +46,30 @@ $GLOBALS['TL_DCA']['tl_dm_downloads'] = array
 			'fields'                  => array('requesttime', 'email', 'downloadcount'),
 			'format'                  => '[%s] %s - %s Downloads'
 		),
-		'global_operations' => array
-		(/*
-			'all' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-				'href'                => 'act=select',
-				'class'               => 'header_edit_all',
-				'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-			)*/
-		),
+		'global_operations' => array(),
 		'operations' => array
 		(
-            /*'edit' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dm_downloads']['edit'],
-                'href'                => 'act=edit',
-              'icon'                => 'edit.gif'
-            ),/*
-            'copy' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dm_downloads']['copy'],
-                'href'                => 'act=copy',
-                'icon'                => 'copy.gif'
-            ),
-			'show' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_dm_downloads']['show'],
-				'href'                => 'act=show',
-				'icon'                => 'show.gif'
-			),*/
             'delete' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dm_downloads']['delete'],
-                'href'                => 'act=delete',
-                'icon'                => 'delete.gif',
-                'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
+                'label'             => &$GLOBALS['TL_LANG']['tl_dm_downloads']['delete'],
+                'href'              => 'act=delete',
+                'icon'              => 'delete.gif',
+                'attributes'        => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
             ),
             'view' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_dm_downloads']['view'],
-                'href'                => 'key=view',
-                'icon'                => 'bundles/esitdownloadmail/img/magnifier--arrow.png'
+                'label'             => &$GLOBALS['TL_LANG']['tl_dm_downloads']['view'],
+                'href'              => 'key=view',
+                'icon'              => 'bundles/esitdownloadmail/img/magnifier--arrow.png',
+                'button_callback'   => [\Esit\Downloadmail\Classes\Contao\Dca\TlDmDownloads::class, 'generateIcon']
             )
 		)
-	),
-
-	// Edit
-	'edit' => array
-	(
-		'buttons_callback' => array()
 	),
 
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array(''),
 		'default'                     => '{info_legend}, requesttime, code, email, downloadcount, singleSRC, jumpto;'
-	),
-
-	// Subpalettes
-	'subpalettes' => array
-	(
-		''                            => ''
 	),
 
 	// Fields
