@@ -58,7 +58,7 @@ $GLOBALS['TL_DCA']['tl_dm_downloads'] = array
             ),
             'view' => array
             (
-                'label'             => &$GLOBALS['TL_LANG']['tl_dm_downloads']['view'],
+                'label'             => &$GLOBALS['TL_LANG']['tl_dm_downloads']['view'][0],
                 'href'              => 'key=view',
                 'icon'              => 'bundles/esitdownloadmail/img/magnifier--arrow.png',
                 'button_callback'   => [\Esit\Downloadmail\Classes\Contao\Dca\TlDmDownloads::class, 'generateIcon']

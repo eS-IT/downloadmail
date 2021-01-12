@@ -34,7 +34,7 @@ $GLOBALS['TL_LANG']['tl_dm_downloads']['info_legend']   = 'Informationen';
 /**
  * Operations
  */
-$GLOBALS['TL_LANG']['tl_dm_downloads']['view'] = 'Details anzeigen';
+$GLOBALS['TL_LANG']['tl_dm_downloads']['view'] = ['Details anzeigen'];
 
 
 /**
