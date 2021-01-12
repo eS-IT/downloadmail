@@ -63,16 +63,18 @@ class OnManageFormListener
     {
         $formData   = $event->getFormData();
         $dbData     = $event->getDbData();
-        $query      = "SELECT * FROM tl_form_field WHERE pid = " . $formData['id'] . " AND downloadmailaddress = 1";
-        $result     = $this->db->execute($query);
 
-        if ($result->numRows) {
-            $fieldName = $result->name;
+        if (!empty($formData['id'])) {
+            $query  = "SELECT * FROM tl_form_field WHERE pid = " . $formData['id'] . " AND downloadmailaddress = 1";
+            $result = $this->db->execute($query);
 
+            if ($result->numRows) {
+                $fieldName = $result->name;
 
-            if (Input::post($fieldName)) {
-                $dbData['email'] = Input::post($fieldName);
-                $event->setDbData($dbData);
+                if (Input::post($fieldName)) {
+                    $dbData['email'] = Input::post($fieldName);
+                    $event->setDbData($dbData);
+                }
             }
         }
     }
@@ -86,10 +88,12 @@ class OnManageFormListener
      */
     public function genFileInfo(OnManageFormEvent $event, $eventName, EventDispatcherInterface $dispatcher)
     {
-        $formData   = $event->getFormData();
-        $fileInfos  = $this->stringHelper->genFileInfo($formData['mySingleSRC']);
-        $event->setDownloadFileInfo($fileInfos);
+        $formData = $event->getFormData();
 
+        if (!empty($formData['mySingleSRC'])) {
+            $fileInfos = $this->stringHelper->genFileInfo($formData['mySingleSRC']);
+            $event->setDownloadFileInfo($fileInfos);
+        }
     }
 
 
@@ -103,7 +107,17 @@ class OnManageFormListener
     {
         $dbData         = $event->getDbData();
         $dlFileInfo     = $event->getDownloadFileInfo();
-        $dbData['code'] = sha1($dlFileInfo['filehash'] . $dbData['email'] . time() . uniqid());
+        $hashString     =\microtime() . \uniqid(\microtime(), true);
+
+        if (!empty($dbData['email'])) {
+            $hashString .= $dbData['email'];
+        }
+
+        if (!empty($dlFileInfo['filehash'])) {
+            $hashString .= $dlFileInfo['filehash'];
+        }
+
+        $dbData['code'] = sha1($hashString);
         $event->setDbData($dbData);
     }
 
@@ -121,7 +135,7 @@ class OnManageFormListener
 
         if (is_array($fields) && count($fields)) {
             foreach ($fields as $field) {
-                if (isset($GLOBALS['downloadmail'][$field]))
+                if (!empty($GLOBALS['downloadmail'][$field]))
                     $settings[$field] = $GLOBALS['downloadmail'][$field];
             }
 
@@ -143,7 +157,7 @@ class OnManageFormListener
 
         if (is_array($fields) && count($fields)) {
             foreach ($fields as $field) {
-                if (Config::get($field) && Config::get($field) != 'a:1:{i:0;s:0:"";}')
+                if (Config::get($field) && Config::get($field) !== 'a:1:{i:0;s:0:"";}')
                 $settings[$field] = Config::get($field);
             }
 
@@ -169,7 +183,7 @@ class OnManageFormListener
 
             if ($root) {
                 foreach ($fields as $field) {
-                    if ($root->$field && $root->$field != 'a:1:{i:0;s:0:"";}') {
+                    if ($root->$field && $root->$field !== 'a:1:{i:0;s:0:"";}') {
                         $settings[$field] = $root->$field;
                     }
                 }
@@ -194,7 +208,7 @@ class OnManageFormListener
 
         if (is_array($fields) && count($fields)) {
             foreach ($fields as $field) {
-                if (isset($formData[$field]) && $formData[$field] && $formData[$field]!= 'a:1:{i:0;s:0:"";}') {
+                if (isset($formData[$field]) && $formData[$field] && $formData[$field]!== 'a:1:{i:0;s:0:"";}') {
                     $settings[$field] = $formData[$field];
                 }
             }
@@ -217,10 +231,16 @@ class OnManageFormListener
         $dbData                 = $event->getDbData();
         $dbData['tstamp']       = time();
         $dbData['requesttime']  = time();
-        $dbData['jumpto']       = (isset($settingData['jumptodownload'])) ? $settingData['jumptodownload'] : '';
-        $dbData['formid']       = $formData['id'];
-        $dbData['singleSRC']    = $formData['mySingleSRC'];
+        $dbData['jumpto']       = (!empty($settingData['jumptodownload'])) ? $settingData['jumptodownload'] : '';
         $dbData['requestpage']  = Environment::get('requestUri');
+
+        if (!empty($formData['id'])) {
+            $dbData['formid'] = $formData['id'];
+        }
+
+        if (!empty($formData['mySingleSRC'])) {
+            $dbData['singleSRC'] = $formData['mySingleSRC'];
+        }
 
         $event->setDbData($dbData);
     }
@@ -258,9 +278,7 @@ class OnManageFormListener
         $dbData = $event->getDbData();
 
         if (is_array($dbData) && count($dbData)) {
-            $this->db->prepare("INSERT INTO tl_dm_downloads %s")
-                     ->set($dbData)
-                     ->execute();
+            $this->db->prepare("INSERT INTO tl_dm_downloads %s")->set($dbData)->execute();
         }
     }
 
@@ -279,7 +297,7 @@ class OnManageFormListener
         $email          = new Email();
         $email->subject = $settings['mailsubject'];
         $email->from    = $settings['mailfrom'];
-        $bcc            = unserialize($settings['mailbcc']);
+        $bcc            = \unserialize($settings['mailbcc'], [null]);
         $text           = $settings['mailtext'];
 
         if (isset($dbData['code']) && $dbData['code']) {
