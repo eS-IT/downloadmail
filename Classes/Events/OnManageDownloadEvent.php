@@ -13,6 +13,7 @@ namespace Esit\Downloadmail\Classes\Events;
 
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
+use Contao\ModuleModel;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -48,6 +49,13 @@ class OnManageDownloadEvent extends Event
      * @var string
      */
     protected $modulId = '';
+
+
+    /**
+     * Daten des Moduls
+     * @var ModuleModel
+     */
+    protected $modul;
 
 
     /**
@@ -138,6 +146,24 @@ class OnManageDownloadEvent extends Event
     public function setModulId(string $modulId)
     {
         $this->modulId = $modulId;
+    }
+
+
+    /**
+     * @return ModuleModel
+     */
+    public function getModul(): ModuleModel
+    {
+        return $this->modul;
+    }
+
+
+    /**
+     * @param ModuleModel $modul
+     */
+    public function setModul(ModuleModel $modul): void
+    {
+        $this->modul = $modul;
     }
 
 

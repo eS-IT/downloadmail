@@ -15,7 +15,6 @@ use Contao\Config;
 use Contao\Controller;
 use Contao\Database;
 use Contao\Environment;
-use Contao\File;
 use Contao\FilesModel;
 use Contao\Input;
 use Contao\ModuleModel;
@@ -89,7 +88,7 @@ class OnManageDownloadListener
         $template   = $event->getTamplate();
         $dlData     = $event->getDlFromDb();
 
-        if (is_array($dlData) && isset($dlData['singleSRC']) && $dlData['singleSRC']) {
+        if (!empty($dlData['singleSRC'])) {
             $fileData = FilesModel::findByPk($dlData['singleSRC']);
             $event->setFileData($fileData);
         } else {
@@ -109,7 +108,7 @@ class OnManageDownloadListener
     {
         $dlData = $event->getDlFromDb();
 
-        if (isset($dlData['formid']) && $dlData['formid']) {
+        if (!empty($dlData['formid'])) {
             $query  = "SELECT * FROM tl_form WHERE id = " . $dlData['formid'];
             $result = $this->db->execute($query);
 
@@ -134,7 +133,7 @@ class OnManageDownloadListener
 
         if (isset($formData['downloadtime'])) {
             $event->setDownloadtime($formData['downloadtime']);
-        } elseif ($objRoot && $objRoot->downloadtime > 0) {
+        } elseif (null !== $objRoot && $objRoot->downloadtime > 0) {
             $event->setDownloadtime($objRoot->downloadtime);
         } elseif (Config::get('downloadtime')) {
             $event->setDownloadtime(Config::get('downloadtime'));
@@ -153,7 +152,10 @@ class OnManageDownloadListener
     public function getRequestLink(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
     {
         $dlData = $event->getDlFromDb();
-        $event->setRequestLink($dlData['requestpage']);
+
+        if (!empty($dlData['requestpage'])) {
+            $event->setRequestLink($dlData['requestpage']);
+        }
     }
 
 
@@ -171,7 +173,7 @@ class OnManageDownloadListener
         $downloadTime   = $event->getDownloadtime();
         $requestLink    = $event->getRequestLink();
 
-        if (is_array($dlData) && isset($dlData['requesttime']) && $dlData['requesttime']) {
+        if (!empty($dlData['requesttime'])) {
             $intDownloadPeriodEnd   = $dlData['requesttime'];
             $intDownloadPeriodEnd  += ($downloadTime * $GLOBALS['downloadmail']['timemodifikator']);
 
@@ -197,8 +199,12 @@ class OnManageDownloadListener
         $moduleId   = $event->getModulId();
         $objModul   = ModuleModel::findByPk($moduleId);
 
-        if ($objModul && $objModul->redirecttime > 0) {
-            $event->setRequestTime($objModul->redirecttime);
+        if (null !== $objModul) {
+            $event->setModul($objModul);
+
+            if ($objModul->redirecttime > 0) {
+                $event->setRequestTime($objModul->redirecttime);
+            }
         } elseif (Config::get('redirecttime') > 0) {
             $event->setRequestTime(Config::get('redirecttime'));
         } else {
@@ -224,9 +230,13 @@ class OnManageDownloadListener
 
         if ($fileModel) {
             if (Input::get('download') === "true") {    // Infput::get() gibt einen String zurück!
-                $dlData['downloadcount']++;
+                $dlData['downloadcount']= (!empty($dlData['downloadcount'])) ? $dlData['downloadcount']+1 : 1;
                 $ip                     = System::anonymizeIp(Environment::get('remoteAddr'));
-                $downloads              = deserialize($dlData['downloaddata'], true);
+
+                if (!empty($dlData['downloaddata'])) {
+                    $downloads = \unserialize($dlData['downloaddata'], [null]);
+                }
+
                 $downloads[]            = ['time'=> time(), 'code' => $downloadKey, 'ip'=> $ip];
                 $dlData['downloaddata'] = serialize($downloads);
                 $dlDataId               = $dlData['id'];
