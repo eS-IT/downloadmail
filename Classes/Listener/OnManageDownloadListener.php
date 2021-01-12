@@ -96,9 +96,6 @@ class OnManageDownloadListener
             if (null !== $fileData) {
                 $event->setFileData($fileData);
             }
-        } else {
-            $template->strError = $formLang['downloaderror'];
-            $event->stopPropagation();
         }
     }
 
@@ -233,7 +230,7 @@ class OnManageDownloadListener
         $fileModel      = $event->getFileData();
         $requestTime    = $event->getRequestTime();
 
-        if ($fileModel) {
+        if (null !== $fileModel) {
             if (Input::get('download') === "true") {    // Infput::get() gibt einen String zurück!
                 $dlData['downloadcount']= (!empty($dlData['downloadcount'])) ? $dlData['downloadcount']+1 : 1;
                 $ip                     = System::anonymizeIp(Environment::get('remoteAddr'));
