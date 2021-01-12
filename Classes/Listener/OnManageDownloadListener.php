@@ -19,6 +19,7 @@ use Contao\FilesModel;
 use Contao\Input;
 use Contao\ModuleModel;
 use Contao\PageModel;
+use Contao\StringUtil;
 use Contao\System;
 use Esit\Downloadmail\Classes\Events\OnManageDownloadEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -87,10 +88,14 @@ class OnManageDownloadListener
         $formLang   = $event->getFeFormLang();
         $template   = $event->getTamplate();
         $dlData     = $event->getDlFromDb();
+        $singleSrc  = StringUtil::binToUuid($dlData['singleSRC']);
 
-        if (!empty($dlData['singleSRC'])) {
-            $fileData = FilesModel::findByPk($dlData['singleSRC']);
-            $event->setFileData($fileData);
+        if ('00000000-0000-0000-0000-000000000000' !== $singleSrc) {
+            $fileData = FilesModel::findByPk($singleSrc);
+
+            if (null !== $fileData) {
+                $event->setFileData($fileData);
+            }
         } else {
             $template->strError = $formLang['downloaderror'];
             $event->stopPropagation();
