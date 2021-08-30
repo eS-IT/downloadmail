@@ -71,17 +71,17 @@ services:
         tags:
             - { name: kernel.event_listener, event: on.manage.form, method: genDownloadCode, priority: 9216 }
 
-    downloadmail.listener.on_manage_form_listener.load_data_from_settings:
-        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
-        arguments: ["@downloadmail.servies.helper.stringhelper"]
-        tags:
-            - { name: kernel.event_listener, event: on.manage.form, method: loadDataFromSettings, priority: 8192 }
-
     downloadmail.listener.on_manage_form_listener.load_default_values:
         class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
         arguments: ["@downloadmail.servies.helper.stringhelper"]
         tags:
-            - { name: kernel.event_listener, event: on.manage.form, method: loadDefaultValues, priority: 7168 }
+            - { name: kernel.event_listener, event: on.manage.form, method: loadDefaultValues, priority: 8192 }
+
+    downloadmail.listener.on_manage_form_listener.load_data_from_settings:
+        class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
+        arguments: ["@downloadmail.servies.helper.stringhelper"]
+        tags:
+            - { name: kernel.event_listener, event: on.manage.form, method: loadDataFromSettings, priority: 7168 }
 
     downloadmail.listener.on_manage_form_listener.load_data_from_rootpage:
         class: Esit\Downloadmail\Classes\Listener\OnManageFormListener
