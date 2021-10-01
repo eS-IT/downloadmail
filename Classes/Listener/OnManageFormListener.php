@@ -157,8 +157,9 @@ class OnManageFormListener
 
         if (is_array($fields) && count($fields)) {
             foreach ($fields as $field) {
-                if (Config::get($field) && Config::get($field) !== 'a:1:{i:0;s:0:"";}')
-                $settings[$field] = Config::get($field);
+                if (Config::get($field) && Config::get($field) !== 'a:1:{i:0;s:0:"";}') {
+                    $settings[$field] = Config::get($field);
+                }
             }
 
             $event->setSettings($settings);
