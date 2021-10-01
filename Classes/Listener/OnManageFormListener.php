@@ -12,13 +12,16 @@
 namespace Esit\Downloadmail\Classes\Listener;
 
 use Contao\Config;
+use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\Database;
 use Contao\Email;
 use Contao\Environment;
 use Contao\Input;
 use Contao\PageModel;
+use Contao\System;
 use Esit\Downloadmail\Classes\Events\OnManageFormEvent;
 use Esit\Downloadmail\Classes\Helper\StringHelper;
+use Psr\Log\LogLevel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -155,7 +158,7 @@ class OnManageFormListener
         $settings   = $event->getSettings();
         $fields     = $event->getSettingFields();
 
-        if (is_array($fields) && count($fields)) {
+        if (\is_array($fields) && \count($fields)) {
             foreach ($fields as $field) {
                 if (Config::get($field) && Config::get($field) !== 'a:1:{i:0;s:0:"";}') {
                     $settings[$field] = Config::get($field);
@@ -230,8 +233,8 @@ class OnManageFormListener
         $formData               = $event->getFormData();
         $settingData            = $event->getSettings();
         $dbData                 = $event->getDbData();
-        $dbData['tstamp']       = time();
-        $dbData['requesttime']  = time();
+        $dbData['tstamp']       = \time();
+        $dbData['requesttime']  = \time();
         $dbData['jumpto']       = (!empty($settingData['jumptodownload'])) ? $settingData['jumptodownload'] : '';
         $dbData['requestpage']  = Environment::get('requestUri');
 
@@ -308,12 +311,12 @@ class OnManageFormListener
                 $link = "<a href='$link'>$link</a>";
             }
 
-            $text = str_replace('{{download::link}}', $link, $text);
+            $text = \str_replace('{{download::link}}', $link, $text);
         }
 
-        if (is_array($postData) && count($postData)) {
+        if (\is_array($postData) && \count($postData)) {
             foreach ($postData as $strKey => $strValue) {
-                $text = str_replace("{{download::$strKey}}", $strValue, $text);
+                $text = \str_replace("{{download::$strKey}}", $strValue, $text);
             }
         }
 
@@ -324,11 +327,17 @@ class OnManageFormListener
         }
 
         if (is_array($bcc) && count($bcc)) {
-            call_user_func_array(array($email, 'sendBcc'), $bcc);
+            \call_user_func_array(array($email, 'sendBcc'), $bcc);
         }
 
-        if (isset($dbData['email']) && $dbData['email']) {
+        if (!empty($dbData['email'])) {
             $email->sendTo($dbData['email']);
+        } else {
+            $logger = System::getContainer()->get('monolog.logger.contao');
+            if (null !== $logger) {
+                $context = ['contao' => new ContaoContext(__METHOD__, 'Mailerror')];
+                $logger->log(LogLevel::ERROR, 'No mail address found!', $context);
+            }
         }
     }
 }

@@ -1,13 +1,13 @@
 # DownloadMail v2
 
-DownloadMail v2 ist eine Erweiterung für das Open Source CMS Contao, die den Download einer geschützten Datei nach dem 
-Ausfüllen eines Formulars ermöglicht. Das Formular kann im Formulargenerator frei gestalltet werden. Die eingegebenen 
+DownloadMail v2 ist eine Erweiterung für das Open Source CMS Contao, die den Download einer geschützten Datei nach dem
+Ausfüllen eines Formulars ermöglicht. Das Formular kann im Formulargenerator frei gestalltet werden. Die eingegebenen
 Daten stehen im Backend zur Verfügung. __Diese Version benötigt Contao 4, für Contao 3 bitte die erste Version verwenden.__
 
 
 ## Requirements
 
-- PHP >= 7.1
+- PHP >= 7.3
 - Contao >= 4.4
 
 
@@ -39,11 +39,11 @@ Im Contao Manager nach `eS-IT/downloadmail` suchen und installieren.
 
 ### Formulare
 
-In der neuen Version wird kein vorgefertigtes Formular mehr ausgegeben. Es können nun beliebige Formulare aus dem 
-Formulargenerator verwendet werden. Bei den gewünschten Formularen muss in der Einstellungen der Formulare der Haken 
+In der neuen Version wird kein vorgefertigtes Formular mehr ausgegeben. Es können nun beliebige Formulare aus dem
+Formulargenerator verwendet werden. Bei den gewünschten Formularen muss in der Einstellungen der Formulare der Haken
 __Formular für DownloadMail__ gesetzt sein. Hier können dann auch die Einstellungen für die Downloads getätigt werden.
 
-Die __Weiterleitungsseite__ des Formulars verweist auf die Seite, die angezeigt wird, wenn das Formular abgesendet 
+Die __Weiterleitungsseite__ des Formulars verweist auf die Seite, die angezeigt wird, wenn das Formular abgesendet
 wird.
 
 Die __Downloadseite__ ist die Seite, auf die der Downloadlink in der E-Mail verweist. Auf dieser Seite muss das Modul
@@ -51,12 +51,12 @@ vom Typ __easy_Downloadmail__ eingebunden werden.
 
 ### Formularfeld
 
-Das Formular muss ein Textfeld enthalten, in dem der Haken __E-Mail-Adresse für DownloadMail__ gesetzt ist, 
+Das Formular muss ein Textfeld enthalten, in dem der Haken __E-Mail-Adresse für DownloadMail__ gesetzt ist,
 enthalten. Als Eingabeprüfung kann hier __E-Mail-Adresse__ verwendet werden, dann sind alle Adressen erlaubt. Wird
-als Eingabeprüfung stattdessen __E-Mail-Blacklist__ verwendet, wird auch geprüft, ob es sich um eine gültige 
-E-Mail-Adresse handelt, zusätzlich wird sie aber auch gegen die Blacklist geprüft (s. Blacklist, weiter unten). 
+als Eingabeprüfung stattdessen __E-Mail-Blacklist__ verwendet, wird auch geprüft, ob es sich um eine gültige
+E-Mail-Adresse handelt, zusätzlich wird sie aber auch gegen die Blacklist geprüft (s. Blacklist, weiter unten).
 
-__Es sollte in jedem Formularfeld nur ein Formularfeld mit dem Haken "E-Mail-Adresse für DownloadMail" geben, 
+__Es sollte in jedem Formularfeld nur ein Formularfeld mit dem Haken "E-Mail-Adresse für DownloadMail" geben,
 da nur die erste E-Mailadresse berücksichtigt wird!__
 
 ### Modul
@@ -66,10 +66,10 @@ und das Bereitstellen des Downloads.
 
 ### Einstellungen
 
-Es gibt mehrere Stellen an denen die Einstellungen gesetzt werden können. Die Einstellungen werden in den 
-Contao-Setting global für alle Formulare auf allen Seiten gesetzt. Diese können in der Rootpage der entsprechenden 
-Seite überschrieben, bzw. ergänzt werden. Diese Einstellungen gelten nur für die Formulare auf Unterseiten der 
-entsprechenden Rootpage. Dann gibt es noch die Möglichkeit die Einstellungen direkt im Formular zu setzen. Diese 
+Es gibt mehrere Stellen an denen die Einstellungen gesetzt werden können. Die Einstellungen werden in den
+Contao-Setting global für alle Formulare auf allen Seiten gesetzt. Diese können in der Rootpage der entsprechenden
+Seite überschrieben, bzw. ergänzt werden. Diese Einstellungen gelten nur für die Formulare auf Unterseiten der
+entsprechenden Rootpage. Dann gibt es noch die Möglichkeit die Einstellungen direkt im Formular zu setzen. Diese
 gelten dann nur für das eine Formular.
 
 | Name der Einstellung | Erklärng |
@@ -85,7 +85,7 @@ gelten dann nur für das eine Formular.
 | __Quelldatei__ | Die Datei, die über den Link aus der E-Mail runter geladen werden kann. |
 
 - __TinyMCE verwenden__ kann nur in den Contao-Settings eingestellt werden.
-- Die __Quelldatei__ kann nur direkt im Formular festgelegt werden. 
+- Die __Quelldatei__ kann nur direkt im Formular festgelegt werden.
 
 
 ## Blacklist
@@ -94,14 +94,14 @@ Hier können E-Mail-Adressen oder reguläre Ausdrücke für E-Mail-Adressen ange
 verwendet werden können (z.B. Einmaladressen wie byom.de). Wird eine solche E-Mail-Adresse im Formular eingegeben, wird
 im Formular eine entsprechende Fehlermeldung ausgegeben.
 
-Damit dies funktioniert, muss im betreffenden Formularfeld (s. Formularfeld weiter oben) als Eingabeprüfung 
+Damit dies funktioniert, muss im betreffenden Formularfeld (s. Formularfeld weiter oben) als Eingabeprüfung
 __E-Mail-Blacklist__ verwendet werden.
 
 
 ## Downloads
 
 Unter dem Menüpunkt __Downloads__ können im Backend die Anfragen und die getätigten Download eingesehen werden. Klick
-man in der Liste auf die Lupe, werden Metadaten, die Zeiten und anonymisierten IPs zu den einzelnen Downloads angezeigt. 
-Dort ist auch ein Button __Anforderungszeit zurücksetzen__. Dieser setzt die Anforderungszeit auf die aktuelle Zeit, 
-so dass über den gleichen Link auch nach Ablauf der Gültigkeitsdauer wieder die entsprechende Datei runter geladen 
+man in der Liste auf die Lupe, werden Metadaten, die Zeiten und anonymisierten IPs zu den einzelnen Downloads angezeigt.
+Dort ist auch ein Button __Anforderungszeit zurücksetzen__. Dieser setzt die Anforderungszeit auf die aktuelle Zeit,
+so dass über den gleichen Link auch nach Ablauf der Gültigkeitsdauer wieder die entsprechende Datei runter geladen
 werden kann.
