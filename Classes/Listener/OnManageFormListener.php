@@ -65,6 +65,7 @@ class OnManageFormListener
     public function loadMailField(OnManageFormEvent $event, $eventName, EventDispatcherInterface $dispatcher)
     {
         $formData   = $event->getFormData();
+        $postArray  = $event->getPostData();
         $dbData     = $event->getDbData();
 
         if (!empty($formData['id'])) {
@@ -74,8 +75,8 @@ class OnManageFormListener
             if ($result->numRows) {
                 $fieldName = $result->name;
 
-                if (Input::post($fieldName)) {
-                    $dbData['email'] = Input::post($fieldName);
+                if ($postArray[$fieldName]) {
+                    $dbData['email'] = $postArray[$fieldName];
                     $event->setDbData($dbData);
                 }
             }
