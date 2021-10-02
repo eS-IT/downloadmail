@@ -1,24 +1,22 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @package     downloadmail
- * @filesource  BlacklistHelper.php
  * @version     2.0.0
  * @since       18.10.2018 - 10:53
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @link        http://easySolutionsIT.de
+ * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
-namespace Esit\Downloadmail\Classes\Helper;
 
-use Contao\Database;
-use Contao\Idna;
-use Contao\Validator;
+namespace Esit\Downloadmail\Classes\Services\Helper;
 
-/**
- * Class BlacklistHelper
- * @package Esit\Downloadmail\Classes\Helper
- */
+use Esit\Downloadmail\Classes\Services\Wrapper\Database;
+use Esit\Downloadmail\Classes\Services\Wrapper\Idna;
+use Esit\Downloadmail\Classes\Services\Wrapper\Validator;
+
 class BlacklistHelper
 {
 
@@ -26,16 +24,31 @@ class BlacklistHelper
     /**
      * @var Database
      */
-    protected $db;
+    private $db;
 
 
     /**
-     * dmBlacklist constructor.
-     * @param Database|null $db
+     * @var Validator
      */
-    public function __construct(Database $db = null)
+    private $validator;
+
+
+    /**
+     * @var Idna
+     */
+    private $idna;
+
+
+    /**
+     * @param Database  $db
+     * @param Validator $validator
+     * @param Idna      $idna
+     */
+    public function __construct(Database $db, Validator $validator, Idna $idna)
     {
-        $this->db = $db ?: Database::getInstance();
+        $this->db = $db;
+        $this->validator = $validator;
+        $this->idna = $idna;
     }
 
 
@@ -44,16 +57,13 @@ class BlacklistHelper
      * @param $strMail
      * @return bool
      */
-    public function validateMailaddress($strMail)
+    public function validateMailaddress($strMail): bool
     {
         if ($this->checkMailaddress($strMail)) {
             // Mailadresse nicht in Blacklist!
-            $strMail = Idna::encodeEmail($strMail);
+            $strMail = $this->idna->encodeEmail($strMail);
 
-            if (Validator::isEmail($strMail)) {
-                // Es ist eine valide Mailaderesse und nicht in der Blacklist!
-                return true;
-            }
+            return $this->validator->isEmail($strMail);
         }
 
         return false;
@@ -65,9 +75,9 @@ class BlacklistHelper
      * @param $strMail
      * @return bool
      */
-    public function checkMailaddress($strMail)
+    public function checkMailaddress($strMail): bool
     {
-        $query  = "SELECT * FROM tl_dm_blacklist";
+        $query = "SELECT * FROM tl_dm_blacklist";
         $result = $this->db->execute($query);
 
         if ($result->numRows) {
@@ -75,12 +85,12 @@ class BlacklistHelper
                 if ($result->regex) {
                     $strPattern = html_entity_decode($result->pattern);
 
-                    if ($result->pattern != '' && preg_match('|' . $strPattern . '|i', $strMail)) {
+                    if ('' != $result->pattern && preg_match('|' . $strPattern . '|i', $strMail)) {
                         // Adresse stimmt mit dem Regulaeren Ausdruck ueberein.
                         return false;
                     }
                 } else {
-                    if ($result->pattern != '' && substr_count($strMail, $result->pattern)) {
+                    if ('' != $result->pattern && substr_count($strMail, $result->pattern)) {
                         // String ist in Mailadresse enthalten.
                         return false;
                     }

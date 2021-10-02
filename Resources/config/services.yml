@@ -5,9 +5,9 @@ services:
 
     ## Helper
     downloadmail.servies.helper.blacklisthelper:
-        class: Esit\Downloadmail\Classes\Helper\BlacklistHelper
+        class: Esit\Downloadmail\Classes\Services\Helper\BlacklistHelper
         public: true
 
     downloadmail.servies.helper.stringhelper:
-        class: Esit\Downloadmail\Classes\Helper\StringHelper
+        class: Esit\Downloadmail\Classes\Services\Helper\StringHelper
         public: true

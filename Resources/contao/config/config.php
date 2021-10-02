@@ -1,15 +1,17 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @package     downloadmail
  * @filesource  config.php
  * @version     2.0.0
  * @since       18.10.2018 - 10:34
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @link        http://easySolutionsIT.de
+ * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
-/**
+/*
  * BACK END MODULES
  *
  * Back end modules are stored in a global array called "BE_MOD". You can add
@@ -35,19 +37,19 @@
  * have to be set. Take a look at the system/modules/core/config/config.php
  * file to see how back end modules are configured.
  */
-$GLOBALS['BE_MOD']['easy_downloadmail'] = array(
-    'tl_dm_downloads' => array(
-        'tables'    => array('tl_dm_downloads'),
-        'view'      => array('\Esit\Downloadmail\Classes\Contao\Dca\DownloadView', 'show'),
-        'reset'     => array('\Esit\Downloadmail\Classes\Contao\Dca\DownloadView', 'show')
-    ),
-    'tl_dm_blacklist' => array(
-        'tables'    => array('tl_dm_blacklist')
-    )
-);
+$GLOBALS['BE_MOD']['easy_downloadmail'] = [
+    'tl_dm_downloads' => [
+        'tables' => ['tl_dm_downloads'],
+        'view' => ['\Esit\Downloadmail\Classes\Contao\Dca\DownloadView', 'show'],
+        'reset' => ['\Esit\Downloadmail\Classes\Contao\Dca\DownloadView', 'show']
+    ],
+    'tl_dm_blacklist' => [
+        'tables' => ['tl_dm_blacklist']
+    ]
+];
 
 
-/**
+/*
  * FRONT END MODULES
  *
  * Front end modules are stored in a global array called "FE_MOD". You can add
@@ -71,7 +73,7 @@ $GLOBALS['BE_MOD']['easy_downloadmail'] = array(
 $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadmail\Classes\Contao\Modules\ModuleRequestDownload';
 
 
-/**
+/*
  * CONTENT ELEMENTS
  *
  * Content elements are stored in a global array called "TL_CTE". You can add
@@ -94,7 +96,7 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  */
 
 
-/**
+/*
  * BACK END FORM FIELDS
  *
  * Back end form fields are stored in a global array called "BE_FFL". You can
@@ -114,7 +116,7 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  */
 
 
-/**
+/*
  * FRONT END FORM FIELDS
  *
  * Front end form fields are stored in a global array called "TL_FFL". You can
@@ -134,7 +136,7 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  */
 
 
-/**
+/*
  * PAGE TYPES
  *
  * Page types are stored in a global array called "TL_PTY". You can add your own
@@ -154,7 +156,7 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  */
 
 
-/**
+/*
  * MODEL MAPPINGS
  *
  * Model names are usually built from the table names, e.g. "tl_user_group"
@@ -171,7 +173,7 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  */
 
 
-/**
+/*
  * MAINTENANCE MODULES
  *
  * Maintenance modules are stored in a global array called "TL_MAINTENANCE". You
@@ -189,7 +191,7 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  */
 
 
-/**
+/*
  * PURGE JOBS
  *
  * Purge jobs are stored in a global array called "TL_PURGE". You can add your
@@ -215,7 +217,7 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  */
 
 
-/**
+/*
  * CRON JOBS
  *
  * Cron jobs are stored in a global array called "TL_CRON". You can add your own
@@ -239,7 +241,7 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  */
 
 
-/**
+/*
  * HOOKS
  *
  * Hooks are stored in a global array called "TL_HOOKS". You can register your
@@ -258,11 +260,11 @@ $GLOBALS['FE_MOD']['easy_downloadmail']['easy_Downloadmail'] = '\Esit\Downloadma
  * source code by registering callback functions to be executed on a particular
  * event. For more information see https://contao.org/manual.html.
  */
-$GLOBALS['TL_HOOKS']['addCustomRegexp'][] = array('\Esit\Downloadmail\Classes\Contao\Hooks\BlacklistHook', 'onBlacklistRegex');
-$GLOBALS['TL_HOOKS']['processFormData'][] = array('\Esit\Downloadmail\Classes\Contao\Hooks\FormHook', 'onProcessFormData');
+$GLOBALS['TL_HOOKS']['addCustomRegexp'][] = ['\Esit\Downloadmail\Classes\Contao\Hooks\BlacklistHook', 'onBlacklistRegex'];
+$GLOBALS['TL_HOOKS']['processFormData'][] = ['\Esit\Downloadmail\Classes\Contao\Hooks\FormHook', 'onProcessFormData'];
 
 
-/**
+/*
  * AUTO ITEMS
  *
  * Auto items are stored in a global array called "TL_AUTO_ITEM". You can
@@ -276,7 +278,7 @@ $GLOBALS['TL_HOOKS']['processFormData'][] = array('\Esit\Downloadmail\Classes\Co
  */
 
 
-/**
+/*
  * Downloadmail
  */
 
@@ -284,10 +286,10 @@ $GLOBALS['TL_HOOKS']['processFormData'][] = array('\Esit\Downloadmail\Classes\Co
 $GLOBALS['downloadmail']['timemodifikator'] = 60 * 60;  // Eingabe in den Eintellungen in Tagen: 60 * 60 * 24; in Stunden: 60 * 60
 
 // Fallback fuer die Wartezeit bis der Download startet
-$GLOBALS['downloadmail']['requestTime']     = 5;        // Wartezeit bis zum Start des Downloads (fallback)
+$GLOBALS['downloadmail']['requestTime'] = 5;        // Wartezeit bis zum Start des Downloads (fallback)
 
 // Lebensdauer der Cookies in Tagen
-$GLOBALS['downloadmail']['cookieTime']      = 30;
+$GLOBALS['downloadmail']['cookieTime'] = 30;
 
 // Gueltigkeitsdauer der Downloadtokens (fallback)
-$GLOBALS['downloadmail']['downloadtime']    = 12;
+$GLOBALS['downloadmail']['downloadtime'] = 12;

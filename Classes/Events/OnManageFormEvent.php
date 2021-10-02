@@ -1,14 +1,17 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @package     downloadmail
  * @filesource  OnManageFormEvent.php
  * @version     2.0.0
  * @since       18.10.2018 - 10:53
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @link        http://easySolutionsIT.de
+ * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
 namespace Esit\Downloadmail\Classes\Events;
 
 use Symfony\Component\EventDispatcher\Event;
@@ -24,7 +27,7 @@ class OnManageFormEvent extends Event
     /**
      * Name des Events
      */
-    const NAME = 'on.manage.form';
+    public const NAME = 'on.manage.form';
 
 
     /**
@@ -96,7 +99,7 @@ class OnManageFormEvent extends Event
     /**
      * @param array $formData
      */
-    public function setFormData(array $formData)
+    public function setFormData(array $formData): void
     {
         $this->formData = $formData;
     }
@@ -114,7 +117,7 @@ class OnManageFormEvent extends Event
     /**
      * @param array $postData
      */
-    public function setPostData(array $postData)
+    public function setPostData(array $postData): void
     {
         $this->postData = $postData;
     }
@@ -132,7 +135,7 @@ class OnManageFormEvent extends Event
     /**
      * @param array $filesData
      */
-    public function setFilesData(array $filesData)
+    public function setFilesData(array $filesData): void
     {
         $this->filesData = $filesData;
     }
@@ -150,7 +153,7 @@ class OnManageFormEvent extends Event
     /**
      * @param array $downloadFileInfo
      */
-    public function setDownloadFileInfo(array $downloadFileInfo)
+    public function setDownloadFileInfo(array $downloadFileInfo): void
     {
         $this->downloadFileInfo = $downloadFileInfo;
     }
@@ -168,7 +171,7 @@ class OnManageFormEvent extends Event
     /**
      * @param array $settingFields
      */
-    public function setSettingFields(array $settingFields)
+    public function setSettingFields(array $settingFields): void
     {
         $this->settingFields = $settingFields;
     }
@@ -186,7 +189,7 @@ class OnManageFormEvent extends Event
     /**
      * @param array $settings
      */
-    public function setSettings(array $settings)
+    public function setSettings(array $settings): void
     {
         $this->settings = $settings;
     }
@@ -204,7 +207,7 @@ class OnManageFormEvent extends Event
     /**
      * @param array $dbData
      */
-    public function setDbData(array $dbData)
+    public function setDbData(array $dbData): void
     {
         $this->dbData = $dbData;
     }

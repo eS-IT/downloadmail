@@ -1,14 +1,17 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @package     downloadmail
  * @filesource  BlacklistHook.php
  * @version     2.0.0
  * @since       18.10.2018 - 10:54
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @link        http://easySolutionsIT.de
+ * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
 namespace Esit\Downloadmail\Classes\Contao\Hooks;
 
 use Contao\System;
@@ -25,12 +28,12 @@ class BlacklistHook
      * Hook: Prüft ob eine Mailadresse auf der Blacklist steht.
      * @param $strRegexp
      * @param $varValue
-     * @param \Widget $objWidget
+     * @param  \Widget $objWidget
      * @return bool
      */
     public function onBlacklistRegex($strRegexp, $varValue, \Widget $objWidget)
     {
-        if ($strRegexp == 'mailblacklist') {
+        if ('mailblacklist' === $strRegexp) {
             $blacklist = System::getContainer()->get('downloadmail.servies.helper.blacklisthelper');
 
             if (!$blacklist->validateMailaddress($varValue)) {

@@ -1,14 +1,17 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @package     downloadmail
  * @filesource  OnManageDownloadEvent.php
  * @version     2.0.0
  * @since       18.10.2018 - 10:54
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @link        http://easySolutionsIT.de
+ * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
 namespace Esit\Downloadmail\Classes\Events;
 
 use Contao\FilesModel;
@@ -27,7 +30,7 @@ class OnManageDownloadEvent extends Event
     /**
      * Name des Events
      */
-    const NAME = 'on.manage.download';
+    public const NAME = 'on.manage.download';
 
 
     /**
@@ -125,7 +128,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param string $downloadKey
      */
-    public function setDownloadKey(string $downloadKey)
+    public function setDownloadKey(string $downloadKey): void
     {
         $this->downloadKey = $downloadKey;
     }
@@ -143,7 +146,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param string $modulId
      */
-    public function setModulId(string $modulId)
+    public function setModulId(string $modulId): void
     {
         $this->modulId = $modulId;
     }
@@ -179,7 +182,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param array $feFormLang
      */
-    public function setFeFormLang(array $feFormLang)
+    public function setFeFormLang(array $feFormLang): void
     {
         $this->feFormLang = $feFormLang;
     }
@@ -197,7 +200,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param array $dlFromDb
      */
-    public function setDlFromDb(array $dlFromDb)
+    public function setDlFromDb(array $dlFromDb): void
     {
         $this->dlFromDb = $dlFromDb;
     }
@@ -215,7 +218,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param FilesModel $fileData
      */
-    public function setFileData(FilesModel $fileData)
+    public function setFileData(FilesModel $fileData): void
     {
         $this->fileData = $fileData;
     }
@@ -233,7 +236,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param array $formData
      */
-    public function setFormData(array $formData)
+    public function setFormData(array $formData): void
     {
         $this->formData = $formData;
     }
@@ -251,7 +254,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param FrontendTemplate $tamplate
      */
-    public function setTamplate(FrontendTemplate $tamplate)
+    public function setTamplate(FrontendTemplate $tamplate): void
     {
         $this->tamplate = $tamplate;
     }
@@ -269,7 +272,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param string $downloadtime
      */
-    public function setDownloadtime(string $downloadtime)
+    public function setDownloadtime(string $downloadtime): void
     {
         $this->downloadtime = $downloadtime;
     }
@@ -287,7 +290,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param string $requestLink
      */
-    public function setRequestLink(string $requestLink)
+    public function setRequestLink(string $requestLink): void
     {
         $this->requestLink = $requestLink;
     }
@@ -305,7 +308,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param bool $isDownloadTimeOkay
      */
-    public function setIsDownloadTimeOkay(bool $isDownloadTimeOkay)
+    public function setIsDownloadTimeOkay(bool $isDownloadTimeOkay): void
     {
         $this->isDownloadTimeOkay = $isDownloadTimeOkay;
     }
@@ -323,7 +326,7 @@ class OnManageDownloadEvent extends Event
     /**
      * @param string $requestTime
      */
-    public function setRequestTime(string $requestTime)
+    public function setRequestTime(string $requestTime): void
     {
         $this->requestTime = $requestTime;
     }

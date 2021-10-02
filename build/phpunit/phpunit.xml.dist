@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="./bootstrap.php"
+         forceCoversAnnotation="false"
+         beStrictAboutCoversAnnotation="false"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         verbose="false"
+         colors="true"
+         backupGlobals="false"
+         backupStaticAttributes="false">
+
+    <coverage>
+        <include>
+            <directory suffix=".php">../../Classes/</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">../../Classes/Contao/</directory>
+        </exclude>
+        <report>
+            <html outputDirectory="/tmp/coverage" lowUpperBound="35" highLowerBound="70"/>
+            <text outputFile="php://stdout" showUncoveredFiles="false" showOnlySummary="true"/>
+        </report>
+    </coverage>
+    <!-- Coverage -->
+    <logging/>
+
+    <!-- Tests -->
+    <testsuites>
+        <testsuite name="esitTestSuite">
+            <directory>../../Tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

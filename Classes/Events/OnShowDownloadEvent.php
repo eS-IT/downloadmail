@@ -1,14 +1,17 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @package     downloadmail
  * @filesource  OnShowDownloadEvent.php
  * @version     2.0.0
  * @since       20.10.2018 - 12:20
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @link        http://easySolutionsIT.de
+ * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
 namespace Esit\Downloadmail\Classes\Events;
 
 use Symfony\Component\EventDispatcher\Event;
@@ -19,8 +22,7 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class OnShowDownloadEvent extends Event
 {
-
-    const NAME = 'on.show.download';
+    public const NAME = 'on.show.download';
 
 
     /**
@@ -63,7 +65,7 @@ class OnShowDownloadEvent extends Event
     /**
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -81,7 +83,7 @@ class OnShowDownloadEvent extends Event
     /**
      * @param string $table
      */
-    public function setTable(string $table)
+    public function setTable(string $table): void
     {
         $this->table = $table;
     }
@@ -99,7 +101,7 @@ class OnShowDownloadEvent extends Event
     /**
      * @param bool $reset
      */
-    public function setReset(bool $reset)
+    public function setReset(bool $reset): void
     {
         $this->reset = $reset;
     }
@@ -117,9 +119,8 @@ class OnShowDownloadEvent extends Event
     /**
      * @param array $data
      */
-    public function setData(array $data)
+    public function setData(array $data): void
     {
         $this->data = $data;
     }
-
 }

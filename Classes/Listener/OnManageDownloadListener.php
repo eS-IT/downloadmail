@@ -1,70 +1,153 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @package     downloadmail
  * @filesource  OnManageDownloadListener.php
  * @version     2.0.0
  * @since       18.10.2018 - 10:52
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @link        http://easySolutionsIT.de
+ * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
 namespace Esit\Downloadmail\Classes\Listener;
 
-use Contao\Config;
-use Contao\Controller;
-use Contao\Database;
-use Contao\Environment;
-use Contao\FilesModel;
-use Contao\Input;
-use Contao\ModuleModel;
-use Contao\PageModel;
-use Contao\StringUtil;
-use Contao\System;
 use Esit\Downloadmail\Classes\Events\OnManageDownloadEvent;
+use Esit\Downloadmail\Classes\Services\Wrapper\Config;
+use Esit\Downloadmail\Classes\Services\Wrapper\Controller;
+use Esit\Downloadmail\Classes\Services\Wrapper\Database;
+use Esit\Downloadmail\Classes\Services\Wrapper\Environment;
+use Esit\Downloadmail\Classes\Services\Wrapper\FilesModel;
+use Esit\Downloadmail\Classes\Services\Wrapper\Input;
+use Esit\Downloadmail\Classes\Services\Wrapper\ModuleModel;
+use Esit\Downloadmail\Classes\Services\Wrapper\PageModel;
+use Esit\Downloadmail\Classes\Services\Wrapper\StringUtil;
+use Esit\Downloadmail\Classes\Services\Wrapper\System;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class OnManageDownloadListener
- * @package Esit\Downloadmail\Classes\Listener
- */
 class OnManageDownloadListener
 {
 
 
     /**
-     * @var Database
+     * @var Config
      */
-    protected $db;
+    private $config;
 
 
     /**
-     * OnManageDownloadListener constructor.
-     * @param Database $db
+     * @var Controller
      */
-    public function __construct(Database $db = null)
-    {
-        $this->db = $db ?: Database::getInstance();
+    private $controller;
+
+
+    /**
+     * @var Database
+     */
+    private $db;
+
+
+    /**
+     * @var Environment
+     */
+    private $environment;
+
+
+    /**
+     * @var FilesModel
+     */
+    private $filesModel;
+
+
+    /**
+     * @var Input
+     */
+    private $input;
+
+
+    /**
+     * @var ModuleModel
+     */
+    private $moduleModel;
+
+
+    /**
+     * @var PageModel
+     */
+    private $pageModel;
+
+
+    /**
+     * @var StringUtil
+     */
+    private $stringUtil;
+
+
+    /**
+     * @var System
+     */
+    private $system;
+
+
+    /**
+     * @param Config      $config
+     * @param Controller  $controller
+     * @param Database    $database
+     * @param Environment $environment
+     * @param FilesModel  $filesModel
+     * @param Input       $input
+     * @param ModuleModel $moduleModel
+     * @param PageModel   $pageModel
+     * @param StringUtil  $stringUtil
+     * @param System      $system
+     */
+    public function __construct(
+        Config $config,
+        Controller $controller,
+        Database $database,
+        Environment $environment,
+        FilesModel $filesModel,
+        Input $input,
+        ModuleModel $moduleModel,
+        PageModel $pageModel,
+        StringUtil $stringUtil,
+        System $system
+    ) {
+        $this->config = $config;
+        $this->controller = $controller;
+        $this->db = $database;
+        $this->environment = $environment;
+        $this->filesModel = $filesModel;
+        $this->input = $input;
+        $this->moduleModel = $moduleModel;
+        $this->pageModel = $pageModel;
+        $this->stringUtil = $stringUtil;
+        $this->system = $system;
     }
 
 
     /**
-     * Lädt die Daten des Download aus der Datenbank.
+     * Lädt die Daten des Downloads aus der Datenbank.
      * @param OnManageDownloadEvent    $event
-     * @param                          $eventName
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function loadDownloadFromDb(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
-    {
-        $formLang       = $event->getFeFormLang();
-        $template       = $event->getTamplate();
-        $downloadKey    = $event->getDownloadKey();
+    public function loadDownloadFromDb(
+        OnManageDownloadEvent $event,
+        string $eventName,
+        EventDispatcherInterface $dispatcher
+    ): void {
+        $formLang = $event->getFeFormLang();
+        $template = $event->getTamplate();
+        $downloadKey = $event->getDownloadKey();
 
-        if ($event->getDownloadKey()) {
-            $query  = "SELECT * FROM tl_dm_downloads WHERE code = '$downloadKey'";
+        if ('' !== $event->getDownloadKey()) {
+            $query = "SELECT * FROM tl_dm_downloads WHERE code = '$downloadKey'";
             $result = $this->db->execute($query);
 
-            if ($result->numRows) {
+            if ($result->numRows > 0) {
                 $event->setDlFromDb($result->fetchAssoc());
             } else {
                 $template->strError = $formLang['downloaderror'];
@@ -80,18 +163,19 @@ class OnManageDownloadListener
     /**
      * Lädt die Daten zu der angeforderten Datei.
      * @param OnManageDownloadEvent    $event
-     * @param                          $eventName
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function loadFileData(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
-    {
-        $formLang   = $event->getFeFormLang();
-        $template   = $event->getTamplate();
-        $dlData     = $event->getDlFromDb();
-        $singleSrc  = StringUtil::binToUuid($dlData['singleSRC']);
+    public function loadFileData(
+        OnManageDownloadEvent $event,
+        string $eventName,
+        EventDispatcherInterface $dispatcher
+    ): void {
+        $dlData = $event->getDlFromDb();
+        $singleSrc = $this->stringUtil->binToUuid($dlData['singleSRC']);
 
         if ('00000000-0000-0000-0000-000000000000' !== $singleSrc) {
-            $fileData = FilesModel::findByPk($singleSrc);
+            $fileData = $this->filesModel->findByPk($singleSrc);
 
             if (null !== $fileData) {
                 $event->setFileData($fileData);
@@ -103,18 +187,21 @@ class OnManageDownloadListener
     /**
      * Lädt die Daten des Formulars.
      * @param OnManageDownloadEvent    $event
-     * @param                          $eventName
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function loadFormData(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
-    {
+    public function loadFormData(
+        OnManageDownloadEvent $event,
+        string $eventName,
+        EventDispatcherInterface $dispatcher
+    ): void {
         $dlData = $event->getDlFromDb();
 
         if (!empty($dlData['formid'])) {
-            $query  = "SELECT * FROM tl_form WHERE id = " . $dlData['formid'];
+            $query = "SELECT * FROM tl_form WHERE id = " . $dlData['formid'];
             $result = $this->db->execute($query);
 
-            if ($result->numRows) {
+            if ($result->numRows > 0) {
                 $event->setFormData($result->fetchAssoc());
             }
         }
@@ -124,21 +211,24 @@ class OnManageDownloadListener
     /**
      * Lädt die Zeit, die ein Download gültig ist.
      * @param OnManageDownloadEvent    $event
-     * @param                          $eventName
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function loadDownloadTime(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
-    {
+    public function loadDownloadTime(
+        OnManageDownloadEvent $event,
+        string $eventName,
+        EventDispatcherInterface $dispatcher
+    ): void {
         global $objPage;
-        $objRoot    = PageModel::findByPk($objPage->rootId);
-        $formData   = $event->getFormData();
+        $objRoot = $this->pageModel->findByPk($objPage->rootId);
+        $formData = $event->getFormData();
 
-        if (isset($formData['downloadtime'])) {
+        if (!empty($formData['downloadtime'])) {
             $event->setDownloadtime($formData['downloadtime']);
         } elseif (null !== $objRoot && $objRoot->downloadtime > 0) {
             $event->setDownloadtime($objRoot->downloadtime);
-        } elseif (Config::get('downloadtime')) {
-            $event->setDownloadtime(Config::get('downloadtime'));
+        } elseif ($this->config->get('downloadtime')) {
+            $event->setDownloadtime($this->config->get('downloadtime'));
         } else {
             $event->setDownloadtime($GLOBALS['downloadmail']['downloadtime']);
         }
@@ -148,11 +238,14 @@ class OnManageDownloadListener
     /**
      * Erzeugt den Link, um den Download erneut anzufordern.
      * @param OnManageDownloadEvent    $event
-     * @param                          $eventName
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function getRequestLink(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
-    {
+    public function getRequestLink(
+        OnManageDownloadEvent $event,
+        string $eventName,
+        EventDispatcherInterface $dispatcher
+    ): void {
         $dlData = $event->getDlFromDb();
 
         if (!empty($dlData['requestpage'])) {
@@ -164,28 +257,31 @@ class OnManageDownloadListener
     /**
      * Prüft, ob die Downloadanfrage in der Downloadfrist liegt.
      * @param OnManageDownloadEvent    $event
-     * @param                          $eventName
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function checkDownloadTime(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
-    {
-        $formLang       = $event->getFeFormLang();
-        $template       = $event->getTamplate();
-        $dlData         = $event->getDlFromDb();
-        $downloadTime   = $event->getDownloadtime();
-        $requestLink    = $event->getRequestLink();
+    public function checkDownloadTime(
+        OnManageDownloadEvent $event,
+        string $eventName,
+        EventDispatcherInterface $dispatcher
+    ): void {
+        $formLang = $event->getFeFormLang();
+        $template = $event->getTamplate();
+        $dlData = $event->getDlFromDb();
+        $downloadTime = $event->getDownloadtime();
+        $requestLink = $event->getRequestLink();
 
         if (!empty($dlData['requesttime'])) {
-            $intDownloadPeriodEnd   = $dlData['requesttime'];
-            $intDownloadPeriodEnd  += ($downloadTime * $GLOBALS['downloadmail']['timemodifikator']);
+            $intDownloadPeriodEnd = $dlData['requesttime'];
+            $intDownloadPeriodEnd += ($downloadTime * $GLOBALS['downloadmail']['timemodifikator']);
 
             if (time() > $intDownloadPeriodEnd) {
                 $template->strError = sprintf($formLang['downloadtolate'], $requestLink);
                 $event->stopPropagation();
             }
         } else {
-                $template->strError = sprintf($formLang['notimeerr'], $requestLink);
-                $event->stopPropagation();
+            $template->strError = sprintf($formLang['notimeerr'], $requestLink);
+            $event->stopPropagation();
         }
     }
 
@@ -193,13 +289,16 @@ class OnManageDownloadListener
     /**
      * Lädt die Zeit bis zum automatischen Start des Downloads.
      * @param OnManageDownloadEvent    $event
-     * @param                          $eventName
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function getRequestTime(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
-    {
-        $moduleId   = $event->getModulId();
-        $objModul   = ModuleModel::findByPk($moduleId);
+    public function getRequestTime(
+        OnManageDownloadEvent $event,
+        string $eventName,
+        EventDispatcherInterface $dispatcher
+    ): void {
+        $moduleId = $event->getModulId();
+        $objModul = $this->moduleModel->findByPk($moduleId);
 
         if (null !== $objModul) {
             $event->setModul($objModul);
@@ -207,8 +306,8 @@ class OnManageDownloadListener
             if ($objModul->redirecttime > 0) {
                 $event->setRequestTime($objModul->redirecttime);
             }
-        } elseif (Config::get('redirecttime') > 0) {
-            $event->setRequestTime(Config::get('redirecttime'));
+        } elseif ($this->config->get('redirecttime') > 0) {
+            $event->setRequestTime($this->config->get('redirecttime'));
         } else {
             $event->setRequestTime($GLOBALS['downloadmail']['requestTime']);
         }
@@ -218,41 +317,44 @@ class OnManageDownloadListener
     /**
      * Verarbeitet die Download-Anfrage.
      * @param OnManageDownloadEvent    $event
-     * @param                          $eventName
+     * @param string                   $eventName
      * @param EventDispatcherInterface $dispatcher
      */
-    public function handleDownload(OnManageDownloadEvent $event, $eventName, EventDispatcherInterface $dispatcher)
-    {
-        $downloadKey    = $event->getDownloadKey();
-        $formLang       = $event->getFeFormLang();
-        $template       = $event->getTamplate();
-        $dlData         = $event->getDlFromDb();
-        $fileModel      = $event->getFileData();
-        $requestTime    = $event->getRequestTime();
+    public function handleDownload(
+        OnManageDownloadEvent $event,
+        string $eventName,
+        EventDispatcherInterface $dispatcher
+    ): void {
+        $downloadKey = $event->getDownloadKey();
+        $formLang = $event->getFeFormLang();
+        $template = $event->getTamplate();
+        $dlData = $event->getDlFromDb();
+        $fileModel = $event->getFileData();
+        $requestTime = $event->getRequestTime();
 
         if (null !== $fileModel) {
-            if (Input::get('download') === "true") {    // Infput::get() gibt einen String zurück!
-                $dlData['downloadcount']= (!empty($dlData['downloadcount'])) ? $dlData['downloadcount']+1 : 1;
-                $ip                     = System::anonymizeIp(Environment::get('remoteAddr'));
+            if ("true" === $this->input->get('download')) {    // Infput::get() gibt einen String zurück!
+                $dlData['downloadcount'] = (!empty($dlData['downloadcount'])) ? $dlData['downloadcount'] + 1 : 1;
+                $ip = $this->system->anonymizeIp($this->environment->get('remoteAddr'));
 
                 if (!empty($dlData['downloaddata'])) {
-                    $downloads = \unserialize($dlData['downloaddata'], [null]);
+                    $downloads = unserialize($dlData['downloaddata'], [null]);
                 }
 
-                $downloads[]            = ['time'=> time(), 'code' => $downloadKey, 'ip'=> $ip];
+                $downloads[] = ['time' => time(), 'code' => $downloadKey, 'ip' => $ip];
                 $dlData['downloaddata'] = serialize($downloads);
-                $dlDataId               = $dlData['id'];
+                $dlDataId = $dlData['id'];
 
                 unset($dlData['id']);
 
                 $this->db->prepare("UPDATE tl_dm_downloads %s WHERE id = $dlDataId")->set($dlData)->execute();
 
-                Controller::sendFileToBrowser($fileModel->path);
+                $this->controller->sendFileToBrowser($fileModel->path);
             } else {
-                $template->strLink    = Environment::get('requestUri') . '&download=true';
-                $template->strLabel   = $formLang['downloadstart'];
+                $template->strLink = $this->environment->get('requestUri') . '&download=true';
+                $template->strLabel = $formLang['downloadstart'];
                 $template->strMessage = sprintf($formLang['downloadmessage'], $requestTime);
-                $template->intTimer   = $requestTime;
+                $template->intTimer = $requestTime;
             }
         } else {
             $template->strError = $formLang['fileerror'];

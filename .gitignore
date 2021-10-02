@@ -1,0 +1,53 @@
+# .gitignore by e@sy Solutions IT
+# ===============================
+# author      Patrick Froch <info@easySolutionsIT.de>
+# link        http://easySolutionsIT.de
+# copyright   e@sy Solutions IT 2019
+# license     CC-BY-SA-4.0
+# package     downloadmail
+# filesource  .gitignore
+# version     1.0.0
+# since       05.01.19 - 16:54
+
+*.cache
+*.lock
+*.xml
+autoload*
+vendor/
+**/**/*.example
+CHANGELOG.*
+
+# Backupdateien
+*.bak
+**/**/*.bak
+
+# build der Artefakte für den Contao Manager
+composer_*.zip
+
+# Infection logs
+infection.log
+infection-log.json
+per-mutator.md
+summary.log
+build/infection.log
+build/summary.log
+build/infection-log.json
+build/per-mutator.md
+
+# codeception
+build/codeception/_output/
+build/codeception/_support/
+Tests/Codeception/acceptance/
+Tests/Codeception/functional/
+Tests/Codeception/unit/
+Tests/Codeception/acceptance.suite.yml
+Tests/Codeception/functional.suite.yml
+Tests/Codeception/unit.suite.yml
+
+# node
+coverage/
+node_modules/
+package-lock.json
+
+# webpack
+src/dist/main.js

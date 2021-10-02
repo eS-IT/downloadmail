@@ -1,16 +1,19 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * @package     downloadmail
  * @since       08.01.2021 - 18:24
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @link        http://easySolutionsIT.de
+ * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2021
- * @license     EULA
+ * @license     CC-BY-SA-4.0
  */
+
 namespace Esit\Downloadmail\Classes\Contao\Dca;
 
-use Contao\Image;
 use Contao\Controller;
+use Contao\Image;
 use Contao\StringUtil;
 use Contao\System;
 
@@ -52,11 +55,10 @@ class TlDmDownloads
         $previous,
         $next
     ): string {
-
-        $container      = System::getContainer();
-        $tokenManager   = $container->get('contao.csrf.token_manager');
-        $tokenName      = $container->getParameter('contao.csrf_token_name');
-        $href          .= '&id=' . $row['id'];
+        $container = System::getContainer();
+        $tokenManager = $container->get('contao.csrf.token_manager');
+        $tokenName = $container->getParameter('contao.csrf_token_name');
+        $href .= '&id=' . $row['id'];
 
         if (null !== $tokenManager) {
             $href .= '&rt=' . $tokenManager->getToken($tokenName)->getValue();
@@ -70,6 +72,6 @@ class TlDmDownloads
             return $link;
         }
 
-        return Image::getHtml(\str_replace('.png', '-sw.png', $icon), $label);
+        return Image::getHtml(str_replace('.png', '-sw.png', $icon), $label);
     }
 }
