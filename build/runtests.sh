@@ -208,7 +208,7 @@ if [ -f ${toolFolder}/phpunit ]
 then
     # PHPUnit gobal mit composer installiert
     myecho "Führe UnitTests mit globalem PHPUnit durch"
-    ${toolFolder}/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
+    #${toolFolder}/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
     tmperr=$?
 
     if [ ${tmperr} -ne 0 ]
