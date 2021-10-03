@@ -27,21 +27,17 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class EsitTestCase extends ContaoTestCase
 {
-
-
     /**
      * File with data.
      * @var string
      */
     protected $strDataProviderFile = '';
 
-
     /**
      * DataProvider
      * @var null
      */
     protected $varDataProvider;
-
 
     /**
      * EsitTestCase constructor.
@@ -55,7 +51,6 @@ class EsitTestCase extends ContaoTestCase
         $this->initializeContao();
     }
 
-
     /**
      * setup the environment
      */
@@ -63,14 +58,12 @@ class EsitTestCase extends ContaoTestCase
     {
     }
 
-
     /**
      * tear down the environment
      */
     protected function tearDown(): void
     {
     }
-
 
     /**
      * Initialisiert Contao
@@ -88,15 +81,14 @@ class EsitTestCase extends ContaoTestCase
             \define('TL_SCRIPT', $tlScript);
             $initializePath = CONTAO_ROOT . "/system/initialize.php";
 
-            if (is_file($initializePath)) {
+            if (\is_file($initializePath)) {
                 require $initializePath;
-                stream_wrapper_restore('phar'); // reregister stream wrapper for phpunit.phar
+                \stream_wrapper_restore('phar'); // reregister stream wrapper for phpunit.phar
             } else {
                 throw new \Exception(CONTAO_ROOT . "/system/initialize.php not found!");
             }
         }
     }
-
 
     /**
      * Lädt eien Klasse über den DIC.
@@ -110,7 +102,6 @@ class EsitTestCase extends ContaoTestCase
         return $dc->get($class);
     }
 
-
     /**
      * Universeller DataProvider
      * @param              $strMethod
@@ -119,20 +110,20 @@ class EsitTestCase extends ContaoTestCase
      */
     public function uniDataProvider($strMethod, $ext = 'php')
     {
-        $arrMethod = explode('::', $strMethod);
+        $arrMethod = \explode('::', $strMethod);
         $content = [];
 
         if (\is_array($arrMethod) && \count($arrMethod)) {
-            $strMethod = array_pop($arrMethod);
-            $backtrace = debug_backtrace();
+            $strMethod = \array_pop($arrMethod);
+            $backtrace = \debug_backtrace();
             $file = $backtrace[0]['file'];
-            $parts = explode('/', $file);
-            array_pop($parts);
-            $path = implode('/', $parts);
+            $parts = \explode('/', $file);
+            \array_pop($parts);
+            $path = \implode('/', $parts);
             $providerFile = "$path/data/$strMethod.$ext";
 
             try {
-                if (is_file($providerFile)) {
+                if (\is_file($providerFile)) {
                     $content = include $providerFile;
                 }
             } catch (\Exception $e) {
@@ -145,7 +136,6 @@ class EsitTestCase extends ContaoTestCase
         return (\is_array($content) && \count($content)) ? $content : [];
     }
 
-
     /**
      * Speichert einen Wert in einer Datei.
      * @param $varValue
@@ -154,18 +144,17 @@ class EsitTestCase extends ContaoTestCase
     public static function logToFile($varValue, $strFile = '/tmp/phplogfile.txt'): void
     {
         if ($varValue) {
-            $strContent = date('d.m.Y H:i:s') . "\n";
+            $strContent = \date('d.m.Y H:i:s') . "\n";
 
             if (\is_array($varValue)) {
-                $strContent .= var_export($varValue, true) . "\n";
+                $strContent .= \var_export($varValue, true) . "\n";
             } else {
                 $strContent .= $varValue . "\n\n";
             }
 
-            file_put_contents($strFile, $strContent, \FILE_APPEND);
+            \file_put_contents($strFile, $strContent, \FILE_APPEND);
         }
     }
-
 
     /**
      * Gibt einen String auf dem Bildschirm aus.
@@ -174,10 +163,9 @@ class EsitTestCase extends ContaoTestCase
     public static function dumpValue($varValue): void
     {
         echo "\n";
-        var_dump($varValue);
+        \var_dump($varValue);
         echo "\n";
     }
-
 
     /**
      * Erzeugt einen Mock eines Doctrine Query Builders.
@@ -223,7 +211,7 @@ class EsitTestCase extends ContaoTestCase
 
         $query = $this->getMockBuilder(QueryBuilder::class)
             ->disableOriginalConstructor()
-            ->setMethods(get_class_methods(QueryBuilder::class))
+            ->setMethods(\get_class_methods(QueryBuilder::class))
             ->getMock();
 
         $query->method('execute')
@@ -231,7 +219,6 @@ class EsitTestCase extends ContaoTestCase
 
         return $query;
     }
-
 
     /**
      * Konfiguriert den Mock einer Methode.
@@ -282,7 +269,6 @@ class EsitTestCase extends ContaoTestCase
         }
     }
 
-
     /**
      * Erzeugt ein Mock einer Doctine Dantenbankverbindung.
      * Erhält den Mock eines QueryBuilders.
@@ -328,7 +314,6 @@ class EsitTestCase extends ContaoTestCase
         return $connect;
     }
 
-
     /**
      * Gibt den Namen der Klassen und der Methode, sowie die Priorität der Listener eines Events zurück.
      * @param  string $eventName
@@ -351,7 +336,6 @@ class EsitTestCase extends ContaoTestCase
         return $listener;
     }
 
-
     /**
      * Lädt die JSON-Konfiguration der Listener für das übergebene Event.
      * Dies stellt die erwartete Konfiguration dar und kann mit dem folgenden Befehl experotiert werden:
@@ -363,8 +347,8 @@ class EsitTestCase extends ContaoTestCase
      */
     protected function getExpectedListenerConfig(string $eventName, string $dir): array
     {
-        $json = file_get_contents($dir . '/data/' . $eventName . '.json');
+        $json = \file_get_contents($dir . '/data/' . $eventName . '.json');
 
-        return json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
+        return \json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
     }
 }

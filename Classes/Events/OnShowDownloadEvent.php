@@ -24,19 +24,16 @@ class OnShowDownloadEvent extends Event
 {
     public const NAME = 'on.show.download';
 
-
     /**
      * Id des anzuzeigenden Datensatzes
      * @var int
      */
     protected $id = 0;
 
-
     /**
      * @var string
      */
     protected $table = 'tl_dm_downloads';
-
 
     /**
      * Bei true wird die Anfrage zurückgesetzt. Die RequestTime wird auf den aktuellen Zeitpunkt gesetzt,
@@ -45,13 +42,11 @@ class OnShowDownloadEvent extends Event
      */
     protected $reset = false;
 
-
     /**
      * Daten des anzuzeigenden Datensatzes
      * @var array
      */
     protected $data = [];
-
 
     /**
      * @return int
@@ -61,7 +56,6 @@ class OnShowDownloadEvent extends Event
         return $this->id;
     }
 
-
     /**
      * @param int $id
      */
@@ -69,7 +63,6 @@ class OnShowDownloadEvent extends Event
     {
         $this->id = $id;
     }
-
 
     /**
      * @return string
@@ -79,7 +72,6 @@ class OnShowDownloadEvent extends Event
         return $this->table;
     }
 
-
     /**
      * @param string $table
      */
@@ -87,7 +79,6 @@ class OnShowDownloadEvent extends Event
     {
         $this->table = $table;
     }
-
 
     /**
      * @return bool
@@ -97,7 +88,6 @@ class OnShowDownloadEvent extends Event
         return $this->reset;
     }
 
-
     /**
      * @param bool $reset
      */
@@ -106,7 +96,6 @@ class OnShowDownloadEvent extends Event
         $this->reset = $reset;
     }
 
-
     /**
      * @return array
      */
@@ -114,7 +103,6 @@ class OnShowDownloadEvent extends Event
     {
         return $this->data;
     }
-
 
     /**
      * @param array $data

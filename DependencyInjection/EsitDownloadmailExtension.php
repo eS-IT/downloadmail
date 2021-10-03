@@ -25,8 +25,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class EsitDownloadmailExtension extends Extension
 {
-
-
     /**
      * @param  array            $mergedConfig
      * @param  ContainerBuilder $container

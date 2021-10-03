@@ -24,8 +24,6 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
  */
 class Plugin implements BundlePluginInterface
 {
-
-
     /**
      * @param  ParserInterface                                             $parser
      * @return array|\Contao\ManagerPlugin\Bundle\Config\ConfigInterface[]

@@ -22,43 +22,35 @@ use Esit\Downloadmail\Classes\Services\Wrapper\Validator;
 
 class StringHelper
 {
-
-
     /**
      * @var Config
      */
     private $config;
-
 
     /**
      * @var Environment
      */
     private $environment;
 
-
     /**
      * @var FilesModel
      */
     private $filesModel;
-
 
     /**
      * @var PageModel
      */
     private $pageModel;
 
-
     /**
      * @var StringUtil
      */
     private $stringUtil;
 
-
     /**
      * @var Validator
      */
     private $validator;
-
 
     /**
      * @param Config      $config
@@ -84,7 +76,6 @@ class StringHelper
         $this->validator = $validator;
     }
 
-
     /**
      * Gibt einen für Menschen lesbaren String mit der Größe einer Datei zurück.
      * @param  string $strPath
@@ -93,14 +84,13 @@ class StringHelper
      */
     public function humanFilesize(string $strPath, int $decimals = 2): string
     {
-        $strPath = (substr_count($strPath, TL_ROOT)) ? $strPath : TL_ROOT . '/' . $strPath;
-        $bytes = filesize($strPath);
+        $strPath = (\substr_count($strPath, TL_ROOT)) ? $strPath : TL_ROOT . '/' . $strPath;
+        $bytes = \filesize($strPath);
         $sz = ' KMGTP';
-        $factor = (int)floor((\strlen((string)$bytes) - 1) / 3);
+        $factor = (int)\floor((\strlen((string)$bytes) - 1) / 3);
 
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$sz[$factor] . 'B';
+        return \sprintf("%.{$decimals}f", $bytes / \pow(1024, $factor)) . ' ' . @$sz[$factor] . 'B';
     }
-
 
     /**
      * Erstellt die Informationen zum Downloadfile.
@@ -116,7 +106,7 @@ class StringHelper
         if ($objFile) {
             $arrFile = [
                 'filepath' => $objFile->path,
-                'filename' => basename($objFile->path),
+                'filename' => \basename($objFile->path),
                 'fileext' => $objFile->extension,
                 'filesize' => $this->humanFilesize($objFile->path, 0),
                 'filehash' => $objFile->hash,
@@ -126,7 +116,6 @@ class StringHelper
 
         return $arrFile;
     }
-
 
     /**
      * Erzeugt einen Alias.
@@ -170,7 +159,6 @@ class StringHelper
 
         return '';
     }
-
 
     /**
      * Erzeugt den Link zu einer uebergebenen Id.

@@ -25,19 +25,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class OnShowDownloadListener
 {
-
-
     /**
      * @var StringHelper
      */
     protected $stringHelper;
 
-
     /**
      * @var Database
      */
     protected $db;
-
 
     /**
      * @param StringHelper $stringHelper
@@ -48,7 +44,6 @@ class OnShowDownloadListener
         $this->stringHelper = $stringHelper;
         $this->db = $db;
     }
-
 
     /**
      * Die RequestTime wird auf den aktuellen Zeitpunkt gesetzt,
@@ -67,11 +62,10 @@ class OnShowDownloadListener
         $reset = $event->getReset();
 
         if (true === $reset) {
-            $query = "UPDATE $table set requesttime = " . time() . " WHERE id = $id";
+            $query = "UPDATE $table set requesttime = " . \time() . " WHERE id = $id";
             $this->db->execute($query);
         }
     }
-
 
     /**
      * Lädt die Daten des Downloads für die Anzeige.
@@ -94,7 +88,6 @@ class OnShowDownloadListener
         }
     }
 
-
     /**
      * Erstellt die Infos zur Download-Datei.
      * @param OnShowDownloadEvent      $event
@@ -111,7 +104,6 @@ class OnShowDownloadListener
 
         $event->setData($data);
     }
-
 
     /**
      * Lädt die Daten der Download-Seite.
@@ -135,7 +127,6 @@ class OnShowDownloadListener
         $event->setData($data);
     }
 
-
     /**
      * Lädt die Daten des Formulars.
      * @param OnShowDownloadEvent      $event
@@ -158,7 +149,6 @@ class OnShowDownloadListener
         $event->setData($data);
     }
 
-
     /**
      * Konvertiert die Daten des abesendeten Formulars aus dem Hook.
      * @param OnShowDownloadEvent      $event
@@ -171,11 +161,10 @@ class OnShowDownloadListener
         EventDispatcherInterface $dispatcher
     ): void {
         $data = $event->getData();
-        $data['formdata'] = unserialize($data['formdata'], [null]);
+        $data['formdata'] = \unserialize($data['formdata'], [null]);
 
         $event->setData($data);
     }
-
 
     /**
      * Konvertiert die Daten der Downloads.
@@ -189,7 +178,7 @@ class OnShowDownloadListener
         EventDispatcherInterface $dispatcher
     ): void {
         $data = $event->getData();
-        $data['downloaddata'] = unserialize($data['downloaddata'], [null]);
+        $data['downloaddata'] = \unserialize($data['downloaddata'], [null]);
 
         $event->setData($data);
     }

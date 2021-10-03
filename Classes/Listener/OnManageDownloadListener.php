@@ -29,67 +29,55 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OnManageDownloadListener
 {
-
-
     /**
      * @var Config
      */
     private $config;
-
 
     /**
      * @var Controller
      */
     private $controller;
 
-
     /**
      * @var Database
      */
     private $db;
-
 
     /**
      * @var Environment
      */
     private $environment;
 
-
     /**
      * @var FilesModel
      */
     private $filesModel;
-
 
     /**
      * @var Input
      */
     private $input;
 
-
     /**
      * @var ModuleModel
      */
     private $moduleModel;
-
 
     /**
      * @var PageModel
      */
     private $pageModel;
 
-
     /**
      * @var StringUtil
      */
     private $stringUtil;
 
-
     /**
      * @var System
      */
     private $system;
-
 
     /**
      * @param Config      $config
@@ -127,7 +115,6 @@ class OnManageDownloadListener
         $this->system = $system;
     }
 
-
     /**
      * Lädt die Daten des Downloads aus der Datenbank.
      * @param OnManageDownloadEvent    $event
@@ -159,7 +146,6 @@ class OnManageDownloadListener
         }
     }
 
-
     /**
      * Lädt die Daten zu der angeforderten Datei.
      * @param OnManageDownloadEvent    $event
@@ -183,7 +169,6 @@ class OnManageDownloadListener
         }
     }
 
-
     /**
      * Lädt die Daten des Formulars.
      * @param OnManageDownloadEvent    $event
@@ -206,7 +191,6 @@ class OnManageDownloadListener
             }
         }
     }
-
 
     /**
      * Lädt die Zeit, die ein Download gültig ist.
@@ -234,7 +218,6 @@ class OnManageDownloadListener
         }
     }
 
-
     /**
      * Erzeugt den Link, um den Download erneut anzufordern.
      * @param OnManageDownloadEvent    $event
@@ -252,7 +235,6 @@ class OnManageDownloadListener
             $event->setRequestLink($dlData['requestpage']);
         }
     }
-
 
     /**
      * Prüft, ob die Downloadanfrage in der Downloadfrist liegt.
@@ -275,16 +257,15 @@ class OnManageDownloadListener
             $intDownloadPeriodEnd = $dlData['requesttime'];
             $intDownloadPeriodEnd += ($downloadTime * $GLOBALS['downloadmail']['timemodifikator']);
 
-            if (time() > $intDownloadPeriodEnd) {
-                $template->strError = sprintf($formLang['downloadtolate'], $requestLink);
+            if (\time() > $intDownloadPeriodEnd) {
+                $template->strError = \sprintf($formLang['downloadtolate'], $requestLink);
                 $event->stopPropagation();
             }
         } else {
-            $template->strError = sprintf($formLang['notimeerr'], $requestLink);
+            $template->strError = \sprintf($formLang['notimeerr'], $requestLink);
             $event->stopPropagation();
         }
     }
-
 
     /**
      * Lädt die Zeit bis zum automatischen Start des Downloads.
@@ -313,7 +294,6 @@ class OnManageDownloadListener
         }
     }
 
-
     /**
      * Verarbeitet die Download-Anfrage.
      * @param OnManageDownloadEvent    $event
@@ -338,11 +318,11 @@ class OnManageDownloadListener
                 $ip = $this->system->anonymizeIp($this->environment->get('remoteAddr'));
 
                 if (!empty($dlData['downloaddata'])) {
-                    $downloads = unserialize($dlData['downloaddata'], [null]);
+                    $downloads = \unserialize($dlData['downloaddata'], [null]);
                 }
 
-                $downloads[] = ['time' => time(), 'code' => $downloadKey, 'ip' => $ip];
-                $dlData['downloaddata'] = serialize($downloads);
+                $downloads[] = ['time' => \time(), 'code' => $downloadKey, 'ip' => $ip];
+                $dlData['downloaddata'] = \serialize($downloads);
                 $dlDataId = $dlData['id'];
 
                 unset($dlData['id']);
@@ -353,7 +333,7 @@ class OnManageDownloadListener
             } else {
                 $template->strLink = $this->environment->get('requestUri') . '&download=true';
                 $template->strLabel = $formLang['downloadstart'];
-                $template->strMessage = sprintf($formLang['downloadmessage'], $requestTime);
+                $template->strMessage = \sprintf($formLang['downloadmessage'], $requestTime);
                 $template->intTimer = $requestTime;
             }
         } else {

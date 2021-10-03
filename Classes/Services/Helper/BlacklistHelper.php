@@ -19,25 +19,20 @@ use Esit\Downloadmail\Classes\Services\Wrapper\Validator;
 
 class BlacklistHelper
 {
-
-
     /**
      * @var Database
      */
     private $db;
-
 
     /**
      * @var Validator
      */
     private $validator;
 
-
     /**
      * @var Idna
      */
     private $idna;
-
 
     /**
      * @param Database  $db
@@ -50,7 +45,6 @@ class BlacklistHelper
         $this->validator = $validator;
         $this->idna = $idna;
     }
-
 
     /**
      * Prüft, ob eine Mailadresse valide ist und nicht in der Blacklist steht.
@@ -69,7 +63,6 @@ class BlacklistHelper
         return false;
     }
 
-
     /**
      * Ueberprueft eine Mailadresse gegen die Blacklist.
      * @param $strMail
@@ -83,14 +76,14 @@ class BlacklistHelper
         if ($result->numRows) {
             while ($result->next()) {
                 if ($result->regex) {
-                    $strPattern = html_entity_decode($result->pattern);
+                    $strPattern = \html_entity_decode($result->pattern);
 
-                    if ('' != $result->pattern && preg_match('|' . $strPattern . '|i', $strMail)) {
+                    if ('' != $result->pattern && \preg_match('|' . $strPattern . '|i', $strMail)) {
                         // Adresse stimmt mit dem Regulaeren Ausdruck ueberein.
                         return false;
                     }
                 } else {
-                    if ('' != $result->pattern && substr_count($strMail, $result->pattern)) {
+                    if ('' != $result->pattern && \substr_count($strMail, $result->pattern)) {
                         // String ist in Mailadresse enthalten.
                         return false;
                     }

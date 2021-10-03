@@ -16,19 +16,19 @@ declare(strict_types=1);
   * include esit_contaoTestCase
   */
  if (!\defined('__DIR__') || empty(__DIR__)) {
-     \define('__DIR__', realpath(__FILE__));
+     \define('__DIR__', \realpath(__FILE__));
  }
 
 $buildDir = __DIR__ . '/..';
 $rootDir = __DIR__ . '/../..';
 $testCase = __DIR__ . '/EsitTestCase.php';
 
- if (substr_count(__DIR__, '/src/Esit/')) {
-     $arrPaths = explode('/src/Esit/', __DIR__);
- } elseif (substr_count(__DIR__, '/vendor/')) {
-     $arrPaths = explode('/vendor/', __DIR__);
+ if (\substr_count(__DIR__, '/src/Esit/')) {
+     $arrPaths = \explode('/src/Esit/', __DIR__);
+ } elseif (\substr_count(__DIR__, '/vendor/')) {
+     $arrPaths = \explode('/vendor/', __DIR__);
  } else {
-     $arrPaths = explode('/build/phpunit', __DIR__);
+     $arrPaths = \explode('/build/phpunit', __DIR__);
  }
 
  if (\is_array($arrPaths)) {
@@ -41,15 +41,15 @@ $testCase = __DIR__ . '/EsitTestCase.php';
  $localAutoloadPath = $rootDir . "/autoload.php";              // Wird verwendet, wenn nichts anderes gefunden wird.
  $autoloadFound = false;
 
- if (is_file($globalComposerAutoloadPath)) {
+ if (\is_file($globalComposerAutoloadPath)) {
      // Globalen Composer Autoload einbinden
      include_once $globalComposerAutoloadPath;
      $autoloadFound = true;
  } else {
-     if (is_file("$buildDir/tools/phpab")) {
-         system("$buildDir/tools/phpab -o $localAutoloadPath $rootDir/Classes " . CONTAO_ROOT . "/vendor");
+     if (\is_file("$buildDir/tools/phpab")) {
+         \system("$buildDir/tools/phpab -o $localAutoloadPath $rootDir/Classes " . CONTAO_ROOT . "/vendor");
 
-         if (is_file($localAutoloadPath)) {
+         if (\is_file($localAutoloadPath)) {
              // Lokalen Autoload einbinden
              include_once $localAutoloadPath;
              $autoloadFound = true;
@@ -61,7 +61,7 @@ $testCase = __DIR__ . '/EsitTestCase.php';
      throw new \Exception("No autoload found");
  }
 
-if (is_file($testCase)) {
+if (\is_file($testCase)) {
     include_once $testCase;
 } else {
     throw new \Exception('Testcase is missing: ' . $testCase);

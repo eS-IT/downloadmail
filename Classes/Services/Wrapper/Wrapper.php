@@ -19,8 +19,6 @@ namespace Esit\Downloadmail\Classes\Services\Wrapper;
  */
 abstract class Wrapper
 {
-
-
     /**
      * Ruft eine statische Methode auf.
      * @param $name
@@ -29,9 +27,9 @@ abstract class Wrapper
      */
     public function __call($name, $arguments)
     {
-        $class = str_replace(__NAMESPACE__, 'Contao', static::class);
+        $class = \str_replace(__NAMESPACE__, 'Contao', static::class);
 
-        if (class_exists($class) && method_exists($class, $name)) {
+        if (\class_exists($class) && \method_exists($class, $name)) {
             return \call_user_func_array([$class, $name], $arguments);
         }
     }

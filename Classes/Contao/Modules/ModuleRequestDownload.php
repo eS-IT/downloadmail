@@ -27,13 +27,11 @@ use Esit\Downloadmail\Classes\Events\OnManageDownloadEvent;
  */
 class ModuleRequestDownload extends Module
 {
-
     /**
      * Template
      * @var string
      */
     protected $strTemplate = 'mod_easy_downloadmail';
-
 
     /**
      * Return a wildcard in the back end
@@ -54,7 +52,6 @@ class ModuleRequestDownload extends Module
 
         return parent::generate();
     }
-
 
     /**
      * Generate the module

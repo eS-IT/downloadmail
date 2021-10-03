@@ -16,8 +16,8 @@ declare(strict_types=1);
  */
 $strPalettes = '{easy_downloadmail},downloadtime,redirecttime,mailfrom,mailsubject,mailbcc,mailtext,jumptodownload; ';
 $strReplace = '{publish_legend}';
-$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] = str_replace($strReplace, $strPalettes . $strReplace, $GLOBALS['TL_DCA']['tl_page']['palettes']['root']);
-$GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback'] = str_replace($strReplace, $strPalettes . $strReplace, $GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback']); // @fixed: #18
+$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] = \str_replace($strReplace, $strPalettes . $strReplace, $GLOBALS['TL_DCA']['tl_page']['palettes']['root']);
+$GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback'] = \str_replace($strReplace, $strPalettes . $strReplace, $GLOBALS['TL_DCA']['tl_page']['palettes']['rootfallback']); // @fixed: #18
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['downloadtime'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_page']['downloadtime'],

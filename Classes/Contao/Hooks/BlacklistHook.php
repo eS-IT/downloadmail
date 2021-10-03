@@ -22,8 +22,6 @@ use Contao\System;
  */
 class BlacklistHook
 {
-
-
     /**
      * Hook: Prüft ob eine Mailadresse auf der Blacklist steht.
      * @param $strRegexp
@@ -38,7 +36,7 @@ class BlacklistHook
 
             if (!$blacklist->validateMailaddress($varValue)) {
                 $err = $GLOBALS['TL_LANG']['MSC']['easy_downloadmail']['feform']['custrgxperr'];
-                $objWidget->addError(sprintf($err, $objWidget->label));
+                $objWidget->addError(\sprintf($err, $objWidget->label));
             }
 
             return true;

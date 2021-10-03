@@ -25,14 +25,11 @@ use Esit\Downloadmail\Classes\Events\OnShowDownloadEvent;
  */
 class DownloadView
 {
-
-
     /**
      * Name des Ausgabetemplates
      * @var string
      */
     protected $templateName = 'downloadView';
-
 
     /**
      * Zeigt die Informationen zu einem Download an.

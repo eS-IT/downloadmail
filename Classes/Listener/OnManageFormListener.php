@@ -16,10 +16,10 @@ namespace Esit\Downloadmail\Classes\Listener;
 
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Esit\Downloadmail\Classes\Events\OnManageFormEvent;
+use Esit\Downloadmail\Classes\Services\Factories\EmailFactory;
 use Esit\Downloadmail\Classes\Services\Helper\StringHelper;
 use Esit\Downloadmail\Classes\Services\Wrapper\Config;
 use Esit\Downloadmail\Classes\Services\Wrapper\Database;
-use Esit\Downloadmail\Classes\Services\Wrapper\Email;
 use Esit\Downloadmail\Classes\Services\Wrapper\Environment;
 use Esit\Downloadmail\Classes\Services\Wrapper\PageModel;
 use Esit\Downloadmail\Classes\Services\Wrapper\System;
@@ -32,42 +32,41 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class OnManageFormListener
 {
-
-
     /**
      * @var Config
      */
     private $config;
-
 
     /**
      * @var Database
      */
     private $db;
 
-
     /**
      * @var Environment
      */
     private $environment;
-
 
     /**
      * @var PageModel
      */
     private $pageModel;
 
-
     /**
      * @var System
      */
     private $system;
 
-
     /**
      * @var StringHelper
      */
     private $stringHelper;
+
+
+    /**
+     * @var EmailFactory
+     */
+    private $emailFactory;
 
 
     /**
@@ -77,6 +76,7 @@ class OnManageFormListener
      * @param PageModel    $pageModel
      * @param System       $system
      * @param StringHelper $stringHelper
+     * @param EmailFactory $emailFactory
      */
     public function __construct(
         Config $config,
@@ -84,7 +84,8 @@ class OnManageFormListener
         Environment $environment,
         PageModel $pageModel,
         System $system,
-        StringHelper $stringHelper
+        StringHelper $stringHelper,
+        EmailFactory $emailFactory
     ) {
         $this->config = $config;
         $this->db = $db;
@@ -92,8 +93,8 @@ class OnManageFormListener
         $this->pageModel = $pageModel;
         $this->system = $system;
         $this->stringHelper = $stringHelper;
+        $this->emailFactory = $emailFactory;
     }
-
 
     /**
      * Lädt die Daten des Mailfelds aus tl_form_field.
@@ -125,7 +126,6 @@ class OnManageFormListener
         }
     }
 
-
     /**
      * Erstellt die Informationen zur Downloaddatei.
      * @param OnManageFormEvent        $event
@@ -145,7 +145,6 @@ class OnManageFormListener
         }
     }
 
-
     /**
      * Erzeugt den Downloadcode.
      * @param OnManageFormEvent        $event
@@ -159,7 +158,7 @@ class OnManageFormListener
     ): void {
         $dbData = $event->getDbData();
         $dlFileInfo = $event->getDownloadFileInfo();
-        $hashString = microtime() . uniqid(microtime(), true);
+        $hashString = \microtime() . \uniqid(\microtime(), true);
 
         if (!empty($dbData['email'])) {
             $hashString .= $dbData['email'];
@@ -169,10 +168,9 @@ class OnManageFormListener
             $hashString .= $dlFileInfo['filehash'];
         }
 
-        $dbData['code'] = sha1($hashString);
+        $dbData['code'] = \sha1($hashString);
         $event->setDbData($dbData);
     }
-
 
     /**
      * Setzt die Vorgabewerte aus der config.php.
@@ -199,7 +197,6 @@ class OnManageFormListener
         }
     }
 
-
     /**
      * Lädt die Daten aus den Einstllungen.
      * @param OnManageFormEvent        $event
@@ -225,7 +222,6 @@ class OnManageFormListener
             $event->setSettings($settings);
         }
     }
-
 
     /**
      * Lädt die Daten aus der Rootpage.
@@ -257,7 +253,6 @@ class OnManageFormListener
         }
     }
 
-
     /**
      * Fügt die Daten zusammen.
      * @param OnManageFormEvent        $event
@@ -284,7 +279,6 @@ class OnManageFormListener
         }
     }
 
-
     /**
      * Setzt die Daten, die in tl_dm_doanloads gespeichert werden sollen.
      * @param OnManageFormEvent        $event
@@ -299,8 +293,8 @@ class OnManageFormListener
         $formData = $event->getFormData();
         $settingData = $event->getSettings();
         $dbData = $event->getDbData();
-        $dbData['tstamp'] = time();
-        $dbData['requesttime'] = time();
+        $dbData['tstamp'] = \time();
+        $dbData['requesttime'] = \time();
         $dbData['jumpto'] = (!empty($settingData['jumptodownload'])) ? $settingData['jumptodownload'] : '';
         $dbData['requestpage'] = $this->environment->get('requestUri');
 
@@ -314,7 +308,6 @@ class OnManageFormListener
 
         $event->setDbData($dbData);
     }
-
 
     /**
      * Entfernt alle Felder aus $dbData, die nicht in tl_dm_doanloads vorkommen.
@@ -339,7 +332,6 @@ class OnManageFormListener
         $event->setDbData($newData);
     }
 
-
     /**
      * Speichert die Daten in der Datenbank.
      * @param OnManageFormEvent        $event
@@ -358,7 +350,6 @@ class OnManageFormListener
         }
     }
 
-
     /**
      * Versendet die Mails.
      * @param OnManageFormEvent        $event
@@ -373,10 +364,10 @@ class OnManageFormListener
         $settings = $event->getSettings();
         $postData = $event->getPostData();
         $dbData = $event->getDbData();
-        $email = new Email();
+        $email = $this->emailFactory->create();
         $email->subject = $settings['mailsubject'];
         $email->from = $settings['mailfrom'];
-        $bcc = unserialize($settings['mailbcc'], [null]);
+        $bcc = \unserialize($settings['mailbcc'], [null]);
         $text = $settings['mailtext'];
 
         if (!empty($dbData['code'])) {
@@ -386,12 +377,12 @@ class OnManageFormListener
                 $link = "<a href='$link'>$link</a>";
             }
 
-            $text = str_replace('{{download::link}}', $link, $text);
+            $text = \str_replace('{{download::link}}', $link, $text);
         }
 
         if (!empty($postData)) {
             foreach ($postData as $strKey => $strValue) {
-                $text = str_replace("{{download::$strKey}}", $strValue, $text);
+                $text = \str_replace("{{download::$strKey}}", $strValue, $text);
             }
         }
 

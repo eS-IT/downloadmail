@@ -43,9 +43,13 @@
         "modernize_types_casting": true,
         "multiline_comment_opening_closing": true,
         "multiline_whitespace_before_semicolons": true,
-        "native_constant_invocation": true,
         "native_function_casing": true,
-        "native_function_invocation": true,
+        "native_function_invocation": {
+            "include": [
+                "@compiler_optimized",
+                "@all"
+            ]
+        },
         "new_with_braces": true,
         "no_alternative_syntax": true,
         "no_blank_lines_after_phpdoc": true,
@@ -123,7 +127,6 @@
         "void_return": true,
         "whitespace_after_comma_in_array": true,
         "yoda_style": true,
-        "blank_line_after_opening_tag": true,
         "constant_case": true,
         "single_blank_line_before_namespace": true,
         "cast_spaces": {
@@ -131,6 +134,13 @@
         },
         "concat_space": {
             "spacing": "one"
-        }
+        },
+        "blank_line_after_opening_tag": true,
+        "class_attributes_separation": true,
+        "clean_namespace": true,
+        "combine_nested_dirname": true,
+        "declare_parentheses": true,
+        "native_constant_invocation": true,
+        "native_function_type_declaration_casing": true
     }
 }

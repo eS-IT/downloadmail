@@ -23,8 +23,6 @@ use Esit\Downloadmail\Classes\Events\OnManageFormEvent;
  */
 class FormHook
 {
-
-
     /**
      * @param $postData
      * @param $formData

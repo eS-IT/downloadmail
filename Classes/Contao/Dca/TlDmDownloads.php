@@ -23,8 +23,6 @@ use Contao\System;
  */
 class TlDmDownloads
 {
-
-
     /**
      * Erzeugt das Icon für den Links der Details,
      * @param $row
@@ -72,6 +70,6 @@ class TlDmDownloads
             return $link;
         }
 
-        return Image::getHtml(str_replace('.png', '-sw.png', $icon), $label);
+        return Image::getHtml(\str_replace('.png', '-sw.png', $icon), $label);
     }
 }
