@@ -58,7 +58,7 @@ class ModuleRequestDownload extends Module
      */
     protected function compile(): void
     {
-        $formLang = $GLOBALS['TL_LANG']['MSC']['easy_downloadmail']['feform'];
+        $formLang = $GLOBALS['TL_LANG']['MSC']['easy_downloadmail']['feform'] ?: [];
         $di = System::getContainer()->get('event_dispatcher');
         $template = new FrontendTemplate('downloadmail');
         $event = new OnManageDownloadEvent();
