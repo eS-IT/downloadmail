@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Esit\Downloadmail\Classes\Contao\Hooks;
 
 use Contao\System;
+use Esit\Downloadmail\Classes\Services\Helper\BlacklistHelper;
 
 /**
  * Class BlacklistHook
@@ -32,9 +33,9 @@ class BlacklistHook
     public function onBlacklistRegex($strRegexp, $varValue, \Widget $objWidget)
     {
         if ('mailblacklist' === $strRegexp) {
-            $blacklist = System::getContainer()->get('downloadmail.servies.helper.blacklisthelper');
+            $blacklist = System::getContainer()->get(BlacklistHelper::class);
 
-            if (!$blacklist->validateMailaddress($varValue)) {
+            if (!$blacklist?->validateMailaddress($varValue)) {
                 $err = $GLOBALS['TL_LANG']['MSC']['easy_downloadmail']['feform']['custrgxperr'];
                 $objWidget->addError(\sprintf($err, $objWidget->label));
             }

@@ -1,13 +1,38 @@
 services:
-    ## ####### ##
-    ## Servies ##
-    ## ####### ##
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    ## Factories
+    Esit\Downloadmail\Classes\Services\Factories\EmailFactory:
 
     ## Helper
-    downloadmail.servies.helper.blacklisthelper:
-        class: Esit\Downloadmail\Classes\Services\Helper\BlacklistHelper
+    Esit\Downloadmail\Classes\Services\Helper\BlacklistHelper:
         public: true
 
-    downloadmail.servies.helper.stringhelper:
-        class: Esit\Downloadmail\Classes\Services\Helper\StringHelper
-        public: true
+    Esit\Downloadmail\Classes\Services\Helper\StringHelper:
+
+    ## Wrapper
+    Esit\Downloadmail\Classes\Services\Wrapper\Config:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\Controller:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\Database:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\Environment:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\FilesModel:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\Idna:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\Input:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\ModuleModel:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\PageModel:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\StringUtil:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\System:
+
+    Esit\Downloadmail\Classes\Services\Wrapper\Validator:
