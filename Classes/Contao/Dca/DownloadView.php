@@ -41,13 +41,13 @@ class DownloadView
         $dispatcher = System::getContainer()->get('event_dispatcher');
         $template = new BackendTemplate($this->templateName);
         $event = new OnShowDownloadEvent();
-        $event->setId($dc->id);
+        $event->setId((int)$dc->id);
 
         if ('reset' === Input::get('key')) {
             $event->setReset(true);
         }
 
-        $dispatcher->dispatch($event::NAME, $event);
+        $dispatcher?->dispatch($event::NAME, $event);
 
         $template->setData($event->getData());
         $template->backlink = Environment::get('scriptName');
