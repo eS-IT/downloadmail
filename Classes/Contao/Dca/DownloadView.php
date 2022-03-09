@@ -47,7 +47,9 @@ class DownloadView
             $event->setReset(true);
         }
 
-        $dispatcher?->dispatch($event::NAME, $event);
+        if (null !== $dispatcher) {
+            $dispatcher->dispatch($event::NAME, $event);
+        }
 
         $template->setData($event->getData());
         $template->backlink = Environment::get('scriptName');

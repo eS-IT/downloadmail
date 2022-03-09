@@ -16,7 +16,6 @@ namespace Esit\Downloadmail\Classes\Listener;
 use Doctrine\DBAL\Connection;
 use Esit\Downloadmail\Classes\Events\OnShowDownloadEvent;
 use Esit\Downloadmail\Classes\Services\Helper\StringHelper;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OnShowDownloadListener
 {
@@ -70,7 +69,7 @@ class OnShowDownloadListener
      */
     public function loadData(OnShowDownloadEvent $event): void
     {
-        $id = $event->getId();
+        $id     = $event->getId();
         $table  = $event->getTable();
         $query  = $this->db->createQueryBuilder();
         $result = $query->select('*')->from($table)->where("id = $id")->execute();
@@ -107,11 +106,14 @@ class OnShowDownloadListener
     {
         $data   = $event->getData();
         $query  = $this->db->createQueryBuilder();
-        $result = $query->select('*')->from('tl_page')->where('id = ' . $data['jumpto'])->execute();
-        $dbData = $result->fetchAssociative();
 
-        if (false !== $dbData) {
-            $data['jumpto'] = $dbData;
+        if (!empty($data['jumpto'])) {
+            $result = $query->select('*')->from('tl_page')->where('id = ' . $data['jumpto'])->execute();
+            $dbData = $result->fetchAssociative();
+
+            if (false !== $dbData) {
+                $data['jumpto'] = $dbData;
+            }
         }
 
         $event->setData($data);
