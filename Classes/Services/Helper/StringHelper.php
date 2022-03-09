@@ -117,12 +117,13 @@ class StringHelper
         return $arrFile;
     }
 
+
     /**
      * Erzeugt einen Alias.
      * @param $intJumpTo
-     * @return null|mixed
+     * @return string
      */
-    public function getAlias($intJumpTo): mixed
+    public function getAlias($intJumpTo)
     {
         $disable = (bool)$this->config->get('disableAlias');
 
@@ -131,7 +132,7 @@ class StringHelper
             $objPage = $this->pageModel->findByPk($intJumpTo);
 
             if (null !== $objPage) {
-                return ('' !== $objPage->alias && false === $disable) ? $objPage->alias : $objPage->id;
+                return ('' !== $objPage->alias && false === $disable) ? (string)$objPage->alias : (string)$objPage->id;
             }
         } else {
             // Weiterleitungsseite aus der Root-Page
@@ -143,7 +144,7 @@ class StringHelper
                 $objPage = $this->pageModel->findByPk($objRoot->jumptodownload);
 
                 if (null !== $objPage) {
-                    return ('' !== $objPage->alias && !$disable) ? $objPage->alias : $objPage->id;
+                    return ('' !== $objPage->alias && !$disable) ? (string)$objPage->alias : (string)$objPage->id;
                 }
             }
         }
@@ -153,7 +154,7 @@ class StringHelper
             $objPage = $this->pageModel->findByPk($this->config->get('jumptodownload'));
 
             if (null !== $objPage) {
-                return ('' !== $objPage->alias && !$disable) ? $objPage->alias : $objPage->id;
+                return ('' !== $objPage->alias && !$disable) ? (string)$objPage->alias : (string)$objPage->id;
             }
         }
 

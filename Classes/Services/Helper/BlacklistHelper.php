@@ -54,7 +54,7 @@ class BlacklistHelper
      * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public function validateMailaddress($strMail): mixed
+    public function validateMailaddress($strMail): bool
     {
         if ($this->checkMailaddress($strMail)) {
             // Mailadresse nicht in Blacklist!
