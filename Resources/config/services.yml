@@ -17,8 +17,6 @@ services:
 
     Esit\Downloadmail\Classes\Services\Wrapper\Controller:
 
-    Esit\Downloadmail\Classes\Services\Wrapper\Database:
-
     Esit\Downloadmail\Classes\Services\Wrapper\Environment:
 
     Esit\Downloadmail\Classes\Services\Wrapper\FilesModel:

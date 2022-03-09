@@ -1,10 +1,7 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @package     downloadmail
- * @filesource  OnManageDownloadListener.php
- * @version     2.0.0
  * @since       18.10.2018 - 10:52
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see         http://easySolutionsIT.de
@@ -12,12 +9,14 @@ declare(strict_types=1);
  * @license     CC-BY-SA-4.0
  */
 
+declare(strict_types=1);
+
 namespace Esit\Downloadmail\Classes\Listener;
 
+use Doctrine\DBAL\Connection;
 use Esit\Downloadmail\Classes\Events\OnManageDownloadEvent;
 use Esit\Downloadmail\Classes\Services\Wrapper\Config;
 use Esit\Downloadmail\Classes\Services\Wrapper\Controller;
-use Esit\Downloadmail\Classes\Services\Wrapper\Database;
 use Esit\Downloadmail\Classes\Services\Wrapper\Environment;
 use Esit\Downloadmail\Classes\Services\Wrapper\FilesModel;
 use Esit\Downloadmail\Classes\Services\Wrapper\Input;
@@ -25,7 +24,6 @@ use Esit\Downloadmail\Classes\Services\Wrapper\ModuleModel;
 use Esit\Downloadmail\Classes\Services\Wrapper\PageModel;
 use Esit\Downloadmail\Classes\Services\Wrapper\StringUtil;
 use Esit\Downloadmail\Classes\Services\Wrapper\System;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OnManageDownloadListener
 {
@@ -40,7 +38,7 @@ class OnManageDownloadListener
     private $controller;
 
     /**
-     * @var Database
+     * @var Connection
      */
     private $db;
 
@@ -82,7 +80,7 @@ class OnManageDownloadListener
     /**
      * @param Config      $config
      * @param Controller  $controller
-     * @param Database    $database
+     * @param Connection  $database
      * @param Environment $environment
      * @param FilesModel  $filesModel
      * @param Input       $input
@@ -94,7 +92,7 @@ class OnManageDownloadListener
     public function __construct(
         Config $config,
         Controller $controller,
-        Database $database,
+        Connection $database,
         Environment $environment,
         FilesModel $filesModel,
         Input $input,
@@ -115,27 +113,26 @@ class OnManageDownloadListener
         $this->system = $system;
     }
 
+
     /**
      * Lädt die Daten des Downloads aus der Datenbank.
-     * @param OnManageDownloadEvent    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
+     * @param OnManageDownloadEvent $event
+     * @return void
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function loadDownloadFromDb(
-        OnManageDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function loadDownloadFromDb(OnManageDownloadEvent $event,): void {
         $formLang = $event->getFeFormLang();
         $template = $event->getTamplate();
         $downloadKey = $event->getDownloadKey();
 
         if ('' !== $event->getDownloadKey()) {
-            $query = "SELECT * FROM tl_dm_downloads WHERE code = '$downloadKey'";
-            $result = $this->db->execute($query);
+            $query  = $this->db->createQueryBuilder();
+            $result = $query->select('*')->from('tl_dm_downloads')->where("code = '$downloadKey'")->execute();
+            $data   = $result->fetchAssociative();
 
-            if ($result->numRows > 0) {
-                $event->setDlFromDb($result->fetchAssoc());
+            if (false !== $data) {
+                $event->setDlFromDb($data);
             } else {
                 $template->strError = $formLang['downloaderror'];
                 $event->stopPropagation();
@@ -149,14 +146,8 @@ class OnManageDownloadListener
     /**
      * Lädt die Daten zu der angeforderten Datei.
      * @param OnManageDownloadEvent    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
      */
-    public function loadFileData(
-        OnManageDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function loadFileData(OnManageDownloadEvent $event): void {
         $dlData = $event->getDlFromDb();
         $singleSrc = $this->stringUtil->binToUuid($dlData['singleSRC']);
 
@@ -169,25 +160,24 @@ class OnManageDownloadListener
         }
     }
 
+
     /**
      * Lädt die Daten des Formulars.
-     * @param OnManageDownloadEvent    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
+     * @param OnManageDownloadEvent $event
+     * @return void
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function loadFormData(
-        OnManageDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function loadFormData(OnManageDownloadEvent $event): void {
         $dlData = $event->getDlFromDb();
 
         if (!empty($dlData['formid'])) {
-            $query = "SELECT * FROM tl_form WHERE id = " . $dlData['formid'];
-            $result = $this->db->execute($query);
+            $query  = $this->db->createQueryBuilder();
+            $result = $query->select('*')->from('tl_form')->where('id = ' . $dlData['formid'])->execute();
+            $data   = $result->fetchAssociative();
 
-            if ($result->numRows > 0) {
-                $event->setFormData($result->fetchAssoc());
+            if (false !== $data) {
+                $event->setFormData($data);
             }
         }
     }
@@ -195,14 +185,8 @@ class OnManageDownloadListener
     /**
      * Lädt die Zeit, die ein Download gültig ist.
      * @param OnManageDownloadEvent    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
      */
-    public function loadDownloadTime(
-        OnManageDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function loadDownloadTime(OnManageDownloadEvent $event): void {
         global $objPage;
         $objRoot = $this->pageModel->findByPk($objPage->rootId);
         $formData = $event->getFormData();
@@ -221,14 +205,8 @@ class OnManageDownloadListener
     /**
      * Erzeugt den Link, um den Download erneut anzufordern.
      * @param OnManageDownloadEvent    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
      */
-    public function getRequestLink(
-        OnManageDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function getRequestLink(OnManageDownloadEvent $event): void {
         $dlData = $event->getDlFromDb();
 
         if (!empty($dlData['requestpage'])) {
@@ -239,14 +217,8 @@ class OnManageDownloadListener
     /**
      * Prüft, ob die Downloadanfrage in der Downloadfrist liegt.
      * @param OnManageDownloadEvent    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
      */
-    public function checkDownloadTime(
-        OnManageDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function checkDownloadTime(OnManageDownloadEvent $event): void {
         $formLang = $event->getFeFormLang();
         $template = $event->getTamplate();
         $dlData = $event->getDlFromDb();
@@ -270,14 +242,8 @@ class OnManageDownloadListener
     /**
      * Lädt die Zeit bis zum automatischen Start des Downloads.
      * @param OnManageDownloadEvent    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
      */
-    public function getRequestTime(
-        OnManageDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function getRequestTime(OnManageDownloadEvent $event): void {
         $moduleId = $event->getModulId();
         $objModul = $this->moduleModel->findByPk($moduleId);
 
@@ -294,17 +260,14 @@ class OnManageDownloadListener
         }
     }
 
+
     /**
      * Verarbeitet die Download-Anfrage.
-     * @param OnManageDownloadEvent    $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
+     * @param OnManageDownloadEvent $event
+     * @return void
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function handleDownload(
-        OnManageDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function handleDownload(OnManageDownloadEvent $event): void {
         $downloadKey = $event->getDownloadKey();
         $formLang = $event->getFeFormLang();
         $template = $event->getTamplate();
@@ -326,8 +289,22 @@ class OnManageDownloadListener
                 $dlDataId = $dlData['id'];
 
                 unset($dlData['id']);
+                $dbValues = [];
 
-                $this->db->prepare("UPDATE tl_dm_downloads %s WHERE id = $dlDataId")->set($dlData)->execute();
+                foreach ($dlData as $k => $v) {
+                    $dbValues[] = $v;
+                }
+
+                $query = $this->db->createQueryBuilder();
+                $query->update('tl_dm_downloads');
+
+                foreach ($dlData as $k => $v) {
+                    $query->set($k, '?');
+                }
+
+                $query->setParameters($dbValues)
+                      ->where("id = $dlDataId")
+                      ->execute();
 
                 $this->controller->sendFileToBrowser($fileModel->path);
             } else {
