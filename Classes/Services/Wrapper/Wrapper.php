@@ -1,15 +1,15 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @package     downloadmail
- * @version     1.0.0
  * @since       11.01.19 - 15:32
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2021
  * @license     CC-BY-SA-4.0
  */
+
+declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Services\Wrapper;
 

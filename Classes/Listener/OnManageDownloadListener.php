@@ -121,7 +121,8 @@ class OnManageDownloadListener
      * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public function loadDownloadFromDb(OnManageDownloadEvent $event): void {
+    public function loadDownloadFromDb(OnManageDownloadEvent $event): void
+    {
         $formLang = $event->getFeFormLang();
         $template = $event->getTamplate();
         $downloadKey = $event->getDownloadKey();
@@ -147,7 +148,8 @@ class OnManageDownloadListener
      * Lädt die Daten zu der angeforderten Datei.
      * @param OnManageDownloadEvent    $event
      */
-    public function loadFileData(OnManageDownloadEvent $event): void {
+    public function loadFileData(OnManageDownloadEvent $event): void
+    {
         $dlData = $event->getDlFromDb();
         $singleSrc = $this->stringUtil->binToUuid($dlData['singleSRC']);
 
@@ -168,7 +170,8 @@ class OnManageDownloadListener
      * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public function loadFormData(OnManageDownloadEvent $event): void {
+    public function loadFormData(OnManageDownloadEvent $event): void
+    {
         $dlData = $event->getDlFromDb();
 
         if (!empty($dlData['formid'])) {
@@ -186,7 +189,8 @@ class OnManageDownloadListener
      * Lädt die Zeit, die ein Download gültig ist.
      * @param OnManageDownloadEvent    $event
      */
-    public function loadDownloadTime(OnManageDownloadEvent $event): void {
+    public function loadDownloadTime(OnManageDownloadEvent $event): void
+    {
         global $objPage;
         $objRoot = $this->pageModel->findByPk($objPage->rootId);
         $formData = $event->getFormData();
@@ -206,7 +210,8 @@ class OnManageDownloadListener
      * Erzeugt den Link, um den Download erneut anzufordern.
      * @param OnManageDownloadEvent    $event
      */
-    public function getRequestLink(OnManageDownloadEvent $event): void {
+    public function getRequestLink(OnManageDownloadEvent $event): void
+    {
         $dlData = $event->getDlFromDb();
 
         if (!empty($dlData['requestpage'])) {
@@ -218,7 +223,8 @@ class OnManageDownloadListener
      * Prüft, ob die Downloadanfrage in der Downloadfrist liegt.
      * @param OnManageDownloadEvent    $event
      */
-    public function checkDownloadTime(OnManageDownloadEvent $event): void {
+    public function checkDownloadTime(OnManageDownloadEvent $event): void
+    {
         $formLang = $event->getFeFormLang();
         $template = $event->getTamplate();
         $dlData = $event->getDlFromDb();
@@ -243,7 +249,8 @@ class OnManageDownloadListener
      * Lädt die Zeit bis zum automatischen Start des Downloads.
      * @param OnManageDownloadEvent    $event
      */
-    public function getRequestTime(OnManageDownloadEvent $event): void {
+    public function getRequestTime(OnManageDownloadEvent $event): void
+    {
         $moduleId = $event->getModulId();
         $objModul = $this->moduleModel->findByPk($moduleId);
 
@@ -267,7 +274,8 @@ class OnManageDownloadListener
      * @return void
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleDownload(OnManageDownloadEvent $event): void {
+    public function handleDownload(OnManageDownloadEvent $event): void
+    {
         $downloadKey = $event->getDownloadKey();
         $formLang = $event->getFeFormLang();
         $template = $event->getTamplate();

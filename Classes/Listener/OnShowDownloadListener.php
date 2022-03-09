@@ -48,7 +48,8 @@ class OnShowDownloadListener
      * @return void
      * @throws \Doctrine\DBAL\Exception
      */
-    public function resetDownload(OnShowDownloadEvent $event): void {
+    public function resetDownload(OnShowDownloadEvent $event): void
+    {
         $id = $event->getId();
         $table = $event->getTable();
         $reset = $event->getReset();
@@ -56,7 +57,6 @@ class OnShowDownloadListener
         if (true === $reset) {
             $query = $this->db->createQueryBuilder();
             $query->update($table)->set('requesttime', '?')->setParameters([\time()])->where("id = $id")->execute();
-
         }
     }
 
@@ -68,8 +68,8 @@ class OnShowDownloadListener
      * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public function loadData(
-        OnShowDownloadEvent $event): void {
+    public function loadData(OnShowDownloadEvent $event): void
+    {
         $id = $event->getId();
         $table  = $event->getTable();
         $query  = $this->db->createQueryBuilder();
@@ -81,17 +81,14 @@ class OnShowDownloadListener
         }
     }
 
+
     /**
      * Erstellt die Infos zur Download-Datei.
-     * @param OnShowDownloadEvent      $event
-     * @param string                   $eventName
-     * @param EventDispatcherInterface $dispatcher
+     * @param OnShowDownloadEvent $event
+     * @return void
      */
-    public function convertSingleSrc(
-        OnShowDownloadEvent $event,
-        string $eventName,
-        EventDispatcherInterface $dispatcher
-    ): void {
+    public function convertSingleSrc(OnShowDownloadEvent $event): void
+    {
         $data = $event->getData();
         $data['fileData'] = $this->stringHelper->genFileInfo($data['singleSRC']);
 
@@ -106,8 +103,8 @@ class OnShowDownloadListener
      * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public function convertJumpTo(
-        OnShowDownloadEvent $event): void {
+    public function convertJumpTo(OnShowDownloadEvent $event): void
+    {
         $data   = $event->getData();
         $query  = $this->db->createQueryBuilder();
         $result = $query->select('*')->from('tl_page')->where('id = ' . $data['jumpto'])->execute();
@@ -128,7 +125,8 @@ class OnShowDownloadListener
      * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public function convertFromId(OnShowDownloadEvent $event): void {
+    public function convertFromId(OnShowDownloadEvent $event): void
+    {
         $data   = $event->getData();
         $query  = $this->db->createQueryBuilder();
         $result = $query->select('*')->from('tl_form')->where('id = ' . $data['formid'])->execute();
@@ -147,7 +145,8 @@ class OnShowDownloadListener
      * @param OnShowDownloadEvent $event
      * @return void
      */
-    public function convertFormData(OnShowDownloadEvent $event): void {
+    public function convertFormData(OnShowDownloadEvent $event): void
+    {
         $data = $event->getData();
         $data['formdata'] = \unserialize($data['formdata'], [null]);
 
@@ -160,7 +159,8 @@ class OnShowDownloadListener
      * @param OnShowDownloadEvent $event
      * @return void
      */
-    public function convertDownloadData(OnShowDownloadEvent $event): void {
+    public function convertDownloadData(OnShowDownloadEvent $event): void
+    {
         $data = $event->getData();
         $data['downloaddata'] = \unserialize($data['downloaddata'], [null]);
 

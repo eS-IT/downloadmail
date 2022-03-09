@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @author      pfroch <info@easySolutionsIT.de>
- * @see        http://easySolutionsIT.de
+ * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2021
  * @license     CC-BY-SA-4.0
  * @package     Downloadmail
- * @filesource  EsitTestCase.php
- * @version     2.0.0
  * @since       01.10.2021 - 22:24
  */
+declare(strict_types=1);
 
 namespace Esit\Downloadmail;
 

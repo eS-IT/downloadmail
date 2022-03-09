@@ -96,7 +96,8 @@ class OnManageFormListener
      * Lädt die Daten des Mailfelds aus tl_form_field.
      * @param OnManageFormEvent        $event
      */
-    public function loadMailField(OnManageFormEvent $event): void {
+    public function loadMailField(OnManageFormEvent $event): void
+    {
         $formData = $event->getFormData();
         $postArray = $event->getPostData();
         $dbData = $event->getDbData();
@@ -126,7 +127,8 @@ class OnManageFormListener
      * Erstellt die Informationen zur Downloaddatei.
      * @param OnManageFormEvent        $event
      */
-    public function genFileInfo(OnManageFormEvent $event): void {
+    public function genFileInfo(OnManageFormEvent $event): void
+    {
         $formData = $event->getFormData();
 
         if (!empty($formData['mySingleSRC'])) {
@@ -139,7 +141,8 @@ class OnManageFormListener
      * Erzeugt den Downloadcode.
      * @param OnManageFormEvent        $event
      */
-    public function genDownloadCode(OnManageFormEvent $event): void {
+    public function genDownloadCode(OnManageFormEvent $event): void
+    {
         $dbData = $event->getDbData();
         $dlFileInfo = $event->getDownloadFileInfo();
         $hashString = \microtime() . \uniqid(\microtime(), true);
@@ -160,7 +163,8 @@ class OnManageFormListener
      * Setzt die Vorgabewerte aus der config.php.
      * @param OnManageFormEvent        $event
      */
-    public function loadDefaultValues(OnManageFormEvent $event): void {
+    public function loadDefaultValues(OnManageFormEvent $event): void
+    {
         $settings = $event->getSettings();
         $fields = $event->getSettingFields();
 
@@ -179,7 +183,8 @@ class OnManageFormListener
      * Lädt die Daten aus den Einstllungen.
      * @param OnManageFormEvent        $event
      */
-    public function loadDataFromSettings(OnManageFormEvent $event): void {
+    public function loadDataFromSettings(OnManageFormEvent $event): void
+    {
         $settings = $event->getSettings();
         $fields = $event->getSettingFields();
 
@@ -199,7 +204,8 @@ class OnManageFormListener
      * Lädt die Daten aus der Rootpage.
      * @param OnManageFormEvent        $event
      */
-    public function loadDataFromRootpage(OnManageFormEvent $event): void {
+    public function loadDataFromRootpage(OnManageFormEvent $event): void
+    {
         $settings = $event->getSettings();
         $fields = $event->getSettingFields();
 
@@ -223,7 +229,8 @@ class OnManageFormListener
      * Fügt die Daten zusammen.
      * @param OnManageFormEvent        $event
      */
-    public function loadDataFromForm(OnManageFormEvent $event): void {
+    public function loadDataFromForm(OnManageFormEvent $event): void
+    {
         $settings = $event->getSettings();
         $fields = $event->getSettingFields();
         $formData = $event->getFormData();
@@ -243,7 +250,8 @@ class OnManageFormListener
      * Setzt die Daten, die in tl_dm_doanloads gespeichert werden sollen.
      * @param OnManageFormEvent        $event
      */
-    public function setDataForDb(OnManageFormEvent $event): void {
+    public function setDataForDb(OnManageFormEvent $event): void
+    {
         $formData = $event->getFormData();
         $settingData = $event->getSettings();
         $dbData = $event->getDbData();
@@ -267,12 +275,12 @@ class OnManageFormListener
      * Entfernt alle Felder aus $dbData, die nicht in tl_dm_doanloads vorkommen.
      * @param OnManageFormEvent        $event
      */
-    public function filterNotDbFields(OnManageFormEvent $event): void {
+    public function filterNotDbFields(OnManageFormEvent $event): void
+    {
         $dbData = $event->getDbData();
         $newData = [];
 
         foreach ($dbData as $f => $v) {
-
             if (Database::getInstance()->fieldExists($f, 'tl_dm_downloads')) {
                 $newData[$f] = $v;
             }
@@ -288,7 +296,8 @@ class OnManageFormListener
      * @return void
      * @throws \Doctrine\DBAL\Exception
      */
-    public function saveDataInDb(OnManageFormEvent $event): void {
+    public function saveDataInDb(OnManageFormEvent $event): void
+    {
         $dbData     = $event->getDbData();
         $dbValues   = [];
         $dbFields   = [];
@@ -314,7 +323,8 @@ class OnManageFormListener
      * Versendet die Mails.
      * @param OnManageFormEvent        $event
      */
-    public function sendMails(OnManageFormEvent $event): void {
+    public function sendMails(OnManageFormEvent $event): void
+    {
         $settings = $event->getSettings();
         $postData = $event->getPostData();
         $dbData = $event->getDbData();

@@ -83,45 +83,8 @@ done
 error=0
 tmperr=0
 configFolder='./build'
-toolFolder="../../../vendor/bin"
+toolFolder="$configFolder/tools"
 classesFolder='./Classes'
-
-
-
-## phpcf
-if [ -f ${toolFolder}/phpcf ]
-then
-
-    myecho "Prüfe Kompatibilität zu PHP 7.3"
-    if [ "${VERBOSE}" == "TRUE" ]
-    then
-        ${toolFolder}/phpcf -t 7.3 ${classesFolder}
-        tmperr=$?
-    else
-        ${toolFolder}/phpcf -t 7.3 ${classesFolder} 1>/dev/null
-        tmperr=$?
-    fi
-
-    myecho "Prüfe Kompatibilität zu PHP 7.4"
-    if [ "${VERBOSE}" == "TRUE" ]
-    then
-        ${toolFolder}/phpcf -t 7.4 ${classesFolder}
-        tmperr=$?
-    else
-        ${toolFolder}/phpcf -t 7.4 ${classesFolder} 1>/dev/null
-        tmperr=$?
-    fi
-
-    if [ ${tmperr} -ne 0 ]
-    then
-        error=${tmperr}
-        myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
-    else
-       myshortecho "Prüfung Kompatibilität zu PHP 7.2 erfolgreich"
-    fi
-else
-    myinfo "Prüfen der Kompatibilität ausgelassen. PhpCodeFixer nicht vorhanden!"
-fi
 
 
 ## phpcpd
@@ -146,34 +109,6 @@ then
     fi
 else
     myinfo "Prüfen auf doppelten Code ausgelassen. PhpCopyAndPasteDetector nicht vorhanden!"
-fi
-
-## php-cs-fixer
-#
-# pfroch - 02.01.2019: doesn't run on php 7.3.x, we have to wait, then:
-# REMOVE: PHP_CS_FIXER_IGNORE_ENV=1
-#
-if [ -f ${toolFolder}/php-cs-fixer ]
-then
-    myecho "Führe automatische Korrektur der Code-Standards mit Php-cs-fixer durch"
-    if [ "${VERBOSE}" == "TRUE" ]
-    then
-        PHP_CS_FIXER_IGNORE_ENV=1 ${toolFolder}/php-cs-fixer --config=${configFolder}/php_cs.dist.php fix
-        tmperr=$?
-    else
-        PHP_CS_FIXER_IGNORE_ENV=1 ${toolFolder}/php-cs-fixer -q --config=${configFolder}/php_cs.dist.php fix
-        tmperr=$?
-    fi
-
-    if [ ${tmperr} -ne 0 ]
-    then
-       error=${tmperr}
-       myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
-    else
-       myshortecho "Automatische Korrektur der Code-Standards mit Php-cs-fixer erfolgreich"
-    fi
-else
-   myinfo "Automatische Korrektur der Code-Standards ausgelassen. Php-cs-fixer nicht vorhanden!"
 fi
 
 
@@ -204,11 +139,11 @@ fi
 echo
 
 ## PHPUnit
-if [ -f ${toolFolder}/phpunit ]
+if [ -f ../../../vendor/bin/phpunit ]
 then
     # PHPUnit gobal mit composer installiert
     myecho "Führe UnitTests mit globalem PHPUnit durch"
-    #${toolFolder}/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
+    ../../../vendor/bin/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
     tmperr=$?
 
     if [ ${tmperr} -ne 0 ]
