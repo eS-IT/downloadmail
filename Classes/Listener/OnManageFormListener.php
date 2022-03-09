@@ -18,6 +18,7 @@ use Contao\Database;
 use Doctrine\DBAL\Connection;
 use Esit\Downloadmail\Classes\Events\OnManageFormEvent;
 use Esit\Downloadmail\Classes\Services\Factories\EmailFactory;
+use Esit\Downloadmail\Classes\Services\Helper\FileHelper;
 use Esit\Downloadmail\Classes\Services\Helper\StringHelper;
 use Esit\Downloadmail\Classes\Services\Wrapper\Config;
 use Esit\Downloadmail\Classes\Services\Wrapper\Environment;
@@ -66,6 +67,12 @@ class OnManageFormListener
 
 
     /**
+     * @var FileHelper
+     */
+    private $fileHelper;
+
+
+    /**
      * @param Config       $config
      * @param Connection   $db
      * @param Environment  $environment
@@ -81,15 +88,17 @@ class OnManageFormListener
         PageModel $pageModel,
         System $system,
         StringHelper $stringHelper,
-        EmailFactory $emailFactory
+        EmailFactory $emailFactory,
+        FileHelper $fileHelper
     ) {
-        $this->config = $config;
-        $this->db = $db;
-        $this->environment = $environment;
-        $this->pageModel = $pageModel;
-        $this->system = $system;
+        $this->config       = $config;
+        $this->db           = $db;
+        $this->environment  = $environment;
+        $this->pageModel    = $pageModel;
+        $this->system       = $system;
         $this->stringHelper = $stringHelper;
         $this->emailFactory = $emailFactory;
+        $this->fileHelper   = $fileHelper;
     }
 
     /**
@@ -132,7 +141,7 @@ class OnManageFormListener
         $formData = $event->getFormData();
 
         if (!empty($formData['mySingleSRC'])) {
-            $fileInfos = $this->stringHelper->genFileInfo($formData['mySingleSRC']);
+            $fileInfos = $this->fileHelper->genFileInfo($formData['mySingleSRC']);
             $event->setDownloadFileInfo($fileInfos);
         }
     }

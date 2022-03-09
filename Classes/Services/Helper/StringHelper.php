@@ -76,47 +76,6 @@ class StringHelper
         $this->validator = $validator;
     }
 
-    /**
-     * Gibt einen für Menschen lesbaren String mit der Größe einer Datei zurück.
-     * @param  string $strPath
-     * @param  int    $decimals
-     * @return string
-     */
-    public function humanFilesize(string $strPath, int $decimals = 2): string
-    {
-        $strPath = (\substr_count($strPath, TL_ROOT)) ? $strPath : TL_ROOT . '/' . $strPath;
-        $bytes = \filesize($strPath);
-        $sz = ' KMGTP';
-        $factor = (int)\floor((\strlen((string)$bytes) - 1) / 3);
-
-        return \sprintf("%.{$decimals}f", $bytes / \pow(1024, $factor)) . ' ' . @$sz[$factor] . 'B';
-    }
-
-    /**
-     * Erstellt die Informationen zum Downloadfile.
-     * @param $binId
-     * @return array
-     */
-    public function genFileInfo($binId): array
-    {
-        $arrFile = [];
-        $binId = ($this->validator->isBinaryUuid($binId)) ? $binId : $this->stringUtil->uuidToBin($binId);
-        $objFile = $this->filesModel->findBfyPk($binId);
-
-        if ($objFile) {
-            $arrFile = [
-                'filepath' => $objFile->path,
-                'filename' => \basename($objFile->path),
-                'fileext' => $objFile->extension,
-                'filesize' => $this->humanFilesize($objFile->path, 0),
-                'filehash' => $objFile->hash,
-                'fileuuid' => $this->stringUtil->binToUuid($binId)
-            ];
-        }
-
-        return $arrFile;
-    }
-
 
     /**
      * Erzeugt einen Alias.

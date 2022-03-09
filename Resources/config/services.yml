@@ -10,6 +10,8 @@ services:
     Esit\Downloadmail\Classes\Services\Helper\BlacklistHelper:
         public: true
 
+    Esit\Downloadmail\Classes\Services\Helper\FileHelper:
+
     Esit\Downloadmail\Classes\Services\Helper\StringHelper:
 
     ## Wrapper

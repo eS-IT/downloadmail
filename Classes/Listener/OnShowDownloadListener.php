@@ -15,14 +15,14 @@ namespace Esit\Downloadmail\Classes\Listener;
 
 use Doctrine\DBAL\Connection;
 use Esit\Downloadmail\Classes\Events\OnShowDownloadEvent;
-use Esit\Downloadmail\Classes\Services\Helper\StringHelper;
+use Esit\Downloadmail\Classes\Services\Helper\FileHelper;
 
 class OnShowDownloadListener
 {
     /**
-     * @var StringHelper
+     * @var FileHelper
      */
-    protected $stringHelper;
+    protected $fileHelper;
 
     /**
      * @var Connection
@@ -30,12 +30,12 @@ class OnShowDownloadListener
     protected $db;
 
     /**
-     * @param StringHelper $stringHelper
+     * @param FileHelper   $fileHelper
      * @param Connection   $db
      */
-    public function __construct(StringHelper $stringHelper, Connection $db)
+    public function __construct(FileHelper $fileHelper, Connection $db)
     {
-        $this->stringHelper = $stringHelper;
+        $this->fileHelper = $fileHelper;
         $this->db = $db;
     }
 
@@ -88,8 +88,8 @@ class OnShowDownloadListener
      */
     public function convertSingleSrc(OnShowDownloadEvent $event): void
     {
-        $data = $event->getData();
-        $data['fileData'] = $this->stringHelper->genFileInfo($data['singleSRC']);
+        $data               = $event->getData();
+        $data['fileData']   = $this->fileHelper->genFileInfo($data['singleSRC']);
 
         $event->setData($data);
     }
