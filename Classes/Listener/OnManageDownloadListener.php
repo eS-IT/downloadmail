@@ -121,7 +121,7 @@ class OnManageDownloadListener
      * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public function loadDownloadFromDb(OnManageDownloadEvent $event,): void {
+    public function loadDownloadFromDb(OnManageDownloadEvent $event): void {
         $formLang = $event->getFeFormLang();
         $template = $event->getTamplate();
         $downloadKey = $event->getDownloadKey();
