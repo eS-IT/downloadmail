@@ -119,9 +119,9 @@ class OnManageFormListener
                             ->andWhere('downloadmailaddress = 1')
                             ->execute();
 
-            $data = $result->fetchAllAssociative();
+            $data = $result->fetchAssociative();
 
-            if (false !== $data) {
+            if (!empty($data)) {
                 $fieldName = $data['name'];
 
                 if (!empty($postArray[$fieldName])) {

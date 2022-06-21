@@ -7,8 +7,8 @@ Daten stehen im Backend zur Verfügung. __Diese Version benötigt Contao 4, für
 
 ## Requirements
 
-- PHP: ~7.4||~8.0
-- Contao: ^4.4
+- PHP: ~8.0
+- Contao: ^4.9
 
 
 ## Copyright
