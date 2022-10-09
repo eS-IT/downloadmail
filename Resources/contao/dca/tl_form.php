@@ -62,7 +62,7 @@ $GLOBALS['TL_DCA'][$strName]['fields']['mailbcc'] = [
     'exclude' => true,
     'inputType' => 'listWizard',
     'eval' => ['rgxp' => 'email', 'decodeEntities' => true, 'tl_class' => 'clr'],
-    'sql' => "text NOT NULL"
+    'sql' => "text NULL"
 ];
 
 $GLOBALS['TL_DCA'][$strName]['fields']['mailsubject'] = [
@@ -78,7 +78,7 @@ $GLOBALS['TL_DCA'][$strName]['fields']['mailtext'] = [
     'exclude' => true,
     'inputType' => 'textarea',
     'eval' => ['tl_class' => 'long clr'],
-    'sql' => "text NOT NULL"
+    'sql' => "text NULL"
 ];
 
 $GLOBALS['TL_DCA'][$strName]['fields']['jumptodownload'] = [

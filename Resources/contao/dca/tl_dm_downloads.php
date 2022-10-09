@@ -131,7 +131,7 @@ $GLOBALS['TL_DCA']['tl_dm_downloads'] = [
             'exclude' => true,
             'inputType' => 'fileTree',
             'eval' => ['doNotShow' => true],
-            'sql' => "text NOTNULL"
+            'sql' => "text NULL"
         ],
         'requestpage' => [
             'label' => &$GLOBALS['TL_LANG']['tl_dm_downloads']['requestpage'],
