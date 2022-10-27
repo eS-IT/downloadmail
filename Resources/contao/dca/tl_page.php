@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['mailbcc'] = [
     'exclude' => true,
     'inputType' => 'listWizard',
     'eval' => ['rgxp' => 'email', 'decodeEntities' => true, 'tl_class' => 'clr'],
-    'sql' => "text NOT NULL"
+    'sql' => "text NULL"
 ];
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['mailsubject'] = [
@@ -48,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['mailsubject'] = [
     'exclude' => true,
     'inputType' => 'text',
     'eval' => ['maxlength' => 255, 'tl_class' => 'long clr'],
-    'sql' => "varchar(255) NOT NULL default ''"
+    'sql' => "varchar(255) NULL default ''"
 ];
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['mailtext'] = [
@@ -56,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['mailtext'] = [
     'exclude' => true,
     'inputType' => 'textarea',
     'eval' => ['tl_class' => 'long clr'],
-    'sql' => "text NOT NULL"
+    'sql' => "text NULL"
 ];
 
 $GLOBALS['TL_DCA']['tl_page']['fields']['jumptodownload'] = [
