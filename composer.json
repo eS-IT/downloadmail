@@ -19,8 +19,7 @@
     "readme": "README.md",
     "require": {
         "php": "~8.0",
-        "contao/core-bundle": "^4.9",
-        "symfony/symfony": ">=4.3"
+        "contao/core-bundle": "^4.9"
     },
     "require-dev": {
         "contao/test-case": "^4.4",
