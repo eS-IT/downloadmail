@@ -17,7 +17,7 @@ namespace Esit\Downloadmail\Classes\Events;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
 use Contao\ModuleModel;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class OnManageDownloadEvent

@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Events;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class OnShowDownloadEvent
