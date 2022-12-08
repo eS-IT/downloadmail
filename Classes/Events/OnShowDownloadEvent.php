@@ -22,7 +22,6 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class OnShowDownloadEvent extends Event
 {
-    public const NAME = 'on.show.download';
 
     /**
      * Id des anzuzeigenden Datensatzes

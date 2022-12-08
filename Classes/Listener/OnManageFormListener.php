@@ -25,7 +25,6 @@ use Esit\Downloadmail\Classes\Services\Wrapper\Environment;
 use Esit\Downloadmail\Classes\Services\Wrapper\PageModel;
 use Esit\Downloadmail\Classes\Services\Wrapper\System;
 use Psr\Log\LogLevel;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OnManageFormListener
 {

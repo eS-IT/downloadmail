@@ -71,7 +71,7 @@ class ModuleRequestDownload extends Module
         $event->setFeFormLang($formLang);
         $event->setTamplate($template);
 
-        $di->dispatch($event::NAME, $event);
+        $di->dispatch($event);
 
         $this->Template->content = $template->parse();
     }

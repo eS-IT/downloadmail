@@ -48,7 +48,7 @@ class DownloadView
         }
 
         if (null !== $dispatcher) {
-            $dispatcher->dispatch($event::NAME, $event);
+            $dispatcher->dispatch($event);
         }
 
         $template->setData($event->getData());

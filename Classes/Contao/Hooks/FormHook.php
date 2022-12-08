@@ -32,7 +32,7 @@ class FormHook
     {
         if (isset($formData['downloadmailform']) && $formData['downloadmailform']) {
             $dispatcher = System::getContainer()->get('event_dispatcher');
-            $event = new OnManageFormEvent();
+            $event      = new OnManageFormEvent();
             $event->setPostData($postData);
             $event->setFormData($formData);
 
@@ -40,7 +40,7 @@ class FormHook
                 $event->setFilesData($filesData);
             }
 
-            $dispatcher->dispatch($event::NAME, $event);
+            $dispatcher?->dispatch($event);
         }
     }
 }

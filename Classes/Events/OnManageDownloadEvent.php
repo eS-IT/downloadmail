@@ -25,10 +25,6 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class OnManageDownloadEvent extends Event
 {
-    /**
-     * Name des Events
-     */
-    public const NAME = 'on.manage.download';
 
     /**
      * Spachvariablen

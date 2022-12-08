@@ -5,35 +5,34 @@ services:
 
     Esit\Downloadmail\Classes\Listener\OnManageDownloadListener:
         tags:
-            - { name: kernel.event_listener, event: on.manage.download, method: loadDownloadFromDb, priority: 8182 }
-            - { name: kernel.event_listener, event: on.manage.download, method: loadFileData, priority: 7168 }
-            - { name: kernel.event_listener, event: on.manage.download, method: loadFormData, priority: 6144 }
-            - { name: kernel.event_listener, event: on.manage.download, method: loadDownloadTime, priority: 5120 }
-            - { name: kernel.event_listener, event: on.manage.download, method: getRequestLink, priority: 4096 }
-            - { name: kernel.event_listener, event: on.manage.download, method: checkDownloadTime, priority: 3072 }
-            - { name: kernel.event_listener, event: on.manage.download, method: getRequestTime, priority: 2048 }
-            - { name: kernel.event_listener, event: on.manage.download, method: handleDownload, priority: 1024 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageDownloadEvent, method: loadDownloadFromDb, priority: 8182 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageDownloadEvent, method: loadFileData, priority: 7168 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageDownloadEvent, method: loadFormData, priority: 6144 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageDownloadEvent, method: loadDownloadTime, priority: 5120 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageDownloadEvent, method: getRequestLink, priority: 4096 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageDownloadEvent, method: checkDownloadTime, priority: 3072 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageDownloadEvent, method: getRequestTime, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageDownloadEvent, method: handleDownload, priority: 1024 }
 
     Esit\Downloadmail\Classes\Listener\OnManageFormListener:
         tags:
-            - { name: kernel.event_listener, event: on.manage.form, method: loadMailField, priority: 11264 }
-            - { name: kernel.event_listener, event: on.manage.form, method: genFileInfo, priority: 10240 }
-            - { name: kernel.event_listener, event: on.manage.form, method: genDownloadCode, priority: 9216 }
-            - { name: kernel.event_listener, event: on.manage.form, method: loadDefaultValues, priority: 8192 }
-            - { name: kernel.event_listener, event: on.manage.form, method: loadDataFromSettings, priority: 7168 }
-            - { name: kernel.event_listener, event: on.manage.form, method: loadDataFromRootpage, priority: 6144 }
-            - { name: kernel.event_listener, event: on.manage.form, method: loadDataFromForm, priority: 5120 }
-            - { name: kernel.event_listener, event: on.manage.form, method: setDataForDb, priority: 4096 }
-            - { name: kernel.event_listener, event: on.manage.form, method: filterNotDbFields, priority: 3072 }
-            - { name: kernel.event_listener, event: on.manage.form, method: saveDataInDb, priority: 2048 }
-            - { name: kernel.event_listener, event: on.manage.form, method: sendMails, priority: 1024 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: loadMailField, priority: 11264 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: genFileInfo, priority: 10240 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: genDownloadCode, priority: 9216 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: loadDefaultValues, priority: 8192 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: loadDataFromSettings, priority: 7168 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: loadDataFromRootpage, priority: 6144 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: loadDataFromForm, priority: 5120 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: setDataForDb, priority: 4096 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: filterNotDbFields, priority: 3072 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: saveDataInDb, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnManageFormEvent, method: sendMails, priority: 1024 }
 
     Esit\Downloadmail\Classes\Listener\OnShowDownloadListener:
         tags:
-            - { name: kernel.event_listener, event: on.show.download, method: resetDownload, priority: 7168 }
-            - { name: kernel.event_listener, event: on.show.download, method: loadData, priority: 6144 }
-            - { name: kernel.event_listener, event: on.show.download, method: convertSingleSrc, priority: 5120 }
-            - { name: kernel.event_listener, event: on.show.download, method: convertJumpTo, priority: 4096 }
-            - { name: kernel.event_listener, event: on.show.download, method: convertFromId, priority: 3072 }
-            - { name: kernel.event_listener, event: on.show.download, method: convertFormData, priority: 2048 }
-            - { name: kernel.event_listener, event: on.show.download, method: convertDownloadData, priority: 1024 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnShowDownloadEvent, method: resetDownload, priority: 6144 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnShowDownloadEvent, method: loadData, priority: 5120 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnShowDownloadEvent, method: convertSingleSrc, priority: 4096 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnShowDownloadEvent, method: convertJumpTo, priority: 3072 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnShowDownloadEvent, method: convertFromId, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Downloadmail\Classes\Events\OnShowDownloadEvent, method: convertDownloadData, priority: 1024 }

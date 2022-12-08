@@ -149,10 +149,10 @@ class OnShowDownloadListener
      */
     public function convertFormData(OnShowDownloadEvent $event): void
     {
-        $data = $event->getData();
+        /*$data = $event->getData();
         $data['formdata'] = \unserialize($data['formdata'], [null]);
 
-        $event->setData($data);
+        $event->setData($data);*/
     }
 
 

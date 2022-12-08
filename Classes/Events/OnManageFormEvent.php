@@ -22,10 +22,6 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class OnManageFormEvent extends Event
 {
-    /**
-     * Name des Events
-     */
-    public const NAME = 'on.manage.form';
 
     /**
      * Array mit den Datan des Formulars aus tl_form
