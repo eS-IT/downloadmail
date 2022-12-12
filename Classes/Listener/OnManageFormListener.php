@@ -337,10 +337,14 @@ class OnManageFormListener
         $postData = $event->getPostData();
         $dbData = $event->getDbData();
         $email = $this->emailFactory->create();
-        $email->subject = $settings['mailsubject'];
-        $email->from = $settings['mailfrom'];
-        $bcc = \unserialize($settings['mailbcc'], [null]);
-        $text = $settings['mailtext'];
+        $email->subject = $settings['mailsubject'] ?: '';
+        $email->from = $settings['mailfrom'] ?: '';
+        $text   = $settings['mailtext'] ?: '';
+        $bcc    = '';
+
+        if (!empty($settings['mailbcc'])) {
+            $bcc = \unserialize($settings['mailbcc'], [null]);
+        }
 
         if (!empty($dbData['code'])) {
             $link = $this->stringHelper->genLink((int)$settings['jumptodownload'], $dbData['code']);
