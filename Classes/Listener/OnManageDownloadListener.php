@@ -202,7 +202,7 @@ class OnManageDownloadListener
         } elseif ($this->config->get('downloadtime')) {
             $event->setDownloadtime($this->config->get('downloadtime'));
         } else {
-            $event->setDownloadtime($GLOBALS['downloadmail']['downloadtime']);
+            $event->setDownloadtime((string)$GLOBALS['downloadmail']['downloadtime']);
         }
     }
 
