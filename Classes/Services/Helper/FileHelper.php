@@ -20,20 +20,24 @@ use Esit\Downloadmail\Classes\Services\Wrapper\Validator;
 class FileHelper
 {
 
+
     /**
      * @var FilesModel
      */
     private $filesModel;
+
 
     /**
      * @var StringUtil
      */
     private $stringUtil;
 
+
     /**
      * @var Validator
      */
     private $validator;
+
 
     /**
      * @param FilesModel  $filesModel
@@ -56,10 +60,10 @@ class FileHelper
      */
     public function humanFilesize(string $strPath, int $decimals = 2): string
     {
-        $strPath = (\substr_count($strPath, TL_ROOT)) ? $strPath : TL_ROOT . '/' . $strPath;
-        $bytes = \filesize($strPath);
-        $sz = ' KMGTP';
-        $factor = (int)\floor((\strlen((string)$bytes) - 1) / 3);
+        $strPath    = (\substr_count($strPath, TL_ROOT)) ? $strPath : TL_ROOT . '/' . $strPath;
+        $bytes      = \filesize($strPath);
+        $sz         = ' KMGTP';
+        $factor     = (int)\floor((\strlen((string)$bytes) - 1) / 3);
 
         return \sprintf("%.{$decimals}f", $bytes / (1024 ** $factor)) . ' ' . @$sz[$factor] . 'B';
     }
@@ -72,9 +76,9 @@ class FileHelper
      */
     public function genFileInfo($binId): array
     {
-        $arrFile = [];
-        $binId = ($this->validator->isBinaryUuid($binId)) ? $binId : $this->stringUtil->uuidToBin($binId);
-        $objFile = $this->filesModel->findBfyPk($binId);
+        $arrFile    = [];
+        $binId      = ($this->validator->isBinaryUuid($binId)) ? $binId : $this->stringUtil->uuidToBin($binId);
+        $objFile    = $this->filesModel->findBfyPk($binId);
 
         if ($objFile) {
             $arrFile = [

@@ -1,15 +1,14 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @package     downloadmail
- * @version     2.0.0
- * @since       20.10.2018 - 10:20
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
+declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Contao\Dca;
 
@@ -19,17 +18,16 @@ use Contao\Input;
 use Contao\System;
 use Esit\Downloadmail\Classes\Events\OnShowDownloadEvent;
 
-/**
- * Class DownloadView
- * @package Esit\Downloadmail\Classes\Contao\Dca
- */
 class DownloadView
 {
+
+
     /**
      * Name des Ausgabetemplates
      * @var string
      */
     protected $templateName = 'downloadView';
+
 
     /**
      * Zeigt die Informationen zu einem Download an.
@@ -48,13 +46,13 @@ class DownloadView
         }
 
         if (null !== $dispatcher) {
-            $dispatcher->dispatch($event::NAME, $event);
+            $dispatcher->dispatch($event);
         }
 
         $template->setData($event->getData());
         $template->backlink = Environment::get('scriptName');
         $template->lang = @$GLOBALS['TL_LANG']['tl_dm_downloads'];
-        $template->defaultLang = $GLOBALS['TL_LANG']['MSC']['easy_downloadmail']['feform'];
+        $template->defaultLang = @$GLOBALS['TL_LANG']['MSC']['easy_downloadmail']['feform'];
 
         return $template->parse();
     }

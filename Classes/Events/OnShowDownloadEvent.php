@@ -1,16 +1,15 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @package     downloadmail
- * @filesource  OnShowDownloadEvent.php
- * @version     2.0.0
  * @since       20.10.2018 - 12:20
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @see        http://easySolutionsIT.de
+ * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
+declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Events;
 
@@ -22,7 +21,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class OnShowDownloadEvent extends Event
 {
-    public const NAME = 'on.show.download';
+
 
     /**
      * Id des anzuzeigenden Datensatzes
@@ -30,23 +29,27 @@ class OnShowDownloadEvent extends Event
      */
     protected $id = 0;
 
+
     /**
      * @var string
      */
     protected $table = 'tl_dm_downloads';
 
+
     /**
      * Bei true wird die Anfrage zurückgesetzt. Die RequestTime wird auf den aktuellen Zeitpunkt gesetzt,
-     * so dass über den Link wieder runter geladen werden kann.
+     * sodass über den Link wieder runter geladen werden kann.
      * @var bool
      */
     protected $reset = false;
+
 
     /**
      * Daten des anzuzeigenden Datensatzes
      * @var array
      */
     protected $data = [];
+
 
     /**
      * @return int
@@ -56,6 +59,7 @@ class OnShowDownloadEvent extends Event
         return $this->id;
     }
 
+
     /**
      * @param int $id
      */
@@ -63,6 +67,7 @@ class OnShowDownloadEvent extends Event
     {
         $this->id = $id;
     }
+
 
     /**
      * @return string
@@ -72,6 +77,7 @@ class OnShowDownloadEvent extends Event
         return $this->table;
     }
 
+
     /**
      * @param string $table
      */
@@ -79,6 +85,7 @@ class OnShowDownloadEvent extends Event
     {
         $this->table = $table;
     }
+
 
     /**
      * @return bool
@@ -88,6 +95,7 @@ class OnShowDownloadEvent extends Event
         return $this->reset;
     }
 
+
     /**
      * @param bool $reset
      */
@@ -96,6 +104,7 @@ class OnShowDownloadEvent extends Event
         $this->reset = $reset;
     }
 
+
     /**
      * @return array
      */
@@ -103,6 +112,7 @@ class OnShowDownloadEvent extends Event
     {
         return $this->data;
     }
+
 
     /**
      * @param array $data

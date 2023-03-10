@@ -1,31 +1,23 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @package     downloadmail
- * @filesource  OnManageFormEvent.php
- * @version     2.0.0
  * @since       18.10.2018 - 10:53
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @see        http://easySolutionsIT.de
+ * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
+declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Events;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * Class OnManageFormEvent
- * @package Esit\Downloadmail\Classes\Events
- */
 class OnManageFormEvent extends Event
 {
-    /**
-     * Name des Events
-     */
-    public const NAME = 'on.manage.form';
+
 
     /**
      * Array mit den Datan des Formulars aus tl_form
@@ -33,11 +25,13 @@ class OnManageFormEvent extends Event
      */
     protected $formData = [];
 
+
     /**
      * Array mit den Post-Daten
      * @var array
      */
     protected $postData = [];
+
 
     /**
      * Array mit den hochgeladenen Dateien
@@ -45,11 +39,13 @@ class OnManageFormEvent extends Event
      */
     protected $filesData = [];
 
+
     /**
      * Array mit den Infos zur Downloaddatei
      * @var array
      */
     protected $downloadFileInfo = [];
+
 
     /**
      * Felder, die es in den Einstellungen, der Rootpage und dem Formular gibt
@@ -65,17 +61,20 @@ class OnManageFormEvent extends Event
         'redirecttime'
     ];
 
+
     /**
      * Array mit den zusammengesetzten Daten aus Einstellungen, Rootpage und dem Formular.
      * @var array
      */
     protected $settings = [];
 
+
     /**
      * Datan, die in tl_dm_downloads gespeichert werden sollen.
      * @var array
      */
     protected $dbData = [];
+
 
     /**
      * @return array
@@ -85,6 +84,7 @@ class OnManageFormEvent extends Event
         return $this->formData;
     }
 
+
     /**
      * @param array $formData
      */
@@ -92,6 +92,7 @@ class OnManageFormEvent extends Event
     {
         $this->formData = $formData;
     }
+
 
     /**
      * @return array
@@ -101,6 +102,7 @@ class OnManageFormEvent extends Event
         return $this->postData;
     }
 
+
     /**
      * @param array $postData
      */
@@ -108,6 +110,7 @@ class OnManageFormEvent extends Event
     {
         $this->postData = $postData;
     }
+
 
     /**
      * @return array
@@ -117,6 +120,7 @@ class OnManageFormEvent extends Event
         return $this->filesData;
     }
 
+
     /**
      * @param array $filesData
      */
@@ -124,6 +128,7 @@ class OnManageFormEvent extends Event
     {
         $this->filesData = $filesData;
     }
+
 
     /**
      * @return array
@@ -133,6 +138,7 @@ class OnManageFormEvent extends Event
         return $this->downloadFileInfo;
     }
 
+
     /**
      * @param array $downloadFileInfo
      */
@@ -140,6 +146,7 @@ class OnManageFormEvent extends Event
     {
         $this->downloadFileInfo = $downloadFileInfo;
     }
+
 
     /**
      * @return array
@@ -149,6 +156,7 @@ class OnManageFormEvent extends Event
         return $this->settingFields;
     }
 
+
     /**
      * @param array $settingFields
      */
@@ -156,6 +164,7 @@ class OnManageFormEvent extends Event
     {
         $this->settingFields = $settingFields;
     }
+
 
     /**
      * @return array
@@ -165,6 +174,7 @@ class OnManageFormEvent extends Event
         return $this->settings;
     }
 
+
     /**
      * @param array $settings
      */
@@ -173,6 +183,7 @@ class OnManageFormEvent extends Event
         $this->settings = $settings;
     }
 
+
     /**
      * @return array
      */
@@ -180,6 +191,7 @@ class OnManageFormEvent extends Event
     {
         return $this->dbData;
     }
+
 
     /**
      * @param array $dbData

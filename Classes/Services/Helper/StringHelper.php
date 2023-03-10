@@ -15,65 +15,43 @@ namespace Esit\Downloadmail\Classes\Services\Helper;
 
 use Esit\Downloadmail\Classes\Services\Wrapper\Config;
 use Esit\Downloadmail\Classes\Services\Wrapper\Environment;
-use Esit\Downloadmail\Classes\Services\Wrapper\FilesModel;
 use Esit\Downloadmail\Classes\Services\Wrapper\PageModel;
-use Esit\Downloadmail\Classes\Services\Wrapper\StringUtil;
-use Esit\Downloadmail\Classes\Services\Wrapper\Validator;
 
 class StringHelper
 {
+
+
     /**
      * @var Config
      */
     private $config;
+
 
     /**
      * @var Environment
      */
     private $environment;
 
-    /**
-     * @var FilesModel
-     */
-    private $filesModel;
 
     /**
      * @var PageModel
      */
     private $pageModel;
 
-    /**
-     * @var StringUtil
-     */
-    private $stringUtil;
-
-    /**
-     * @var Validator
-     */
-    private $validator;
 
     /**
      * @param Config      $config
      * @param Environment $environment
-     * @param FilesModel  $filesModel
      * @param PageModel   $pageModel
-     * @param StringUtil  $stringUtil
-     * @param Validator   $validator
      */
     public function __construct(
         Config $config,
         Environment $environment,
-        FilesModel $filesModel,
-        PageModel $pageModel,
-        StringUtil $stringUtil,
-        Validator $validator
+        PageModel $pageModel
     ) {
         $this->config = $config;
         $this->environment = $environment;
-        $this->filesModel = $filesModel;
         $this->pageModel = $pageModel;
-        $this->stringUtil = $stringUtil;
-        $this->validator = $validator;
     }
 
 
@@ -119,6 +97,7 @@ class StringHelper
 
         return '';
     }
+
 
     /**
      * Erzeugt den Link zu einer uebergebenen Id.

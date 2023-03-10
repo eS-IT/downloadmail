@@ -25,34 +25,40 @@ use Esit\Downloadmail\Classes\Services\Wrapper\Environment;
 use Esit\Downloadmail\Classes\Services\Wrapper\PageModel;
 use Esit\Downloadmail\Classes\Services\Wrapper\System;
 use Psr\Log\LogLevel;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OnManageFormListener
 {
+
+
     /**
      * @var Config
      */
     private $config;
+
 
     /**
      * @var Connection
      */
     private $db;
 
+
     /**
      * @var Environment
      */
     private $environment;
+
 
     /**
      * @var PageModel
      */
     private $pageModel;
 
+
     /**
      * @var System
      */
     private $system;
+
 
     /**
      * @var StringHelper
@@ -80,6 +86,7 @@ class OnManageFormListener
      * @param System       $system
      * @param StringHelper $stringHelper
      * @param EmailFactory $emailFactory
+     * @param FileHelper   $fileHelper
      */
     public function __construct(
         Config $config,
@@ -101,15 +108,18 @@ class OnManageFormListener
         $this->fileHelper   = $fileHelper;
     }
 
+
     /**
      * Lädt die Daten des Mailfelds aus tl_form_field.
-     * @param OnManageFormEvent        $event
+     * @param OnManageFormEvent $event
+     * @return void
+     * @throws \Doctrine\DBAL\Exception
      */
     public function loadMailField(OnManageFormEvent $event): void
     {
-        $formData = $event->getFormData();
-        $postArray = $event->getPostData();
-        $dbData = $event->getDbData();
+        $formData   = $event->getFormData();
+        $postArray  = $event->getPostData();
+        $dbData     = $event->getDbData();
 
         if (!empty($formData['id'])) {
             $query  = $this->db->createQueryBuilder();
@@ -117,7 +127,7 @@ class OnManageFormListener
                             ->from('tl_form_field')
                             ->where('pid = ' . $formData['id'])
                             ->andWhere('downloadmailaddress = 1')
-                            ->execute();
+                            ->executeQuery();
 
             $data = $result->fetchAssociative();
 
@@ -131,6 +141,7 @@ class OnManageFormListener
             }
         }
     }
+
 
     /**
      * Erstellt die Informationen zur Downloaddatei.
@@ -146,13 +157,14 @@ class OnManageFormListener
         }
     }
 
+
     /**
      * Erzeugt den Downloadcode.
      * @param OnManageFormEvent        $event
      */
     public function genDownloadCode(OnManageFormEvent $event): void
     {
-        $dbData = $event->getDbData();
+        $dbData     = $event->getDbData();
         $dlFileInfo = $event->getDownloadFileInfo();
         $hashString = \microtime() . \uniqid(\microtime(), true);
 
@@ -167,6 +179,7 @@ class OnManageFormListener
         $dbData['code'] = \sha1($hashString);
         $event->setDbData($dbData);
     }
+
 
     /**
      * Setzt die Vorgabewerte aus der config.php.
@@ -187,6 +200,7 @@ class OnManageFormListener
             $event->setSettings($settings);
         }
     }
+
 
     /**
      * Lädt die Daten aus den Einstllungen.
@@ -209,14 +223,15 @@ class OnManageFormListener
         }
     }
 
+
     /**
      * Lädt die Daten aus der Rootpage.
      * @param OnManageFormEvent        $event
      */
     public function loadDataFromRootpage(OnManageFormEvent $event): void
     {
-        $settings = $event->getSettings();
-        $fields = $event->getSettingFields();
+        $settings   = $event->getSettings();
+        $fields     = $event->getSettingFields();
 
         if (!empty($fields)) {
             global $objPage;
@@ -234,15 +249,16 @@ class OnManageFormListener
         }
     }
 
+
     /**
      * Fügt die Daten zusammen.
      * @param OnManageFormEvent        $event
      */
     public function loadDataFromForm(OnManageFormEvent $event): void
     {
-        $settings = $event->getSettings();
-        $fields = $event->getSettingFields();
-        $formData = $event->getFormData();
+        $settings   = $event->getSettings();
+        $fields     = $event->getSettingFields();
+        $formData   = $event->getFormData();
 
         if (!empty($fields)) {
             foreach ($fields as $field) {
@@ -255,19 +271,20 @@ class OnManageFormListener
         }
     }
 
+
     /**
      * Setzt die Daten, die in tl_dm_doanloads gespeichert werden sollen.
      * @param OnManageFormEvent        $event
      */
     public function setDataForDb(OnManageFormEvent $event): void
     {
-        $formData = $event->getFormData();
-        $settingData = $event->getSettings();
-        $dbData = $event->getDbData();
-        $dbData['tstamp'] = \time();
-        $dbData['requesttime'] = \time();
-        $dbData['jumpto'] = (!empty($settingData['jumptodownload'])) ? $settingData['jumptodownload'] : '';
-        $dbData['requestpage'] = $this->environment->get('requestUri');
+        $formData               = $event->getFormData();
+        $settingData            = $event->getSettings();
+        $dbData                 = $event->getDbData();
+        $dbData['tstamp']       = \time();
+        $dbData['requesttime']  = \time();
+        $dbData['jumpto']       = (!empty($settingData['jumptodownload'])) ? $settingData['jumptodownload'] : '';
+        $dbData['requestpage']  = $this->environment->get('requestUri');
 
         if (!empty($formData['id'])) {
             $dbData['formid'] = $formData['id'];
@@ -279,6 +296,7 @@ class OnManageFormListener
 
         $event->setDbData($dbData);
     }
+
 
     /**
      * Entfernt alle Felder aus $dbData, die nicht in tl_dm_doanloads vorkommen.
@@ -323,25 +341,28 @@ class OnManageFormListener
                 $query->insert('tl_dm_downloads')
                       ->values($dbFields)
                       ->setParameters($dbValues)
-                      ->execute();
+                      ->executeStatement();
             }
         }
     }
 
+
     /**
      * Versendet die Mails.
-     * @param OnManageFormEvent        $event
+     * @param OnManageFormEvent $event
+     * @return void
+     * @throws \Exception
      */
     public function sendMails(OnManageFormEvent $event): void
     {
-        $settings = $event->getSettings();
-        $postData = $event->getPostData();
-        $dbData = $event->getDbData();
-        $email = $this->emailFactory->create();
+        $settings       = $event->getSettings();
+        $postData       = $event->getPostData();
+        $dbData         = $event->getDbData();
+        $email          = $this->emailFactory->create();
         $email->subject = $settings['mailsubject'];
-        $email->from = $settings['mailfrom'];
-        $bcc = \unserialize($settings['mailbcc'], [null]);
-        $text = $settings['mailtext'];
+        $email->from    = $settings['mailfrom'];
+        $bcc            = \unserialize($settings['mailbcc'], [null]);
+        $text           = $settings['mailtext'];
 
         if (!empty($dbData['code'])) {
             $link = $this->stringHelper->genLink((int)$settings['jumptodownload'], $dbData['code']);

@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @package     downloadmail
  * @since       08.01.2021 - 18:24
@@ -10,6 +9,8 @@ declare(strict_types=1);
  * @license     CC-BY-SA-4.0
  */
 
+declare(strict_types=1);
+
 namespace Esit\Downloadmail\Classes\Contao\Dca;
 
 use Contao\Controller;
@@ -17,14 +18,12 @@ use Contao\Image;
 use Contao\StringUtil;
 use Contao\System;
 
-/**
- * Class TlDmDownloads
- * @package Esit\Downloadmail\Classes\Contao\Dca
- */
 class TlDmDownloads
 {
+
+
     /**
-     * Erzeugt das Icon für den Links der Details,
+     * Erzeugt das Icon für den Link der Details,
      * @param $row
      * @param $href
      * @param $label

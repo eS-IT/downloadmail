@@ -19,20 +19,25 @@ use Esit\Downloadmail\Classes\Services\Wrapper\Validator;
 
 class BlacklistHelper
 {
+
+
     /**
      * @var Connection
      */
     private $db;
+
 
     /**
      * @var Validator
      */
     private $validator;
 
+
     /**
      * @var Idna
      */
     private $idna;
+
 
     /**
      * @param Connection  $db
@@ -41,9 +46,9 @@ class BlacklistHelper
      */
     public function __construct(Connection $db, Validator $validator, Idna $idna)
     {
-        $this->db = $db;
-        $this->validator = $validator;
-        $this->idna = $idna;
+        $this->db           = $db;
+        $this->validator    = $validator;
+        $this->idna         = $idna;
     }
 
 
@@ -71,13 +76,12 @@ class BlacklistHelper
      * Überprueft eine Mailadresse gegen die Blacklist.
      * @param $strMail
      * @return bool
-     * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
     public function checkMailaddress($strMail): bool
     {
         $query  = $this->db->createQueryBuilder();
-        $result = $query->select('*')->from('tl_dm_blacklist')->execute();
+        $result = $query->select('*')->from('tl_dm_blacklist')->executeQuery();
         $data   = $result->fetchAllAssociative();
 
         foreach ($data as $item) {

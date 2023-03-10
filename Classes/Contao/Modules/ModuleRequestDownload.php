@@ -1,16 +1,15 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @package     downloadmail
- * @filesource  ModuleRequestDownload.php
- * @version     2.0.0
  * @since       18.10.2018 - 10:54
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @see        http://easySolutionsIT.de
+ * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
+declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Contao\Modules;
 
@@ -21,17 +20,16 @@ use Contao\Module;
 use Contao\System;
 use Esit\Downloadmail\Classes\Events\OnManageDownloadEvent;
 
-/**
- * Class ModuleRequestDownload
- * @package Esit\Downloadmail\Classes\Contao\Modules
- */
 class ModuleRequestDownload extends Module
 {
+
+
     /**
      * Template
      * @var string
      */
     protected $strTemplate = 'mod_easy_downloadmail';
+
 
     /**
      * Return a wildcard in the back end
@@ -39,7 +37,7 @@ class ModuleRequestDownload extends Module
      */
     public function generate()
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### easyDownloadmail-Modul ###';
             $objTemplate->title = $this->headline;
@@ -52,6 +50,7 @@ class ModuleRequestDownload extends Module
 
         return parent::generate();
     }
+
 
     /**
      * Generate the module
@@ -71,7 +70,7 @@ class ModuleRequestDownload extends Module
         $event->setFeFormLang($formLang);
         $event->setTamplate($template);
 
-        $di->dispatch($event::NAME, $event);
+        $di?->dispatch($event);
 
         $this->Template->content = $template->parse();
     }

@@ -1,16 +1,15 @@
 <?php
 
-declare(strict_types=1);
 /**
  * @package     downloadmail
- * @filesource  OnManageDownloadEvent.php
- * @version     2.0.0
  * @since       18.10.2018 - 10:54
  * @author      Patrick Froch <info@easySolutionsIT.de>
- * @see        http://easySolutionsIT.de
+ * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2018
  * @license     CC-BY-SA-4.0
  */
+
+declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Events;
 
@@ -19,16 +18,9 @@ use Contao\FrontendTemplate;
 use Contao\ModuleModel;
 use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * Class OnManageDownloadEvent
- * @package Esit\Downloadmail\Classes\Events
- */
 class OnManageDownloadEvent extends Event
 {
-    /**
-     * Name des Events
-     */
-    public const NAME = 'on.manage.download';
+
 
     /**
      * Spachvariablen
@@ -36,11 +28,13 @@ class OnManageDownloadEvent extends Event
      */
     protected $feFormLang = [];
 
+
     /**
      * Schlüssel für den angeforderten Downlaod
      * @var string
      */
     protected $downloadKey = '';
+
 
     /**
      * Id des aufrufenden Moduls
@@ -48,11 +42,13 @@ class OnManageDownloadEvent extends Event
      */
     protected $modulId = '';
 
+
     /**
      * Daten des Moduls
      * @var ModuleModel
      */
     protected $modul;
+
 
     /**
      * Die Daten des Downloads aus der Datenbank
@@ -60,11 +56,13 @@ class OnManageDownloadEvent extends Event
      */
     protected $dlFromDb = [];
 
+
     /**
      * FrontendTemplate für die Ausfabe
      * @var FrontendTemplate
      */
     protected $tamplate;
+
 
     /**
      * Daten der angeforderten Datei.
@@ -72,11 +70,13 @@ class OnManageDownloadEvent extends Event
      */
     protected $fileData;
 
+
     /**
      * Datan des Formulars.
      * @var array
      */
     protected $formData = [];
+
 
     /**
      * Zeit die ein Download gültig ist.
@@ -84,22 +84,26 @@ class OnManageDownloadEvent extends Event
      */
     protected $downloadtime = '';
 
+
     /**
      * Link um den Download erneut anzufordern
      * @var string
      */
     protected $requestLink = '';
 
+
     /**
      * @var string
      */
     protected $requestTime = '';
+
 
     /**
      * Ist die aktuelle Zeit innerhalb der zulässigen Downloadzeit?
      * @var bool
      */
     protected $isDownloadTimeOkay = false;
+
 
     /**
      * @return string
@@ -109,6 +113,7 @@ class OnManageDownloadEvent extends Event
         return $this->downloadKey;
     }
 
+
     /**
      * @param string $downloadKey
      */
@@ -116,6 +121,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->downloadKey = $downloadKey;
     }
+
 
     /**
      * @return string
@@ -125,6 +131,7 @@ class OnManageDownloadEvent extends Event
         return $this->modulId;
     }
 
+
     /**
      * @param string $modulId
      */
@@ -132,6 +139,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->modulId = $modulId;
     }
+
 
     /**
      * @return ModuleModel
@@ -141,6 +149,7 @@ class OnManageDownloadEvent extends Event
         return $this->modul;
     }
 
+
     /**
      * @param ModuleModel $modul
      */
@@ -148,6 +157,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->modul = $modul;
     }
+
 
     /**
      * @return array
@@ -157,6 +167,7 @@ class OnManageDownloadEvent extends Event
         return $this->feFormLang;
     }
 
+
     /**
      * @param array $feFormLang
      */
@@ -164,6 +175,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->feFormLang = $feFormLang;
     }
+
 
     /**
      * @return array
@@ -173,6 +185,7 @@ class OnManageDownloadEvent extends Event
         return $this->dlFromDb;
     }
 
+
     /**
      * @param array $dlFromDb
      */
@@ -180,6 +193,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->dlFromDb = $dlFromDb;
     }
+
 
     /**
      * @return FilesModel
@@ -189,6 +203,7 @@ class OnManageDownloadEvent extends Event
         return $this->fileData;
     }
 
+
     /**
      * @param FilesModel $fileData
      */
@@ -196,6 +211,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->fileData = $fileData;
     }
+
 
     /**
      * @return array
@@ -205,6 +221,7 @@ class OnManageDownloadEvent extends Event
         return $this->formData;
     }
 
+
     /**
      * @param array $formData
      */
@@ -212,6 +229,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->formData = $formData;
     }
+
 
     /**
      * @return FrontendTemplate
@@ -221,6 +239,7 @@ class OnManageDownloadEvent extends Event
         return $this->tamplate;
     }
 
+
     /**
      * @param FrontendTemplate $tamplate
      */
@@ -228,6 +247,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->tamplate = $tamplate;
     }
+
 
     /**
      * @return string
@@ -237,6 +257,7 @@ class OnManageDownloadEvent extends Event
         return $this->downloadtime;
     }
 
+
     /**
      * @param string $downloadtime
      */
@@ -244,6 +265,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->downloadtime = $downloadtime;
     }
+
 
     /**
      * @return string
@@ -253,6 +275,7 @@ class OnManageDownloadEvent extends Event
         return $this->requestLink;
     }
 
+
     /**
      * @param string $requestLink
      */
@@ -260,6 +283,7 @@ class OnManageDownloadEvent extends Event
     {
         $this->requestLink = $requestLink;
     }
+
 
     /**
      * @return bool
@@ -269,6 +293,7 @@ class OnManageDownloadEvent extends Event
         return $this->isDownloadTimeOkay;
     }
 
+
     /**
      * @param bool $isDownloadTimeOkay
      */
@@ -277,6 +302,7 @@ class OnManageDownloadEvent extends Event
         $this->isDownloadTimeOkay = $isDownloadTimeOkay;
     }
 
+
     /**
      * @return string
      */
@@ -284,6 +310,7 @@ class OnManageDownloadEvent extends Event
     {
         return $this->requestTime;
     }
+
 
     /**
      * @param string $requestTime

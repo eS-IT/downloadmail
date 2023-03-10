@@ -19,15 +19,19 @@ use Esit\Downloadmail\Classes\Services\Helper\FileHelper;
 
 class OnShowDownloadListener
 {
+
+
     /**
      * @var FileHelper
      */
     protected $fileHelper;
 
+
     /**
      * @var Connection
      */
     protected $db;
+
 
     /**
      * @param FileHelper   $fileHelper
@@ -49,13 +53,17 @@ class OnShowDownloadListener
      */
     public function resetDownload(OnShowDownloadEvent $event): void
     {
-        $id = $event->getId();
-        $table = $event->getTable();
-        $reset = $event->getReset();
+        $id     = $event->getId();
+        $table  = $event->getTable();
+        $reset  = $event->getReset();
 
         if (true === $reset) {
             $query = $this->db->createQueryBuilder();
-            $query->update($table)->set('requesttime', '?')->setParameters([\time()])->where("id = $id")->execute();
+            $query->update($table)
+                  ->set('requesttime', '?')
+                  ->setParameters([\time()])
+                  ->where("id = $id")
+                  ->executeStatement();
         }
     }
 
@@ -72,7 +80,7 @@ class OnShowDownloadListener
         $id     = $event->getId();
         $table  = $event->getTable();
         $query  = $this->db->createQueryBuilder();
-        $result = $query->select('*')->from($table)->where("id = $id")->execute();
+        $result = $query->select('*')->from($table)->where("id = $id")->executeQuery();
         $data   = $result->fetchAssociative();
 
         if (false !== $data) {
@@ -99,7 +107,6 @@ class OnShowDownloadListener
      * Lädt die Daten der Download-Seite.
      * @param OnShowDownloadEvent $event
      * @return void
-     * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
     public function convertJumpTo(OnShowDownloadEvent $event): void
@@ -108,7 +115,7 @@ class OnShowDownloadListener
         $query  = $this->db->createQueryBuilder();
 
         if (!empty($data['jumpto'])) {
-            $result = $query->select('*')->from('tl_page')->where('id = ' . $data['jumpto'])->execute();
+            $result = $query->select('*')->from('tl_page')->where('id = ' . $data['jumpto'])->executeQuery();
             $dbData = $result->fetchAssociative();
 
             if (false !== $dbData) {
@@ -124,14 +131,13 @@ class OnShowDownloadListener
      * Lädt die Daten des Formulars.
      * @param OnShowDownloadEvent $event
      * @return void
-     * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
     public function convertFromId(OnShowDownloadEvent $event): void
     {
         $data   = $event->getData();
         $query  = $this->db->createQueryBuilder();
-        $result = $query->select('*')->from('tl_form')->where('id = ' . $data['formid'])->execute();
+        $result = $query->select('*')->from('tl_form')->where('id = ' . $data['formid'])->executeQuery();
         $dbData = $result->fetchAssociative();
 
         if (false !== $dbData) {

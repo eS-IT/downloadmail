@@ -15,10 +15,6 @@ namespace Esit\Downloadmail\Classes\Services\Factories;
 
 use Contao\Email;
 
-/**
- * Class EmailFactory
- * @package Esit\Downloadmail\Classes\Services\Factories
- */
 class EmailFactory
 {
 

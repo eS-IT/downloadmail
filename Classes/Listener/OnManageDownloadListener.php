@@ -27,55 +27,67 @@ use Esit\Downloadmail\Classes\Services\Wrapper\System;
 
 class OnManageDownloadListener
 {
+
+
     /**
      * @var Config
      */
     private $config;
+
 
     /**
      * @var Controller
      */
     private $controller;
 
+
     /**
      * @var Connection
      */
     private $db;
+
 
     /**
      * @var Environment
      */
     private $environment;
 
+
     /**
      * @var FilesModel
      */
     private $filesModel;
+
 
     /**
      * @var Input
      */
     private $input;
 
+
     /**
      * @var ModuleModel
      */
     private $moduleModel;
+
 
     /**
      * @var PageModel
      */
     private $pageModel;
 
+
     /**
      * @var StringUtil
      */
     private $stringUtil;
 
+
     /**
      * @var System
      */
     private $system;
+
 
     /**
      * @param Config      $config
@@ -101,16 +113,16 @@ class OnManageDownloadListener
         StringUtil $stringUtil,
         System $system
     ) {
-        $this->config = $config;
-        $this->controller = $controller;
-        $this->db = $database;
-        $this->environment = $environment;
-        $this->filesModel = $filesModel;
-        $this->input = $input;
-        $this->moduleModel = $moduleModel;
-        $this->pageModel = $pageModel;
-        $this->stringUtil = $stringUtil;
-        $this->system = $system;
+        $this->config       = $config;
+        $this->controller   = $controller;
+        $this->db           = $database;
+        $this->environment  = $environment;
+        $this->filesModel   = $filesModel;
+        $this->input        = $input;
+        $this->moduleModel  = $moduleModel;
+        $this->pageModel    = $pageModel;
+        $this->stringUtil   = $stringUtil;
+        $this->system       = $system;
     }
 
 
@@ -118,18 +130,17 @@ class OnManageDownloadListener
      * Lädt die Daten des Downloads aus der Datenbank.
      * @param OnManageDownloadEvent $event
      * @return void
-     * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
     public function loadDownloadFromDb(OnManageDownloadEvent $event): void
     {
-        $formLang = $event->getFeFormLang();
-        $template = $event->getTamplate();
-        $downloadKey = $event->getDownloadKey();
+        $formLang       = $event->getFeFormLang();
+        $template       = $event->getTamplate();
+        $downloadKey    = $event->getDownloadKey();
 
         if ('' !== $event->getDownloadKey()) {
             $query  = $this->db->createQueryBuilder();
-            $result = $query->select('*')->from('tl_dm_downloads')->where("code = '$downloadKey'")->execute();
+            $result = $query->select('*')->from('tl_dm_downloads')->where("code = '$downloadKey'")->executeQuery();
             $data   = $result->fetchAssociative();
 
             if (false !== $data) {
@@ -144,14 +155,15 @@ class OnManageDownloadListener
         }
     }
 
+
     /**
      * Lädt die Daten zu der angeforderten Datei.
      * @param OnManageDownloadEvent    $event
      */
     public function loadFileData(OnManageDownloadEvent $event): void
     {
-        $dlData = $event->getDlFromDb();
-        $singleSrc = $this->stringUtil->binToUuid($dlData['singleSRC']);
+        $dlData     = $event->getDlFromDb();
+        $singleSrc  = $this->stringUtil->binToUuid($dlData['singleSRC']);
 
         if ('00000000-0000-0000-0000-000000000000' !== $singleSrc) {
             $fileData = $this->filesModel->findByPk($singleSrc);
@@ -167,7 +179,6 @@ class OnManageDownloadListener
      * Lädt die Daten des Formulars.
      * @param OnManageDownloadEvent $event
      * @return void
-     * @throws \Doctrine\DBAL\Driver\Exception
      * @throws \Doctrine\DBAL\Exception
      */
     public function loadFormData(OnManageDownloadEvent $event): void
@@ -176,7 +187,7 @@ class OnManageDownloadListener
 
         if (!empty($dlData['formid'])) {
             $query  = $this->db->createQueryBuilder();
-            $result = $query->select('*')->from('tl_form')->where('id = ' . $dlData['formid'])->execute();
+            $result = $query->select('*')->from('tl_form')->where('id = ' . $dlData['formid'])->executeQuery();
             $data   = $result->fetchAssociative();
 
             if (false !== $data) {
@@ -184,6 +195,7 @@ class OnManageDownloadListener
             }
         }
     }
+
 
     /**
      * Lädt die Zeit, die ein Download gültig ist.
@@ -206,6 +218,7 @@ class OnManageDownloadListener
         }
     }
 
+
     /**
      * Erzeugt den Link, um den Download erneut anzufordern.
      * @param OnManageDownloadEvent    $event
@@ -218,6 +231,7 @@ class OnManageDownloadListener
             $event->setRequestLink($dlData['requestpage']);
         }
     }
+
 
     /**
      * Prüft, ob die Downloadanfrage in der Downloadfrist liegt.
@@ -244,6 +258,7 @@ class OnManageDownloadListener
             $event->stopPropagation();
         }
     }
+
 
     /**
      * Lädt die Zeit bis zum automatischen Start des Downloads.
@@ -276,12 +291,12 @@ class OnManageDownloadListener
      */
     public function handleDownload(OnManageDownloadEvent $event): void
     {
-        $downloadKey = $event->getDownloadKey();
-        $formLang = $event->getFeFormLang();
-        $template = $event->getTamplate();
-        $dlData = $event->getDlFromDb();
-        $fileModel = $event->getFileData();
-        $requestTime = $event->getRequestTime();
+        $downloadKey    = $event->getDownloadKey();
+        $formLang       = $event->getFeFormLang();
+        $template       = $event->getTamplate();
+        $dlData         = $event->getDlFromDb();
+        $fileModel      = $event->getFileData();
+        $requestTime    = $event->getRequestTime();
 
         if (null !== $fileModel) {
             if ("true" === $this->input->get('download')) {    // Infput::get() gibt einen String zurück!
@@ -312,14 +327,14 @@ class OnManageDownloadListener
 
                 $query->setParameters($dbValues)
                       ->where("id = $dlDataId")
-                      ->execute();
+                      ->executeStatement();
 
                 $this->controller->sendFileToBrowser($fileModel->path);
             } else {
-                $template->strLink = $this->environment->get('requestUri') . '&download=true';
-                $template->strLabel = $formLang['downloadstart'];
-                $template->strMessage = \sprintf($formLang['downloadmessage'], $requestTime);
-                $template->intTimer = $requestTime;
+                $template->strLink      = $this->environment->get('requestUri') . '&download=true';
+                $template->strLabel     = $formLang['downloadstart'];
+                $template->strMessage   = \sprintf($formLang['downloadmessage'], $requestTime);
+                $template->intTimer     = $requestTime;
             }
         } else {
             $template->strError = $formLang['fileerror'];

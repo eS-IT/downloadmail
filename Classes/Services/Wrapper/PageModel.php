@@ -2,7 +2,6 @@
 
 /**
  * @package     downloadmail
- * @version     1.0.0
  * @since       24.01.19 - 14:54
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see         http://easySolutionsIT.de
