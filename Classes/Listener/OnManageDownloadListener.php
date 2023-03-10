@@ -208,13 +208,13 @@ class OnManageDownloadListener
         $formData = $event->getFormData();
 
         if (!empty($formData['downloadtime'])) {
-            $event->setDownloadtime($formData['downloadtime']);
+            $event->setDownloadtime((string)$formData['downloadtime']);
         } elseif (null !== $objRoot && $objRoot->downloadtime > 0) {
-            $event->setDownloadtime($objRoot->downloadtime);
+            $event->setDownloadtime((string)$objRoot->downloadtime);
         } elseif ($this->config->get('downloadtime')) {
-            $event->setDownloadtime($this->config->get('downloadtime'));
+            $event->setDownloadtime((string)$this->config->get('downloadtime'));
         } else {
-            $event->setDownloadtime($GLOBALS['downloadmail']['downloadtime']);
+            $event->setDownloadtime((string)$GLOBALS['downloadmail']['downloadtime']);
         }
     }
 

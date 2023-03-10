@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Listener;
 
-use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\CoreBundle\Asset\ContaoContext;
 use Contao\Database;
 use Doctrine\DBAL\Connection;
 use Esit\Downloadmail\Classes\Events\OnManageFormEvent;
@@ -364,6 +364,10 @@ class OnManageFormListener
         $bcc            = \unserialize($settings['mailbcc'], [null]);
         $text           = $settings['mailtext'];
 
+        if (!empty($settings['mailbcc'])) {
+            $bcc = \unserialize($settings['mailbcc'], [null]);
+        }
+
         if (!empty($dbData['code'])) {
             $link = $this->stringHelper->genLink((int)$settings['jumptodownload'], $dbData['code']);
 
@@ -392,12 +396,6 @@ class OnManageFormListener
 
         if (!empty($dbData['email'])) {
             $email->sendTo($dbData['email']);
-        } else {
-            $logger = $this->system->getContainer()->get('monolog.logger.contao');
-            if (null !== $logger) {
-                $context = ['contao' => new ContaoContext(__METHOD__, 'Mailerror')];
-                $logger->log(LogLevel::ERROR, 'No mail address found!', $context);
-            }
         }
     }
 }
