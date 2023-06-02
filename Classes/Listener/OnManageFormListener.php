@@ -361,7 +361,7 @@ class OnManageFormListener
         $email          = $this->emailFactory->create();
         $email->subject = $settings['mailsubject'];
         $email->from    = $settings['mailfrom'];
-        $bcc            = \unserialize($settings['mailbcc'], [null]);
+        $bcc            = [];
         $text           = $settings['mailtext'];
 
         if (!empty($settings['mailbcc'])) {
