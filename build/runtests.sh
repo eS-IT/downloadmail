@@ -10,8 +10,6 @@
 # =============================================================================
 #
 
-BUILD_FULLPACKAGE="false";
-
 
 ## Ausgabe
 function myecho() {
@@ -67,12 +65,10 @@ do
     case ${1} in
     -v|--verbose)
         VERBOSE="TRUE"
-        #shift  # Kein shift, da kein Wert übergeben wird!
         ;;
 
     *)          # unknown option
         myerror "Parameter [${1}] unbekannt!"
-        #shift  # Kein shift, da kein Wert übergeben wird!
         ;;
     esac
     shift
@@ -82,9 +78,10 @@ done
 ## Variablen
 error=0
 tmperr=0
-configFolder='./build'
-toolFolder="$configFolder/tools"
-classesFolder='./Classes'
+#SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+configFolder="./build"
+toolFolder="${configFolder}/tools"
+classesFolder="./Classes"
 
 
 ## phpcpd
@@ -143,7 +140,7 @@ if [ -f ../../../vendor/bin/phpunit ]
 then
     # PHPUnit gobal mit composer installiert
     myecho "Führe UnitTests mit globalem PHPUnit durch"
-    ../../../vendor/bin/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
+    XDEBUG_MODE=coverage ../../../vendor/bin/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
     tmperr=$?
 
     if [ ${tmperr} -ne 0 ]
@@ -168,13 +165,6 @@ then
     echo
     exit 127
 else
-    if [ -f /home/pfroch/bin/buildfullpackage ] && [ "$BUILD_FULLPACKAGE" != "false" ]
-    then
-        # Installationsarchiv erstellen
-        echo "Erstelle installationsarchiv"
-        /home/pfroch/bin/buildfullpackage
-    fi
-
     myecho ">>>>>>>>>>>>>>>>>>>>>>> Es sind keine Fehler aufgetreten <<<<<<<<<<<<<<<<<<<<<<<"
     echo
     exit 0

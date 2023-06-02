@@ -100,8 +100,8 @@ __E-Mail-Blacklist__ verwendet werden.
 
 ## Downloads
 
-Unter dem Menüpunkt __Downloads__ können im Backend die Anfragen und die getätigten Download eingesehen werden. Klick
+Unter dem Menüpunkt __Downloads__ können im Backend die Anfragen und die getätigten Downloads eingesehen werden. Klick
 man in der Liste auf die Lupe, werden Metadaten, die Zeiten und anonymisierten IPs zu den einzelnen Downloads angezeigt.
 Dort ist auch ein Button __Anforderungszeit zurücksetzen__. Dieser setzt die Anforderungszeit auf die aktuelle Zeit,
-so dass über den gleichen Link auch nach Ablauf der Gültigkeitsdauer wieder die entsprechende Datei runter geladen
+sodass über den gleichen Link auch nach Ablauf der Gültigkeitsdauer wieder die entsprechende Datei heruntergeladen
 werden kann.

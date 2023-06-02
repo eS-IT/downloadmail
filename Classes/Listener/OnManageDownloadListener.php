@@ -273,12 +273,12 @@ class OnManageDownloadListener
             $event->setModul($objModul);
 
             if ($objModul->redirecttime > 0) {
-                $event->setRequestTime($objModul->redirecttime);
+                $event->setRequestTime((string)$objModul->redirecttime);
             }
         } elseif ($this->config->get('redirecttime') > 0) {
-            $event->setRequestTime($this->config->get('redirecttime'));
+            $event->setRequestTime((string)$this->config->get('redirecttime'));
         } else {
-            $event->setRequestTime($GLOBALS['downloadmail']['requestTime']);
+            $event->setRequestTime((string)$GLOBALS['downloadmail']['requestTime']);
         }
     }
 
