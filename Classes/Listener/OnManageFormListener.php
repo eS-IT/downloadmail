@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Esit\Downloadmail\Classes\Listener;
 
-use Contao\CoreBundle\Asset\ContaoContext;
 use Contao\Database;
 use Doctrine\DBAL\Connection;
 use Esit\Downloadmail\Classes\Events\OnManageFormEvent;
@@ -24,7 +23,6 @@ use Esit\Downloadmail\Classes\Services\Wrapper\Config;
 use Esit\Downloadmail\Classes\Services\Wrapper\Environment;
 use Esit\Downloadmail\Classes\Services\Wrapper\PageModel;
 use Esit\Downloadmail\Classes\Services\Wrapper\System;
-use Psr\Log\LogLevel;
 
 class OnManageFormListener
 {
@@ -55,12 +53,6 @@ class OnManageFormListener
 
 
     /**
-     * @var System
-     */
-    private $system;
-
-
-    /**
      * @var StringHelper
      */
     private $stringHelper;
@@ -83,7 +75,6 @@ class OnManageFormListener
      * @param Connection   $db
      * @param Environment  $environment
      * @param PageModel    $pageModel
-     * @param System       $system
      * @param StringHelper $stringHelper
      * @param EmailFactory $emailFactory
      * @param FileHelper   $fileHelper
@@ -93,7 +84,6 @@ class OnManageFormListener
         Connection $db,
         Environment $environment,
         PageModel $pageModel,
-        System $system,
         StringHelper $stringHelper,
         EmailFactory $emailFactory,
         FileHelper $fileHelper
@@ -102,7 +92,6 @@ class OnManageFormListener
         $this->db           = $db;
         $this->environment  = $environment;
         $this->pageModel    = $pageModel;
-        $this->system       = $system;
         $this->stringHelper = $stringHelper;
         $this->emailFactory = $emailFactory;
         $this->fileHelper   = $fileHelper;
@@ -239,7 +228,7 @@ class OnManageFormListener
 
             if (null !== $root) {
                 foreach ($fields as $field) {
-                    if (null !== $root->$field && $root->$field !== 'a:1:{i:0;s:0:"";}') {
+                    if (!empty($root->$field) && $root->$field !== 'a:1:{i:0;s:0:"";}') {
                         $settings[$field] = $root->$field;
                     }
                 }
