@@ -66,11 +66,11 @@ und das Bereitstellen des Downloads.
 
 ### Einstellungen
 
-Es gibt mehrere Stellen an denen die Einstellungen gesetzt werden können. Die Einstellungen werden in den
-Contao-Setting global für alle Formulare auf allen Seiten gesetzt. Diese können in der Rootpage der entsprechenden
-Seite überschrieben, bzw. ergänzt werden. Diese Einstellungen gelten nur für die Formulare auf Unterseiten der
-entsprechenden Rootpage. Dann gibt es noch die Möglichkeit die Einstellungen direkt im Formular zu setzen. Diese
-gelten dann nur für das eine Formular.
+Es gibt mehrere Stellen, an denen die Einstellungen gesetzt werden können. Die Einstellungen werden in den
+Einstellungen von Contao global für alle Formulare auf allen Seiten gesetzt. Diese können in der Rootpage der
+entsprechenden Seite überschrieben, bzw. ergänzt werden. Diese Einstellungen gelten nur für die Formulare auf
+Unterseiten der entsprechenden Rootpage. Dann gibt es noch die Möglichkeit die Einstellungen direkt im Formular zu
+setzen. Diese gelten dann nur für das eine Formular.
 
 | Name der Einstellung | Erklärng |
 | -------------------- | -------- |
@@ -86,6 +86,9 @@ gelten dann nur für das eine Formular.
 
 - __TinyMCE verwenden__ kann nur in den Contao-Settings eingestellt werden.
 - Die __Quelldatei__ kann nur direkt im Formular festgelegt werden.
+- Der __Suffix für die Downloadseite__ kann nur direkt im Formular festgelegt werden.
+
+Der __Suffix für die Downloadseite__ kann nur global für alle Downloadseiten gesetzt werden. Er kann auch leer sein, falls kein Suffix verwendet werden soll.
 
 
 ## Blacklist

@@ -107,11 +107,17 @@ class StringHelper
      */
     public function genLink(int $intId, string $strCode = ''): string
     {
-        $strAlias = $this->getAlias($intId);
-        $strUrl = (string)$this->environment->get('url');
-        $strUrl .= TL_PATH;
-        $strUrl .= '/';
-        $strUrl .= $strAlias . $GLOBALS['TL_CONFIG']['urlSuffix'];
+        $strAlias   = $this->getAlias($intId);
+        $strUrl     = (string)$this->environment->get('url');
+        $strUrl    .= TL_PATH;
+        $strUrl    .= '/';
+        $suffix     = '.html';
+
+        if (true === $this->config->get('setdownladsuffix')) {
+            $suffix = (string)$this->config->get('downloadsuffix');
+        }
+
+        $strUrl .= $strAlias . $suffix;
 
         if ($strCode) {
             $strUrl .= '?key=' . $strCode;
