@@ -86,7 +86,7 @@ setzen. Diese gelten dann nur für das eine Formular.
 
 - __TinyMCE verwenden__ kann nur in den Contao-Settings eingestellt werden.
 - Die __Quelldatei__ kann nur direkt im Formular festgelegt werden.
-- Der __Suffix für die Downloadseite__ kann nur direkt im Formular festgelegt werden.
+- Der __Suffix für die Downloadseite__ kann nur direkt in den Contao-Settings festgelegt werden.
 
 Der __Suffix für die Downloadseite__ kann nur global für alle Downloadseiten gesetzt werden. Er kann auch leer sein, falls kein Suffix verwendet werden soll.
 
