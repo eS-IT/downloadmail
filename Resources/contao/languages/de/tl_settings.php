@@ -22,7 +22,7 @@ $GLOBALS['TL_LANG']['tl_settings']['mailtext']          = ['Mailtext', 'Bitte ge
 $GLOBALS['TL_LANG']['tl_settings']['usetiny']           = ['TinyMCE verwenden', 'Wenn der Haken gesetzt ist, wird für den Mailtext der TinyMCE verwendet.'];
 $GLOBALS['TL_LANG']['tl_settings']['mailbcc']           = ['Empfänger der Bildkopie', 'Bitte geben Sie die E-Mailadresse des Empfänger der Bildkopie ein.'];
 $GLOBALS['TL_LANG']['tl_settings']['setdownladsuffix']  = ['Suffix für die Downloadseite setzen', 'Ist der Haken gesetzt, kann hier ein abweichender Suffix für die Seite mit dem Download gesetzt werden.'];
-$GLOBALS['TL_LANG']['tl_settings']['downloadsuffix']    = ['Suffix für die Downloadseite', 'Bitte geben Sie den Suffix für die Seite mit dem Download ein. Dieser kann auch leer sein.'];
+$GLOBALS['TL_LANG']['tl_settings']['downloadsuffix']    = ['Suffix für die Downloadseite', 'Bitte geben Sie den Suffix inkl. Punkt für die Seite mit dem Download ein, z. B. ".html". Dieser kann auch leer sein.'];
 
 
 /*
