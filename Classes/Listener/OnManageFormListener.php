@@ -369,7 +369,11 @@ class OnManageFormListener
 
         if (!empty($postData)) {
             foreach ($postData as $strKey => $strValue) {
-                $text = \str_replace("{{download::$strKey}}", $strValue, $text);
+                if (true === \is_bool($strValue)) {
+                    $strValue = $strValue ? "Ja" : "Nein";
+                }
+
+                $text = \str_replace("{{download::$strKey}}", (string)$strValue, $text);
             }
         }
 
